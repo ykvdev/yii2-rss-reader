@@ -1,17 +1,10 @@
 
-users
-id|email|password|registered_at|activated
 
-feeds
-id|site_url|rss_uri|subscribed_at
-
-news
-id|published_at|feed|title|short_text|external_uri
 
 -----------------------------------
 
-названия полей БД делать попроще, связь можно проследить через внешние ключи
-управление БД делать через миграции
++названия полей БД делать попроще, связь можно проследить через внешние ключи
++управление БД делать через миграции
 создание/обновление моделенй через gii
 Модели распологать так:
 /models/mysql/dbname/UserModel.php
