@@ -1,0 +1,59 @@
+<?php
+
+namespace app\models\db;
+
+use Yii;
+
+/**
+ * This is the model class for table "feeds".
+ *
+ * @property integer $id
+ * @property integer $user
+ * @property string $site_url
+ * @property string $rss_uri
+ * @property string $subscribed_at
+ *
+ * @property UsersModel $user
+ * @property NewsModel[] $news
+ */
+class FeedsModel extends \yii\db\ActiveRecord
+{
+    /**
+     * @inheritdoc
+     */
+    public static function tableName()
+    {
+        return 'feeds';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['user', 'site_url', 'rss_uri', 'subscribed_at'], 'required'],
+            [['user'], 'integer'],
+            [['subscribed_at'], 'date', 'format' => 'php:Y-m-d H:i:s'],
+            [['site_url'], 'url'],
+            [['site_url', 'rss_uri'], 'string', 'max' => 255],
+            [['user', 'site_url', 'rss_uri'], 'unique', 'targetAttribute' => ['user', 'site_url', 'rss_uri'], 'message' => 'The combination of User, Site Url and Rss Uri has already been taken.'],
+            [['user'], 'exist', 'skipOnError' => true, 'targetClass' => UsersModel::className(), 'targetAttribute' => ['user' => 'id']],
+        ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser() {
+        return $this->hasOne(UsersModel::className(), ['id' => 'user']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getNews()
+    {
+        return $this->hasMany(NewsModel::className(), ['feed' => 'id']);
+    }
+}
