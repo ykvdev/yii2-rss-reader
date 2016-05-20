@@ -5,7 +5,10 @@ $params = require(__DIR__ . '/params.php');
 $config = [
     'id' => 'yii2-rss-reader',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => [
+        'log',
+        'app\controllers\Bootstrap'
+    ],
     'components' => [
         'request' => [
             'cookieValidationKey' => '82d8SvpQuyZkkraNzrXsXqe7CT9hLtSJ',
