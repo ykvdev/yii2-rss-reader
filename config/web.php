@@ -9,6 +9,7 @@ $config = [
     'components' => [
         'request' => [
             'cookieValidationKey' => '82d8SvpQuyZkkraNzrXsXqe7CT9hLtSJ',
+            'enableCsrfValidation' => true
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
