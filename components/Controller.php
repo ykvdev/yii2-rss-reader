@@ -1,24 +1,22 @@
 <?php
 
-namespace app\controllers;
+namespace app\components;
 
-use yii\web\Controller;
-
-class BaseController extends Controller
+class Controller extends \yii\web\Controller
 {
     public function actions() {
         $controllerId = \Yii::$app->controller->uniqueId;
-        $dirPath = __DIR__ . DIRECTORY_SEPARATOR . $controllerId;
-        if(!is_dir($dirPath)) {
+        $controllerPath = \Yii::getAlias('@app/controllers/' . $controllerId);
+        if(!is_dir($controllerPath)) {
             return [];
         }
 
         $actions = [];
-        $dir = new \DirectoryIterator($dirPath);
+        $dir = new \DirectoryIterator($controllerPath);
         foreach($dir as $item) {
             if($item->isFile()) {
                 $actionId = lcfirst(str_replace(['Action', '.' . $item->getExtension()], '', $item->getBasename()));
-                $actionClassName = __NAMESPACE__ . '\\' . $controllerId . '\\'
+                $actionClassName = 'app\controllers\\' . $controllerId . '\\'
                     . str_replace('.' . $item->getExtension(), '', $item->getBasename());
                 $actions[$actionId] = $actionClassName;
             }
