@@ -15,9 +15,9 @@ use Yii;
  * @property string $external_uri
  * @property integer $read
  *
- * @property FeedsModel $feed
+ * @property FeedModel $feed
  */
-class NewsModel extends \yii\db\ActiveRecord
+class NewModel extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -40,7 +40,7 @@ class NewsModel extends \yii\db\ActiveRecord
             [['title', 'short_text', 'external_uri'], 'string', 'max' => 255],
             [['feed', 'title'], 'unique', 'targetAttribute' => ['feed', 'title'], 'message' => 'The combination of feed and title has already been taken.'],
             [['feed', 'external_uri'], 'unique', 'targetAttribute' => ['feed', 'external_uri'], 'message' => 'The combination of feed and external_uri has already been taken.'],
-            [['feed'], 'exist', 'skipOnError' => true, 'targetClass' => FeedsModel::className(), 'targetAttribute' => ['feed' => 'id']],
+            [['feed'], 'exist', 'skipOnError' => true, 'targetClass' => FeedModel::className(), 'targetAttribute' => ['feed' => 'id']],
         ];
     }
 
@@ -49,6 +49,6 @@ class NewsModel extends \yii\db\ActiveRecord
      */
     public function getFeed()
     {
-        return $this->hasOne(FeedsModel::className(), ['id' => 'feed']);
+        return $this->hasOne(FeedModel::className(), ['id' => 'feed']);
     }
 }

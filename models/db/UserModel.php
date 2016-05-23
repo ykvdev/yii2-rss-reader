@@ -13,9 +13,9 @@ use Yii;
  * @property string $registered_at
  * @property integer $activated
  *
- * @property FeedsModel[] $feeds
+ * @property FeedModel[] $feeds
  */
-class UsersModel extends \yii\db\ActiveRecord
+class UserModel extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -46,7 +46,7 @@ class UsersModel extends \yii\db\ActiveRecord
      */
     public function getFeeds()
     {
-        return $this->hasMany(FeedsModel::className(), ['user' => 'id']);
+        return $this->hasMany(FeedModel::className(), ['user' => 'id']);
     }
 
     public function sendMail($view, $subject) {

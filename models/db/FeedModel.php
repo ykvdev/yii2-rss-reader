@@ -13,10 +13,10 @@ use Yii;
  * @property string $rss_uri
  * @property string $subscribed_at
  *
- * @property UsersModel $user
- * @property NewsModel[] $news
+ * @property UserModel $user
+ * @property NewModel[] $news
  */
-class FeedsModel extends \yii\db\ActiveRecord
+class FeedModel extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -38,7 +38,7 @@ class FeedsModel extends \yii\db\ActiveRecord
             [['site_url'], 'url'],
             [['site_url', 'rss_uri'], 'string', 'max' => 255],
             [['user', 'site_url', 'rss_uri'], 'unique', 'targetAttribute' => ['user', 'site_url', 'rss_uri'], 'message' => 'The combination of User, Site Url and Rss Uri has already been taken.'],
-            [['user'], 'exist', 'skipOnError' => true, 'targetClass' => UsersModel::className(), 'targetAttribute' => ['user' => 'id']],
+            [['user'], 'exist', 'skipOnError' => true, 'targetClass' => UserModel::className(), 'targetAttribute' => ['user' => 'id']],
         ];
     }
 
@@ -46,7 +46,7 @@ class FeedsModel extends \yii\db\ActiveRecord
      * @return \yii\db\ActiveQuery
      */
     public function getUser() {
-        return $this->hasOne(UsersModel::className(), ['id' => 'user']);
+        return $this->hasOne(UserModel::className(), ['id' => 'user']);
     }
 
     /**
@@ -54,6 +54,6 @@ class FeedsModel extends \yii\db\ActiveRecord
      */
     public function getNews()
     {
-        return $this->hasMany(NewsModel::className(), ['feed' => 'id']);
+        return $this->hasMany(NewModel::className(), ['feed' => 'id']);
     }
 }
