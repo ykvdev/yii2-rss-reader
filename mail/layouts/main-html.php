@@ -15,7 +15,14 @@ use yii\helpers\Html;
 </head>
 <body>
     <?php $this->beginBody() ?>
+
+    <h4>Hello <?= isset($this->params['name']) ? $this->params['name'] : '' ?></h4>
+
     <?= $content ?>
+
+    <hr>
+    <a href="http://rss-reader.com" target="_blank">rss-reader.com</a>
+
     <?php $this->endBody() ?>
 </body>
 </html>

@@ -25,7 +25,13 @@ $config = [
             'errorAction' => 'site/error',
         ],
         'mailer' => [
-            'class' => 'yii\swiftmailer\Mailer',
+            'class' => yii\swiftmailer\Mailer::className(),
+            'htmlLayout' => 'layouts/main-html',
+            'textLayout' => 'layouts/main-text',
+            'messageConfig' => [
+                'charset' => 'UTF-8',
+                'from' => ['noreply@rss-reader.com' => 'Rss Reader'],
+            ],
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
