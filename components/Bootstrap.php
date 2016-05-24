@@ -5,6 +5,7 @@ namespace app\components;
 use yii\base\BootstrapInterface;
 use yii\base\Event;
 use yii\base\Application;
+use yii\web\View;
 
 class Bootstrap implements BootstrapInterface
 {
@@ -15,6 +16,14 @@ class Bootstrap implements BootstrapInterface
             \yii\web\Controller::className(),
             \yii\web\Controller::EVENT_BEFORE_ACTION,
             [$this, 'registerPageAssets']
+        );
+
+        Event::on(
+            \yii\web\View::className(),
+            \yii\web\View::EVENT_AFTER_RENDER,
+            function($event) use ($app) {
+                $app->view->title .= ' - RSS Reader';
+            }
         );
     }
 

@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\forms\RegistrationForm;
 use Yii;
 use app\components\Controller;
 use app\models\forms\LoginForm;
@@ -18,6 +19,15 @@ class UserController extends Controller
                 'class' => 'yii\captcha\CaptchaAction',
             ],
         ]);
+    }
+
+    public function actionRegistration() {
+        $registrationForm = new RegistrationForm();
+        if($registrationForm->load(Yii::$app->request->post()) && $registrationForm->registration()) {
+            die('Register success'); // todo: auth and redirect to user space
+        }
+
+        return $this->render('registration', compact('registrationForm'));
     }
 
     public function actionLogin()
