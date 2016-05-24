@@ -19,7 +19,10 @@ class Bootstrap implements BootstrapInterface
             \yii\web\View::className(),
             \yii\web\View::EVENT_AFTER_RENDER,
             function($event) use ($app) {
-                $app->view->title .= ' - RSS Reader';
+                $app->view->title = implode(' - ', [
+                    $app->view->title,
+                    'RSS Reader'
+                ]);
             }
         );
     }
