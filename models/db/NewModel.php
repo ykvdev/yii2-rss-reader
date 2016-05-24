@@ -14,8 +14,6 @@ use Yii;
  * @property string $short_text
  * @property string $external_uri
  * @property integer $read
- *
- * @property FeedModel $feed
  */
 class NewModel extends \yii\db\ActiveRecord
 {
@@ -47,7 +45,7 @@ class NewModel extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getFeed()
+    public function getFeedModel()
     {
         return $this->hasOne(FeedModel::className(), ['id' => 'feed']);
     }

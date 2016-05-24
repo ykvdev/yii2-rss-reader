@@ -12,9 +12,6 @@ use Yii;
  * @property string $site_url
  * @property string $rss_uri
  * @property string $subscribed_at
- *
- * @property UserModel $user
- * @property NewModel[] $news
  */
 class FeedModel extends \yii\db\ActiveRecord
 {
@@ -45,14 +42,14 @@ class FeedModel extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUser() {
+    public function getUserModel() {
         return $this->hasOne(UserModel::className(), ['id' => 'user']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getNews()
+    public function getNewModels()
     {
         return $this->hasMany(NewModel::className(), ['feed' => 'id']);
     }

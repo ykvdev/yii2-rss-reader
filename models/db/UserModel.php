@@ -12,8 +12,6 @@ use Yii;
  * @property string $password
  * @property string $registered_at
  * @property integer $activated
- *
- * @property FeedModel[] $feeds
  */
 class UserModel extends \yii\db\ActiveRecord
 {
@@ -44,7 +42,7 @@ class UserModel extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getFeeds()
+    public function getFeedModels()
     {
         return $this->hasMany(FeedModel::className(), ['user' => 'id']);
     }
