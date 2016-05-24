@@ -3,9 +3,6 @@
 namespace app\modules\guest;
 use yii\filters\AccessControl;
 
-/**
- * guest module definition class
- */
 class Module extends \yii\base\Module
 {
     public function init()

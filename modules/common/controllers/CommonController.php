@@ -1,25 +1,20 @@
 <?php
 
-namespace app\controllers;
+namespace app\modules\common\controllers;
 
-use app\models\forms\RegistrationForm;
-use Yii;
-use app\components\Controller;
-use app\models\forms\LoginForm;
+use yii\web\Controller;
 
-class UserController extends Controller
+class CommonController extends Controller
 {
     public function actions()
     {
-        return array_merge(parent::actions(), [
+        return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
             'captcha' => [
                 'class' => 'yii\captcha\CaptchaAction',
             ],
-        ]);
+        ];
     }
-
-
 }

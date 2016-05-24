@@ -13,6 +13,9 @@ $config = [
         'user' => [
             'class' => 'app\modules\user\Module',
         ],
+        'common' => [
+            'class' => 'app\modules\common\Module',
+        ],
     ],
     'bootstrap' => [
         'log',
@@ -27,12 +30,12 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
+            'identityClass' => \app\modules\common\models\db\UserModel::className(),
             'enableAutoLogin' => true, // for remember me functionality
             'loginUrl' => ['guest/guest/sign-in']
         ],
         'errorHandler' => [
-            'errorAction' => 'user/error',
+            'errorAction' => 'common/common/error',
         ],
         'mailer' => [
             'class' => yii\swiftmailer\Mailer::className(),
@@ -42,9 +45,6 @@ $config = [
                 'charset' => 'UTF-8',
                 'from' => ['noreply@rss-reader.com' => 'Rss Reader'],
             ],
-            // send all mails to a file by default. You have to set
-            // 'useFileTransport' to false and configure a transport
-            // for the mailer to send real emails.
             'useFileTransport' => YII_ENV_DEV,
         ],
         'log' => [
