@@ -5,6 +5,7 @@ $params = require(__DIR__ . '/params.php');
 $config = [
     'id' => 'yii2-rss-reader',
     'basePath' => dirname(__DIR__),
+    'defaultRoute' => 'user/login',
     'bootstrap' => [
         'log',
         'app\components\Bootstrap'
@@ -22,7 +23,7 @@ $config = [
             'enableAutoLogin' => true,
         ],
         'errorHandler' => [
-            'errorAction' => 'site/error',
+            'errorAction' => 'user/error',
         ],
         'mailer' => [
             'class' => yii\swiftmailer\Mailer::className(),
