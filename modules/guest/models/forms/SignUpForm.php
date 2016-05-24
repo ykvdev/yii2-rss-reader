@@ -1,12 +1,12 @@
 <?php
 
-namespace app\models\forms;
+namespace app\modules\guest\models\forms;
 
 use app\models\db\UserModel;
 use yii\base\Model;
 use yii\helpers\Url;
 
-class RegistrationForm extends Model
+class SignUpForm extends Model
 {
     public $email, $password, $repassword, $captcha, $acceptAgreement;
 

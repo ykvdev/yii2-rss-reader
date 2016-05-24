@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models\forms;
+namespace app\modules\guest\models\forms;
 
 use Yii;
 use yii\base\Model;
@@ -12,7 +12,7 @@ use app\models\db\UserModel;
  * @property UserModel|null $user This property is read-only.
  *
  */
-class LoginForm extends Model
+class SignInForm extends Model
 {
     public $username;
     public $password;

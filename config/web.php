@@ -5,7 +5,12 @@ $params = require(__DIR__ . '/params.php');
 $config = [
     'id' => 'yii2-rss-reader',
     'basePath' => dirname(__DIR__),
-    'defaultRoute' => 'user/login',
+    'defaultRoute' => 'guest/guest/sign-in',
+    'modules' => [
+        'guest' => [
+            'class' => 'app\modules\guest\Module',
+        ],
+    ],
     'bootstrap' => [
         'log',
         'app\components\Bootstrap'
@@ -20,7 +25,8 @@ $config = [
         ],
         'user' => [
             'identityClass' => 'app\models\User',
-            'enableAutoLogin' => true,
+            'enableAutoLogin' => true, // for remember me functionality
+            'loginUrl' => ['guest/guest/sign-in']
         ],
         'errorHandler' => [
             'errorAction' => 'user/error',

@@ -21,26 +21,6 @@ class UserController extends Controller
         ]);
     }
 
-    public function actionRegistration() {
-        $registrationForm = new RegistrationForm();
-        if($registrationForm->load(Yii::$app->request->post()) && $registrationForm->registration()) {
-            die('Register success'); // todo: auth and redirect to user space
-        }
-
-        return $this->render('registration', compact('registrationForm'));
-    }
-
-    public function actionLogin()
-    {
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-//            return $this->goBack(); todo go to lists of rss
-        }
-        return $this->render('login', [
-            'model' => $model,
-        ]);
-    }
-
     public function actionLogout()
     {
         Yii::$app->user->logout();
