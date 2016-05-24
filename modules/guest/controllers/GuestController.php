@@ -6,9 +6,6 @@ use yii\web\Controller;
 use app\modules\guest\models\forms\SignUpForm;
 use app\modules\guest\models\forms\SignInForm;
 
-/**
- * Default controller for the `guest` module
- */
 class GuestController extends Controller
 {
     public function actionSignUp() {

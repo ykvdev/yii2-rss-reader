@@ -10,6 +10,9 @@ $config = [
         'guest' => [
             'class' => 'app\modules\guest\Module',
         ],
+        'user' => [
+            'class' => 'app\modules\user\Module',
+        ],
     ],
     'bootstrap' => [
         'log',
