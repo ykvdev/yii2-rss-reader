@@ -89,3 +89,16 @@ a.desc:after {
     padding: 10px 20px;
     margin: 0 0 15px 0;
 }
+
+.sign-up-page h1 {
+    margin-bottom: 30px;
+}
+
+.sign-up-page button[type="submit"] {
+    margin-top: 30px;
+}
+
+.sign-up-page {
+    width: 400px;
+    margin: 0 auto;
+}

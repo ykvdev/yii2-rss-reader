@@ -30,7 +30,7 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => \app\modules\common\models\db\UserModel::className(),
+            'identityClass' => 'app\modules\common\models\db\UserModel',
             'enableAutoLogin' => true, // for remember me functionality
             'loginUrl' => ['guest/guest/sign-in']
         ],

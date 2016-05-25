@@ -24,18 +24,18 @@ class SignUpForm extends Model
             // если бы был логин, то нужно было бы добавить проверку на длину мин 2 символа
 
             ['password', 'required', 'message' => 'Введите пароль'],
-            ['password', 'string', 'min' => 3, 'message' => 'Пароль должен быть не короче 3-х символов'],
+            ['password', 'string', 'min' => 3, 'tooShort' => 'Пароль должен быть не короче 3-х символов'],
             ['repassword', 'required', 'message' => 'Повторите пароль'],
             [['password', 'repassword'], 'compare', 'compareAttribute' => 'password',
                 'message' => 'Введенные пароли не совпадают'],
 
             ['captcha', 'filter', 'filter' => 'trim'],
             ['captcha', 'required', 'message' => 'Введите проверочные символы'],
-            ['captcha', 'captcha', 'captchaAction' => Url::toRoute('user/captcha'),
+            ['captcha', 'captcha', 'captchaAction' => Url::toRoute('/common/common/captcha'),
                 'message' => 'Проверочные символы введены не верно'],
 
             ['acceptAgreement', 'boolean'],
-            ['acceptAgreement', 'required', 'message' => 'Вы должны принять условия соглашения'],
+            ['acceptAgreement', 'required', 'requiredValue' => true, 'message' => 'Вы должны принять условия соглашения'],
         ];
     }
 
@@ -52,7 +52,7 @@ class SignUpForm extends Model
     /**
      * @return UserModel|bool
      */
-    public function registration() {
+    public function signUp() {
         if(!$this->validate()) {
             return false;
         }
