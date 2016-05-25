@@ -6,6 +6,7 @@ $config = [
     'id' => 'yii2-rss-reader',
     'basePath' => dirname(__DIR__),
     'defaultRoute' => 'guest/guest/sign-in',
+    'layoutPath' => '@app/modules/common/views/layouts',
     'modules' => [
         'guest' => [
             'class' => 'app\modules\guest\Module',
