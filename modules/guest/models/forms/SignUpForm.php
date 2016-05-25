@@ -2,7 +2,7 @@
 
 namespace app\modules\guest\models\forms;
 
-use app\models\db\UserModel;
+use app\modules\common\models\db\UserModel;
 use yii\base\Model;
 use yii\helpers\Url;
 
