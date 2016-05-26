@@ -3,6 +3,10 @@
 namespace app\modules\common\models\db;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
+use yii\db\Expression;
+use yii\web\IdentityInterface;
 
 /**
  * This is the model class for table "users".
@@ -13,14 +17,30 @@ use Yii;
  * @property string $registered_at
  * @property integer $activated
  */
-class UserModel extends \yii\db\ActiveRecord
+class UserModel extends \yii\db\ActiveRecord implements IdentityInterface
 {
+    use UserModelIdentityTrait,
+        UserModelServiceTrait;
+
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
         return 'users';
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_VALIDATE => 'registered_at',
+                ],
+                'value' => date('Y-m-d H:i:s'),
+            ],
+        ];
     }
 
     /**
@@ -47,26 +67,15 @@ class UserModel extends \yii\db\ActiveRecord
         return $this->hasMany(FeedModel::className(), ['user' => 'id']);
     }
 
-    public function sendMail($view, $subject) {
-        self::sendMailTo($view, $subject, $this->email);
-    }
-
-    public static function sendMailTo($view, $subject, $recipientEmail, $recipientName = null) {
-        // Set layout params
-        if($recipientName) {
-            \Yii::$app->mailer->getView()->params['name'] = $recipientName;
+    public function beforeSave($insert) {
+        if(!parent::beforeSave($insert)) {
+            return false;
         }
 
-        \Yii::$app->mailer->compose([
-            'html' => 'views/' . $view . '-html',
-            'text' => 'views/' . $view . '-text'
-        ])->setTo($recipientName ? [$recipientEmail => $recipientName] : $recipientEmail)
-            ->setSubject($subject)
-            ->send();
-
-        // Reset layout params
-        if($recipientName) {
-            \Yii::$app->mailer->getView()->params['name'] = null;
+        if($this->isAttributeChanged('password')) {
+            $this->password = Yii::$app->security->generatePasswordHash($this->password);
         }
+
+        return true;
     }
 }

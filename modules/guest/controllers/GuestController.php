@@ -17,15 +17,11 @@ class GuestController extends Controller
         return $this->render('sign-up', compact('signUpForm'));
     }
 
-    /**
-     * Renders the index view for the module
-     * @return string
-     */
     public function actionSignIn()
     {
         $signInForm = new SignInForm();
         if ($signInForm->load(\Yii::$app->request->post()) && $signInForm->signIn()) {
-//            return $this->goBack(); todo go to lists of rss
+            die('Sign in success'); // todo: go to lists of rss
         }
 
         return $this->render('sign-in', compact('signInForm'));

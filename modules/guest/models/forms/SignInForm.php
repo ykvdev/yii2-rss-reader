@@ -4,22 +4,18 @@ namespace app\modules\guest\models\forms;
 
 use Yii;
 use yii\base\Model;
-use app\models\db\UserModel;
+use app\modules\common\models\db\UserModel;
 
-/**
- * LoginForm is the model behind the login form.
- *
- * @property UserModel|null $user This property is read-only.
- *
- */
 class SignInForm extends Model
 {
-    public $username;
+    const REMEMBER_ME_SECONDS = 604800; // 7 days
+
+    public $email;
     public $password;
     public $rememberMe = true;
 
-    private $_user = false;
-
+    /** @var bool|UserModel */
+    private $user = false;
 
     /**
      * @return array the validation rules.
@@ -27,11 +23,9 @@ class SignInForm extends Model
     public function rules()
     {
         return [
-            // username and password are both required
-            [['username', 'password'], 'required'],
-            // rememberMe must be a boolean value
+            ['email', 'required', 'message' => 'Введите e-mail'],
+            ['password', 'required', 'message' => 'Введите пароль'],
             ['rememberMe', 'boolean'],
-            // password is validated by validatePassword()
             ['password', 'validatePassword'],
         ];
     }
@@ -48,35 +42,42 @@ class SignInForm extends Model
         if (!$this->hasErrors()) {
             $user = $this->getUser();
 
-            if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+            if (!$user || !Yii::$app->security->validatePassword($this->password, $user->password)) {
+                $this->addError($attribute, 'Не корректное имя пользователя или пароль');
             }
         }
+    }
+
+    public function attributeLabels() {
+        return [
+            'email' => 'E-mail',
+            'password' => 'Пароль',
+            'rememberMe' => 'Запомнить меня'
+        ];
     }
 
     /**
      * Logs in a user using the provided username and password.
      * @return boolean whether the user is logged in successfully
      */
-    public function login()
+    public function signIn()
     {
-        if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
+        if (!$this->validate()) {
+            return false;
         }
-        return false;
+
+        return Yii::$app->user->login($this->getUser(), $this->rememberMe ? self::REMEMBER_ME_SECONDS : 0);
     }
 
     /**
-     * Finds user by [[username]]
-     *
      * @return UserModel|null
      */
     public function getUser()
     {
-        if ($this->_user === false) {
-            $this->_user = UserModel::findByUsername($this->username);
+        if (!$this->user) {
+            $this->user = UserModel::findOne(['email' => $this->email]);
         }
 
-        return $this->_user;
+        return $this->user;
     }
 }

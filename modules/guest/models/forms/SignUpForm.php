@@ -60,11 +60,11 @@ class SignUpForm extends Model
         $user = new UserModel();
         $user->email = $this->email;
         $user->password = $this->password;
-        $user->registered_at = date('Y-m-d H:i:s');
 
         if($user->save()) {
             return $user;
         } else {
+            $this->addError('email', 'Произошла внутренняя ошибка');
             return false;
         }
     }
