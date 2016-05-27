@@ -19,7 +19,9 @@ $this->title = 'Регистрация';
     <?= $form->field($signUpForm, 'repassword')->passwordInput() ?>
     <?= $form->field($signUpForm, 'captcha')->widget(Captcha::className(), [
         'captchaAction' => \yii\helpers\Url::toRoute('/common/common/captcha'),
-        'options' => ['class' => 'form-control', 'autocomplete' => 'off']
+        'options' => ['class' => 'form-control', 'autocomplete' => 'off'],
+        'template' => '{image} <a href="#" class="captcha-refresh-link" title="Получить другие цифры"
+                        ><span class="glyphicon glyphicon-refresh"></span></a> {input}'
     ]) ?>
     <?= $form->field($signUpForm, 'acceptAgreement')->checkbox() ?>
     <?= Html::submitButton('Регистрация', ['class' => 'btn btn-primary']) ?>
