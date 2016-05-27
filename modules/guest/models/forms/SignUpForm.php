@@ -30,9 +30,9 @@ class SignUpForm extends Model
                 'message' => 'Введенные пароли не совпадают'],
 
             ['captcha', 'filter', 'filter' => 'trim'],
-            ['captcha', 'required', 'message' => 'Введите проверочные символы'],
+            ['captcha', 'required', 'message' => 'Введите проверочные цифры'],
             ['captcha', 'captcha', 'captchaAction' => Url::toRoute('/common/common/captcha'),
-                'message' => 'Проверочные символы введены не верно'],
+                'message' => 'Проверочные цифры введены не верно'],
 
             ['acceptAgreement', 'boolean'],
             ['acceptAgreement', 'required', 'requiredValue' => true, 'message' => 'Вы должны принять условия соглашения'],
@@ -44,7 +44,7 @@ class SignUpForm extends Model
             'email' => 'E-mail адрес',
             'password' => 'Введите пароль',
             'repassword' => 'Повторите пароль',
-            'captcha' => 'Введите проверочные символы',
+            'captcha' => 'Введите проверочные цифры',
             'acceptAgreement' => 'Принять условия пользовательского сглашения (ссылка)' // todo add link
         ];
     }
