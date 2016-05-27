@@ -23,7 +23,8 @@ trait UserModelIdentityTrait
     public function getAuthKey()
     {
         /** @var $this UserModel */
-        return password_hash($this->id, $this->registered_at, $this->email);
+        return \Yii::$app->security->generatePasswordHash($this->id . $this->registered_at . $this->email
+            . \Yii::$app->params['user']['sign-in']['auth-key-secret']);
     }
 
     public function validateAuthKey($authKey)

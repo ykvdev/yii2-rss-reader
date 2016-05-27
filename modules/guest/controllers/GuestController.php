@@ -10,8 +10,9 @@ class GuestController extends Controller
 {
     public function actionSignUp() {
         $signUpForm = new SignUpForm();
-        if($signUpForm->load(\Yii::$app->request->post()) && $signUpForm->signUp()) {
-            die('Sign-up success'); // todo: auth and redirect to user module
+        if($signUpForm->load(\Yii::$app->request->post()) && ($userModel = $signUpForm->signUp())) {
+            \Yii::$app->user->login($userModel);
+            return $this->redirect(\Yii::$app->params['user']['sign-in']['redirect-route']);
         }
 
         return $this->render('sign-up', compact('signUpForm'));
@@ -21,7 +22,7 @@ class GuestController extends Controller
     {
         $signInForm = new SignInForm();
         if ($signInForm->load(\Yii::$app->request->post()) && $signInForm->signIn()) {
-            die('Sign in success'); // todo: go to lists of rss
+            return $this->redirect(\Yii::$app->params['user']['sign-in']['redirect-route']);
         }
 
         return $this->render('sign-in', compact('signInForm'));

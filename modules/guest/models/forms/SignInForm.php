@@ -8,8 +8,6 @@ use app\modules\common\models\db\UserModel;
 
 class SignInForm extends Model
 {
-    const REMEMBER_ME_SECONDS = 604800; // 7 days
-
     public $email;
     public $password;
     public $rememberMe = true;
@@ -66,7 +64,10 @@ class SignInForm extends Model
             return false;
         }
 
-        return Yii::$app->user->login($this->getUser(), $this->rememberMe ? self::REMEMBER_ME_SECONDS : 0);
+        return Yii::$app->user->login(
+            $this->getUser(),
+            $this->rememberMe ? \Yii::$app->params['user']['sign-in']['remember-me-seconds'] : 0
+        );
     }
 
     /**

@@ -19,7 +19,14 @@ class Module extends \yii\base\Module
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['?'],
+                        'roles' => ['?']
+                    ],
+                    [
+                        'allow' => false,
+                        'roles' => ['@'],
+                        'denyCallback' => function ($rule, $action) {
+                            \Yii::$app->getResponse()->redirect(\Yii::$app->params['user']['sign-in']['redirect-route'])->send();
+                        }
                     ]
                 ]
             ]
