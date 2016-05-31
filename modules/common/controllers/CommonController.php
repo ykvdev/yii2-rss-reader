@@ -17,6 +17,7 @@ class CommonController extends Controller
             ],
             'captcha' => [
                 'class' => CaptchaAction::className(),
+                'fixedVerifyCode' => YII_ENV_DEV ? '5555' : false,
                 'algorithm' => function() {
                     $algo = new Numbers;
                     $algo->minLength = 4;

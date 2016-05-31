@@ -56,11 +56,6 @@ class SignUpForm extends Model
             return false;
         }
 
-        if($user = UserModel::signUp($this->email, $this->password)) {
-            return $user;
-        } else {
-            $this->addError('email', 'Произошла внутренняя ошибка');
-            return false;
-        }
+        return UserModel::signUp($this->email, $this->password);
     }
 }

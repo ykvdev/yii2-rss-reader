@@ -2,12 +2,15 @@
 
 namespace app\modules\common\models\db;
 
+use yii\web\ServerErrorHttpException;
+
 trait UserModelServiceTrait
 {
     /**
      * @param string $email
      * @param string $password
-     * @return bool|UserModel
+     * @return UserModel
+     * @throws ServerErrorHttpException
      * @throws \yii\base\Exception
      */
     public static function signUp($email, $password) {
@@ -16,7 +19,8 @@ trait UserModelServiceTrait
         $user->password = \Yii::$app->security->generatePasswordHash($password);
         $user->registered_at = date('Y-m-d H:i:s');
         if(!$user->save()) {
-            return false;
+            $errors = $user->getFirstErrors();
+            throw new ServerErrorHttpException($errors ? array_shift($errors) : null);
         }
 
         return $user;
