@@ -23,7 +23,10 @@ $this->title = 'Регистрация';
         'template' => '{image} <a href="#" class="captcha-refresh-link" title="Получить другие цифры"
                         ><span class="glyphicon glyphicon-refresh"></span></a> {input}'
     ]) ?>
-    <?= $form->field($signUpForm, 'acceptAgreement')->checkbox() ?>
+    <?= $form->field($signUpForm, 'acceptAgreement')->checkbox()->label('Принять условия ' . Html::a(
+            'пользовательского сглашения',
+            ['/common/common/page', 'view' => 'agreement'],
+            ['target' => '_blank'])) ?>
     <?= Html::submitButton('Регистрация', ['class' => 'btn btn-primary']) ?>
     <?php ActiveForm::end() ?>
 </div>

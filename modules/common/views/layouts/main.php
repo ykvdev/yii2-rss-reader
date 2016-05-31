@@ -36,9 +36,9 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => Yii::$app->user->isGuest ? [
-            ['label' => 'Регистрация', 'url' => ['guest/sign-up']],
-            ['label' => 'Авторизация', 'url' => ['guest/sign-in']],
-            ['label' => 'Восстановить пароль', 'url' => ['guest/re-password']],
+            ['label' => 'Регистрация', 'url' => ['/guest/guest/sign-up']],
+            ['label' => 'Авторизация', 'url' => ['/guest/guest/sign-in']],
+            ['label' => 'Восстановить пароль', 'url' => ['/guest/guest/re-password']],
         ] : [
             // user space menu items
         ],

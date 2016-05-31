@@ -5,6 +5,7 @@ namespace app\modules\common\controllers;
 use omnilight\captcha\algorithms\Numbers;
 use omnilight\captcha\CaptchaAction;
 use yii\web\Controller;
+use yii\web\ViewAction;
 
 class CommonController extends Controller
 {
@@ -23,6 +24,9 @@ class CommonController extends Controller
                     return $algo;
                 },
             ],
+            'page' => [
+                'class' => ViewAction::className(),
+            ]
         ];
     }
 }

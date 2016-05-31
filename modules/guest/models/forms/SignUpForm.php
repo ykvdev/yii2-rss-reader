@@ -45,7 +45,6 @@ class SignUpForm extends Model
             'password' => 'Введите пароль',
             'repassword' => 'Повторите пароль',
             'captcha' => 'Введите проверочные цифры',
-            'acceptAgreement' => 'Принять условия пользовательского сглашения (ссылка)' // todo add link
         ];
     }
 
