@@ -20,6 +20,7 @@ use yii\helpers\Html;
 
     <?= $content ?>
 
+    <br>
     <hr>
     <a href="http://rss-reader.com" target="_blank">rss-reader.com</a>
 

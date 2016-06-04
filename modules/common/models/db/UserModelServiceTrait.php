@@ -24,7 +24,7 @@ trait UserModelServiceTrait
             throw new ServerErrorHttpException($errors ? array_shift($errors) : null);
         }
 
-        $user->sendMail('confirmation', 'Активация аккаунат', [
+        $user->sendMail('confirmation', 'Подтверждение e-mail адреса', [
             'link' => Url::toRoute(['/user/user/confirmation', 'hash' => $user->getConfirmationHash()], true)
         ]);
 
@@ -51,9 +51,10 @@ trait UserModelServiceTrait
             \Yii::$app->mailer->getView()->params['name'] = $recipientName;
         }
 
+        $moduleViewsPath = '@app/modules/' . \Yii::$app->controller->module->id . '/mail/views';
         \Yii::$app->mailer->compose([
-            'html' => 'views/' . $view . '-html',
-            'text' => 'views/' . $view . '-text'
+            'html' => $moduleViewsPath . '/' . $view . '-html',
+            'text' => $moduleViewsPath . '/' . $view . '-text',
         ], $params)->setTo($recipientName ? [$recipientEmail => $recipientName] : $recipientEmail)
             ->setSubject($subject)
             ->send();

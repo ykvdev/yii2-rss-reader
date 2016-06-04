@@ -40,11 +40,12 @@ $config = [
         ],
         'mailer' => [
             'class' => yii\swiftmailer\Mailer::className(),
+            'viewPath' => '@app/modules/common/mail',
             'htmlLayout' => 'layouts/main-html',
             'textLayout' => 'layouts/main-text',
             'messageConfig' => [
                 'charset' => 'UTF-8',
-                'from' => ['noreply@rss-reader.com' => 'Rss Reader'],
+                'from' => ['noreply@rss-reader.com' => 'RSS Reader'],
             ],
             'useFileTransport' => YII_ENV_DEV,
         ],

@@ -12,8 +12,8 @@ class GuestController extends Controller
         $signUpForm = new SignUpForm();
         if($signUpForm->load(\Yii::$app->request->post()) && ($userModel = $signUpForm->signUp())) {
             \Yii::$app->user->login($userModel);
-            \Yii::$app->session->setFlash('info', 'Вам необходимо активировать ваш аккаунт.
-            Для этого необходимо перейти по ссылке из активационного письма.');
+            \Yii::$app->session->setFlash('info', 'Вам необходимо подтвердить ваш e-mail адрес.
+            Для этого воспользуйтесь ссылкой из письма отправленного вам на почту.');
             return $this->redirect(\Yii::$app->params['user']['sign-in']['redirect-route']);
         }
 
