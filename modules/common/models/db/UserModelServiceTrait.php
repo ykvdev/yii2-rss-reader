@@ -24,8 +24,8 @@ trait UserModelServiceTrait
             throw new ServerErrorHttpException($errors ? array_shift($errors) : null);
         }
 
-        $user->sendMail('activation', 'Активация аккаунат', [
-            'link' => Url::toRoute(['/user/user/activation', 'hash' => $user->getActivationHash()], true)
+        $user->sendMail('confirmation', 'Активация аккаунат', [
+            'link' => Url::toRoute(['/user/user/confirmation', 'hash' => $user->getConfirmationHash()], true)
         ]);
 
         return $user;
@@ -35,7 +35,7 @@ trait UserModelServiceTrait
      * @return string
      * @throws \yii\base\Exception
      */
-    public function getActivationHash() {
+    public function getConfirmationHash() {
         /** @var $this UserModel */
         return \Yii::$app->security->generatePasswordHash($this->email . $this->registered_at . $this->id . $this->email);
     }

@@ -12,7 +12,7 @@ use yii\web\IdentityInterface;
  * @property string $email
  * @property string $password
  * @property string $registered_at
- * @property integer $activated
+ * @property integer $confirmed
  */
 class UserModel extends \yii\db\ActiveRecord implements IdentityInterface
 {
@@ -35,7 +35,7 @@ class UserModel extends \yii\db\ActiveRecord implements IdentityInterface
         return [
             [['email', 'password', 'registered_at'], 'required'],
             [['registered_at'], 'date', 'format' => 'php:Y-m-d H:i:s'],
-            [['activated'], 'boolean'],
+            [['confirmed'], 'boolean'],
             [['email'], 'string', 'max' => 50],
             [['email'], 'email'],
             [['email'], 'unique', 'targetAttribute' => 'email', 'message' => 'The email has already been taken.'],
