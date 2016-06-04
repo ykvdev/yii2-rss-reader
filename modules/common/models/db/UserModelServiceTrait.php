@@ -2,6 +2,7 @@
 
 namespace app\modules\common\models\db;
 
+use yii\helpers\Url;
 use yii\web\ServerErrorHttpException;
 
 trait UserModelServiceTrait
@@ -23,14 +24,28 @@ trait UserModelServiceTrait
             throw new ServerErrorHttpException($errors ? array_shift($errors) : null);
         }
 
+        $user->sendMail('activation', 'Активация аккаунат', [
+            'link' => Url::toRoute(['/user/user/activation', 'hash' => $user->getActivationHash()], true)
+        ]);
+
         return $user;
     }
 
-    public function sendMail($view, $subject) {
-        self::sendMailTo($view, $subject, $this->email);
+    /**
+     * @return string
+     * @throws \yii\base\Exception
+     */
+    public function getActivationHash() {
+        /** @var $this UserModel */
+        return \Yii::$app->security->generatePasswordHash($this->email . $this->registered_at . $this->id . $this->email);
     }
 
-    public static function sendMailTo($view, $subject, $recipientEmail, $recipientName = null) {
+    public function sendMail($view, $subject, $params = []) {
+        /** @var $this UserModel */
+        self::sendMailTo($view, $subject, $this->email, null, $params);
+    }
+
+    public static function sendMailTo($view, $subject, $recipientEmail, $recipientName = null, $params = []) {
         // Set layout params
         if($recipientName) {
             \Yii::$app->mailer->getView()->params['name'] = $recipientName;
@@ -39,7 +54,7 @@ trait UserModelServiceTrait
         \Yii::$app->mailer->compose([
             'html' => 'views/' . $view . '-html',
             'text' => 'views/' . $view . '-text'
-        ])->setTo($recipientName ? [$recipientEmail => $recipientName] : $recipientEmail)
+        ], $params)->setTo($recipientName ? [$recipientEmail => $recipientName] : $recipientEmail)
             ->setSubject($subject)
             ->send();
 

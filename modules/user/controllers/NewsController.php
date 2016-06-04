@@ -7,6 +7,6 @@ use yii\web\Controller;
 class NewsController extends Controller
 {
     public function actionList() {
-        return 'News list...';
+        return $this->render('list');
     }
 }

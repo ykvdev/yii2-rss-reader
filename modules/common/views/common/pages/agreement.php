@@ -2,9 +2,9 @@
 
 /** @var $this \yii\web\View */
 
-$this->title = 'Пользовательское соглашение';
-
 use yii\bootstrap\Html;
+
+$this->title = 'Пользовательское соглашение';
 
 ?>
 <div>

@@ -16,7 +16,7 @@ use yii\helpers\Html;
 <body>
     <?php $this->beginBody() ?>
 
-    <h4>Hello <?= isset($this->params['name']) ? $this->params['name'] : '' ?></h4>
+    <h4>Здравствуйте <?= isset($this->params['name']) ? $this->params['name'] : '' ?></h4>
 
     <?= $content ?>
 
