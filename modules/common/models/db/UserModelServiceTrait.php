@@ -3,6 +3,7 @@
 namespace app\modules\common\models\db;
 
 use yii\helpers\Url;
+use yii\web\Response;
 use yii\web\ServerErrorHttpException;
 
 trait UserModelServiceTrait
@@ -24,11 +25,21 @@ trait UserModelServiceTrait
             throw new ServerErrorHttpException($errors ? array_shift($errors) : null);
         }
 
-        $user->sendMail('confirmation', 'Подтверждение e-mail адреса', [
-            'link' => Url::toRoute(['/user/user/confirmation', 'hash' => $user->getConfirmationHash()], true)
-        ]);
+        $user->sendMail('confirmation', 'Подтверждение e-mail адреса', ['link' => $user->getConfirmationLink()]);
 
         return $user;
+    }
+
+    /**
+     * @return string
+     */
+    public function getConfirmationLink() {
+        /** @var $this UserModel */
+        return Url::toRoute([
+            '/common/user/confirmation',
+            'email' => $this->email,
+            'hash' => $this->getConfirmationHash()
+        ], true);
     }
 
     /**
@@ -38,6 +49,34 @@ trait UserModelServiceTrait
     public function getConfirmationHash() {
         /** @var $this UserModel */
         return \Yii::$app->security->generatePasswordHash($this->email . $this->registered_at . $this->id . $this->email);
+    }
+
+    /**
+     * @param string $hash
+     * @return bool
+     */
+    public function validateConfirmationHash($hash) {
+        /** @var $this UserModel */
+        return \Yii::$app->security->validatePassword($this->email . $this->registered_at . $this->id . $this->email, $hash);
+    }
+
+    /**
+     * @param bool|false $rememberMe
+     * @param bool|true $withRedirect
+     * @return Response|bool
+     */
+    public function signIn($rememberMe = false, $withRedirect = true) {
+        /** @var UserModel $this */
+        $auth = \Yii::$app->user->login($this, $rememberMe ? \Yii::$app->params['user']['sign-in']['remember-me-seconds'] : 0);
+        if(!$auth) {
+            return false;
+        }
+
+        if($withRedirect) {
+            return \Yii::$app->getResponse()->redirect(\Yii::$app->params['user']['sign-in']['redirect-route']);
+        } else {
+            return true;
+        }
     }
 
     public function sendMail($view, $subject, $params = []) {

@@ -55,8 +55,7 @@ class SignInForm extends Model
     }
 
     /**
-     * Logs in a user using the provided username and password.
-     * @return boolean whether the user is logged in successfully
+     * @return bool|\yii\web\Response
      */
     public function signIn()
     {
@@ -64,10 +63,7 @@ class SignInForm extends Model
             return false;
         }
 
-        return Yii::$app->user->login(
-            $this->getUser(),
-            $this->rememberMe ? \Yii::$app->params['user']['sign-in']['remember-me-seconds'] : 0
-        );
+        return $this->getUser()->signIn($this->rememberMe);
     }
 
     /**
