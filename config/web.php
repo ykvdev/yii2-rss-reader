@@ -1,7 +1,5 @@
 <?php
 
-$params = require(__DIR__ . '/params.php');
-
 $config = [
     'id' => 'yii2-rss-reader',
     'basePath' => dirname(__DIR__),
@@ -62,11 +60,10 @@ $config = [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => [
-            ],
+            'rules' => require(__DIR__ . '/web-url-rules.php'),
         ],
     ],
-    'params' => $params,
+    'params' => require(__DIR__ . '/params.php'),
 ];
 
 if (YII_ENV_DEV) {
