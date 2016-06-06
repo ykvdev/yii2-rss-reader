@@ -4,32 +4,9 @@ namespace app\modules\common\models\db;
 
 use yii\helpers\Url;
 use yii\web\Response;
-use yii\web\ServerErrorHttpException;
 
 trait UserModelServiceTrait
 {
-    /**
-     * @param string $email
-     * @param string $password
-     * @return UserModel
-     * @throws ServerErrorHttpException
-     * @throws \yii\base\Exception
-     */
-    public static function signUp($email, $password) {
-        $user = new UserModel;
-        $user->email = $email;
-        $user->password = \Yii::$app->security->generatePasswordHash($password);
-        $user->registered_at = date('Y-m-d H:i:s');
-        if(!$user->save()) {
-            $errors = $user->getFirstErrors();
-            throw new ServerErrorHttpException($errors ? array_shift($errors) : null);
-        }
-
-        $user->sendMail('confirmation', 'Подтверждение e-mail адреса', ['link' => $user->getConfirmationLink()]);
-
-        return $user;
-    }
-
     /**
      * @return string
      */

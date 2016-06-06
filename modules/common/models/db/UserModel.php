@@ -27,19 +27,53 @@ class UserModel extends \yii\db\ActiveRecord implements IdentityInterface
         return 'users';
     }
 
+    public function beforeSave($insert) {
+        if(!parent::beforeSave($insert)) {
+            return false;
+        }
+
+        if($this->isAttributeChanged('password')) {
+            $this->password = Yii::$app->security->generatePasswordHash($this->password);
+        }
+
+        if($insert) {
+            $this->registered_at = date('Y-m-d H:i:s');
+        }
+
+        return true;
+    }
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['email', 'password', 'registered_at'], 'required'],
-            [['registered_at'], 'date', 'format' => 'php:Y-m-d H:i:s'],
-            [['confirmed'], 'boolean'],
-            [['email'], 'string', 'max' => 50],
-            [['email'], 'email'],
-            [['email'], 'unique', 'targetAttribute' => 'email', 'message' => 'The email has already been taken.'],
-            [['password'], 'string', 'max' => 255],
+            // ['login', 'string', 'min' => 2, 'max' => 255],
+            // если бы был логин, то нужно было бы добавить проверку на длину мин 2 символа
+
+            ['email', 'filter', 'filter' => 'trim'],
+            ['email', 'required'],
+            ['email', 'email'],
+            ['email', 'string', 'max' => 50],
+            ['email', 'unique', 'targetAttribute' => 'email'],
+
+            ['password', 'required'],
+            ['password', 'string', 'min' => 3, 'max' => 255],
+
+            ['registered_at', 'required'],
+            ['registered_at', 'date', 'format' => 'php:Y-m-d H:i:s'],
+
+            ['confirmed', 'boolean'],
+        ];
+    }
+
+    public function attributeLabels() {
+        return [
+            'email' => 'E-mail',
+            'password' => 'Пароль',
+            'registered_at' => 'Дата регистрации',
+            'confirmed' => 'Подтвержден'
         ];
     }
 

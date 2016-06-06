@@ -3,28 +3,27 @@
 namespace app\modules\guest\models\forms;
 
 use app\modules\common\models\db\UserModel;
-use yii\base\Model;
 use yii\helpers\Url;
 
-class SignUpForm extends Model
+class SignUpForm extends UserModel
 {
-    public $email, $password, $repassword, $captcha, $acceptAgreement;
+    const SCENARIO_SIGN_UP = 'sign-up';
+
+    public $repassword, $captcha, $acceptAgreement;
+
+    public function init() {
+        parent::init();
+        $this->scenario = self::SCENARIO_SIGN_UP;
+    }
+
+    public function scenarios() {
+        return array_merge(parent::scenarios(), [
+            self::SCENARIO_SIGN_UP => ['email', 'password', 'repassword', 'captcha', 'acceptAgreement']
+        ]);
+    }
 
     public function rules() {
-        return [
-            ['email', 'filter', 'filter' => 'trim'],
-            ['email', 'required', 'message' => 'Введите e-mail адрес'],
-            ['email', 'email', 'message' => 'E-mail адрес введен не корректно'],
-            ['email', 'string', 'max' => 50,
-                'message' => 'Максимально допустимая длинна e-mail адреса составляет 50 символов'],
-            ['email', 'unique', 'targetClass' => UserModel::className(),
-                'message' => 'Такой e-mail адрес уже зарегистрирован'],
-
-            // ['login', 'string', 'min' => 2, 'max' => 255],
-            // если бы был логин, то нужно было бы добавить проверку на длину мин 2 символа
-
-            ['password', 'required', 'message' => 'Введите пароль'],
-            ['password', 'string', 'min' => 3, 'tooShort' => 'Пароль должен быть не короче 3-х символов'],
+        return array_merge(parent::rules(), [
             ['repassword', 'required', 'message' => 'Повторите пароль'],
             [['password', 'repassword'], 'compare', 'compareAttribute' => 'password',
                 'message' => 'Введенные пароли не совпадают'],
@@ -35,27 +34,15 @@ class SignUpForm extends Model
                 'message' => 'Проверочные цифры введены не верно'],
 
             ['acceptAgreement', 'boolean'],
-            ['acceptAgreement', 'required', 'requiredValue' => true, 'message' => 'Вы должны принять условия соглашения'],
-        ];
+            ['acceptAgreement', 'required', 'requiredValue' => true,
+                'message' => 'Вы должны принять условия соглашения'],
+        ]);
     }
 
     public function attributeLabels() {
-        return [
-            'email' => 'E-mail адрес',
-            'password' => 'Введите пароль',
+        return array_merge(parent::attributeLabels(), [
             'repassword' => 'Повторите пароль',
             'captcha' => 'Введите проверочные цифры',
-        ];
-    }
-
-    /**
-     * @return UserModel|bool
-     */
-    public function signUp() {
-        if(!$this->validate()) {
-            return false;
-        }
-
-        return UserModel::signUp($this->email, $this->password);
+        ]);
     }
 }

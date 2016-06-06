@@ -2,6 +2,8 @@
 
 $config = [
     'id' => 'yii2-rss-reader',
+    'language' => 'ru-RU',
+    'sourceLanguage' => 'ru-RU',
     'basePath' => dirname(__DIR__),
     'defaultRoute' => 'guest/guest/sign-in',
     'layoutPath' => '@app/modules/common/views/layouts',
