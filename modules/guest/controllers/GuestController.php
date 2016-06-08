@@ -2,11 +2,11 @@
 
 namespace app\modules\guest\controllers;
 
-use yii\bootstrap\ActiveForm;
 use yii\web\Controller;
 use app\modules\guest\models\forms\SignUpForm;
 use app\modules\guest\models\forms\SignInForm;
 use yii\web\Response;
+use yii\widgets\ActiveForm;
 
 class GuestController extends Controller
 {
@@ -33,11 +33,16 @@ class GuestController extends Controller
 
     public function actionSignIn()
     {
-        $signInForm = new SignInForm();
-        if ($signInForm->load(\Yii::$app->request->post()) && $userRedirect = $signInForm->signIn()) {
-            return $userRedirect;
+        $model = new SignInForm();
+        if ($model->load(\Yii::$app->request->post())) {
+            if(\Yii::$app->request->isAjax) {
+                \Yii::$app->response->format = Response::FORMAT_JSON;
+                return ActiveForm::validate($model);
+            } elseif($userRedirect = $model->signIn()) {
+                return $userRedirect;
+            }
         }
 
-        return $this->render('sign-in', compact('signInForm'));
+        return $this->render('sign-in', compact('model'));
     }
 }

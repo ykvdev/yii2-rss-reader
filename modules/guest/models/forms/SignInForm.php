@@ -5,76 +5,76 @@ namespace app\modules\guest\models\forms;
 use Yii;
 use yii\base\Model;
 use app\modules\common\models\db\UserModel;
+use yii\web\Response;
 
-class SignInForm extends Model
+class SignInForm extends UserModel
 {
-    public $email;
-    public $password;
-    public $rememberMe = true;
+    const SCENARIO_SIGN_IN = 'sign-in';
 
-    /** @var bool|UserModel */
-    private $user = false;
+    public $nativePassword, $rememberMe = true;
+
+    public function init() {
+        parent::init();
+        $this->scenario = self::SCENARIO_SIGN_IN;
+    }
+
+    public function scenarios() {
+        return array_merge(parent::scenarios(), [
+            self::SCENARIO_SIGN_IN => ['email', 'nativePassword', 'rememberMe']
+        ]);
+    }
 
     /**
      * @return array the validation rules.
      */
     public function rules()
     {
-        return [
-            ['email', 'required', 'message' => 'Введите e-mail'],
-            ['password', 'required', 'message' => 'Введите пароль'],
+        return array_merge(parent::rules(), [
+            ['nativePassword', 'required'],
+            ['nativePassword', 'validatePassword'],
+
             ['rememberMe', 'boolean'],
-            ['password', 'validatePassword'],
-        ];
+        ]);
     }
 
-    /**
-     * Validates the password.
-     * This method serves as the inline validation for password.
-     *
-     * @param string $attribute the attribute currently being validated
-     * @param array $params the additional name-value pairs given in the rule
-     */
+    public function beforeValidate() {
+        if(!parent::beforeValidate()) {
+            return false;
+        }
+
+        if($this->email && !$this->id && $user = self::findOne(['email' => $this->email])) {
+            $this->populateRecord($this, $user->toArray());
+        }
+
+        return true;
+    }
+
     public function validatePassword($attribute, $params)
     {
         if (!$this->hasErrors()) {
-            $user = $this->getUser();
-
-            if (!$user || !Yii::$app->security->validatePassword($this->password, $user->password)) {
+            if (!$this->id || !Yii::$app->security->validatePassword($this->nativePassword, $this->password)) {
                 $this->addError($attribute, 'Не корректное имя пользователя или пароль');
             }
         }
     }
 
     public function attributeLabels() {
-        return [
-            'email' => 'E-mail',
-            'password' => 'Пароль',
+        return array_merge(parent::attributeLabels(), [
+            'nativePassword' => 'Пароль',
             'rememberMe' => 'Запомнить меня'
-        ];
+        ]);
     }
 
     /**
-     * @return bool|\yii\web\Response
+     * @param bool|false $rememberMe
+     * @param bool|true $withRedirect
+     * @return Response|bool
      */
-    public function signIn()
-    {
+    public function signIn($rememberMe = false, $withRedirect = true) {
         if (!$this->validate()) {
             return false;
         }
 
-        return $this->getUser()->signIn($this->rememberMe);
-    }
-
-    /**
-     * @return UserModel|null
-     */
-    public function getUser()
-    {
-        if (!$this->user) {
-            $this->user = UserModel::findOne(['email' => $this->email]);
-        }
-
-        return $this->user;
+        return parent::signIn($this->rememberMe);
     }
 }
