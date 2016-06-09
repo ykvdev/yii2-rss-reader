@@ -3,17 +3,14 @@
 namespace app\modules\common\controllers;
 
 use yii\web\Controller;
-use yii\web\ServerErrorHttpException;
 use app\modules\common\models\db\UserModel;
 
 class UserController extends Controller
 {
-    /**
-     * @param string $email
-     * @param string $hash
-     * @return \yii\web\Response
-     * @throws ServerErrorHttpException
-     */
+    public function actionResendConfirmMail($email) {
+
+    }
+
     public function actionConfirmation($email, $hash) {
         /** @var $user UserModel */
         if(!($user = UserModel::findOne(['email' => $email]))) {
@@ -23,10 +20,7 @@ class UserController extends Controller
         } else {
             if(!$user->confirmed) {
                 $user->confirmed = 1;
-                if (!$user->save()) {
-                    $errors = $user->getFirstErrors();
-                    throw new ServerErrorHttpException($errors ? array_shift($errors) : null);
-                }
+                $user->save();
             }
 
             \Yii::$app->session->setFlash('info', 'Ваш e-mail адрес ' . $email . ' подтвержден');

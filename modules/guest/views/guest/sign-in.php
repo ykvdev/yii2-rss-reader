@@ -15,7 +15,10 @@ $this->title = 'Авторизация';
     <?php $form = ActiveForm::begin([
         'id' => 'sign-up-form',
         'enableAjaxValidation' => true,
-        'fieldConfig' => ['inputOptions' => ['autocomplete' => 'off']]
+        'fieldConfig' => [
+            'inputOptions' => ['autocomplete' => 'off'],
+            'errorOptions' => ['encode' => false]
+        ],
     ]); ?>
     <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
     <?= $form->field($model, 'nativePassword')->passwordInput() ?>

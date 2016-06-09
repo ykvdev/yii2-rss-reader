@@ -3,8 +3,8 @@
 namespace app\modules\guest\models\forms;
 
 use Yii;
-use yii\base\Model;
 use app\modules\common\models\db\UserModel;
+use yii\helpers\Html;
 use yii\web\Response;
 
 class SignInForm extends UserModel
@@ -30,6 +30,8 @@ class SignInForm extends UserModel
     public function rules()
     {
         return array_merge(parent::rules(), [
+            ['email', 'validateEmailConfirmation'],
+
             ['nativePassword', 'required'],
             ['nativePassword', 'validatePassword'],
 
@@ -47,6 +49,19 @@ class SignInForm extends UserModel
         }
 
         return true;
+    }
+
+    public function validateEmailConfirmation($attribute, $params) {
+        if(!$this->hasErrors()) {
+            if($this->id && !$this->confirmed) {
+                $this->addError($attribute, sprintf(
+                    'Ваш e-mail не подтвержден.
+                    Вы должны перейти по ссылке из письма для подтверждения e-mail адреса.
+                    Если вы не получали это письмо, вы можете %s.',
+                    Html::a('запросить его повторно', ['/common/user/resend-confirm-mail', 'email' => $this->email])
+                ));
+            }
+        }
     }
 
     public function validatePassword($attribute, $params)
