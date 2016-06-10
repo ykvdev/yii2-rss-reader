@@ -7,13 +7,13 @@ return [
     'error' => 'common/common/error',
     'page/<view:[a-zA-Z0-9-]+>' => 'common/common/page',
     'email-confirmation/<email:.*>/<hash:.*>' => 'common/user/confirmation',
-    'resend-confirm-mail/<email:.*>' => 'common/user/resend-confirm-mail',
 
     /**
      * GUEST MODULE
      */
     'sign-up' => 'guest/guest/sign-up',
     'sign-in' => 'guest/guest/sign-in',
+    'resend-confirm-mail/<email:.*>' => 'guest/guest/resend-confirm-mail',
 
     /**
      * USER MODULE

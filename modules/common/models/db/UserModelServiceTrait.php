@@ -25,7 +25,7 @@ trait UserModelServiceTrait
      */
     public function getConfirmationHash() {
         /** @var $this UserModel */
-        return \Yii::$app->security->generatePasswordHash($this->email . $this->registered_at . $this->id . $this->email);
+        return md5($this->email . $this->registered_at . $this->id . $this->email);
     }
 
     /**
@@ -34,7 +34,7 @@ trait UserModelServiceTrait
      */
     public function validateConfirmationHash($hash) {
         /** @var $this UserModel */
-        return \Yii::$app->security->validatePassword($this->email . $this->registered_at . $this->id . $this->email, $hash);
+        return $this->getConfirmationHash() === $hash;
     }
 
     /**

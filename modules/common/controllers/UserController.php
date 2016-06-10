@@ -7,10 +7,6 @@ use app\modules\common\models\db\UserModel;
 
 class UserController extends Controller
 {
-    public function actionResendConfirmMail($email) {
-
-    }
-
     public function actionConfirmation($email, $hash) {
         /** @var $user UserModel */
         if(!($user = UserModel::findOne(['email' => $email]))) {
