@@ -2,28 +2,22 @@
 
 namespace app\modules\common\controllers;
 
+use app\modules\common\models\forms\ConfirmationForm;
 use yii\web\Controller;
-use app\modules\common\models\db\UserModel;
 
 class UserController extends Controller
 {
-    public function actionConfirmation($email, $hash) {
-        /** @var $user UserModel */
-        if(!($user = UserModel::findOne(['email' => $email]))) {
-            \Yii::$app->session->setFlash('danger', 'Пользователя с e-mail адресом ' . $email . ' не найдено');
-        } elseif(!$user->validateConfirmationHash($hash)) {
-            \Yii::$app->session->setFlash('danger', 'Ссылка подтверждения e-mail адреса не верная');
-        } else {
-            if(!$user->confirmed) {
-                $user->confirmed = 1;
-                $user->save();
-            }
-
+    public function actionConfirmationEmail($email, $hash) {
+        $model = new ConfirmationForm(compact('email', 'hash'));
+        if($model->confirm()) {
             \Yii::$app->session->setFlash('info', 'Ваш e-mail адрес ' . $email . ' подтвержден');
 
-            if(\Yii::$app->user->isGuest && $userRedirect = $user->signIn()) {
+            if(\Yii::$app->user->isGuest && $userRedirect = $model->signIn()) {
                 return $userRedirect;
             }
+        } else {
+            $errors = $model->getFirstErrors();
+            \Yii::$app->session->setFlash('danger', array_shift($errors));
         }
 
         return $this->goHome();

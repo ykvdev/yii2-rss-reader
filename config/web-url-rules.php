@@ -6,14 +6,14 @@ return [
      */
     'error' => 'common/common/error',
     'page/<view:[a-zA-Z0-9-]+>' => 'common/common/page',
-    'email-confirmation/<email:.*>/<hash:.*>' => 'common/user/confirmation',
+    'confirmation-email/<email:.*>/<hash:.*>' => 'common/user/confirmation-email',
 
     /**
      * GUEST MODULE
      */
     'sign-up' => 'guest/guest/sign-up',
     'sign-in' => 'guest/guest/sign-in',
-    'resend-confirm-mail/<email:.*>' => 'guest/guest/resend-confirm-mail',
+    'resend-confirmation-mail/<email:.*>' => 'guest/guest/resend-confirmation-mail',
 
     /**
      * USER MODULE

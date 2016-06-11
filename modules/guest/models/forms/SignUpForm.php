@@ -45,4 +45,17 @@ class SignUpForm extends UserModel
             'captcha' => 'Введите проверочные цифры',
         ]);
     }
+
+    /**
+     * @return bool
+     */
+    public function signUp() {
+        return $this->validate()
+        && $this->save()
+        && $this->sendMail(
+            'confirmation',
+            'Подтверждение e-mail адреса',
+            ['link' => $this->getConfirmationLink()]
+        );
+    }
 }

@@ -4,18 +4,18 @@ namespace app\modules\guest\models\forms;
 
 use app\modules\common\models\db\UserModel;
 
-class ResendConfirmMailForm extends UserModel
+class ResendConfirmationMailForm extends UserModel
 {
-    const SCENARIO_RESEND_CONFIRM_MAIL = 'resend-confirm-mail';
+    const SCENARIO_RESEND_CONFIRMATION_MAIL = 'resend-confirmation-mail';
 
     public function init() {
         parent::init();
-        $this->scenario = self::SCENARIO_RESEND_CONFIRM_MAIL;
+        $this->scenario = self::SCENARIO_RESEND_CONFIRMATION_MAIL;
     }
 
     public function scenarios() {
         return array_merge(parent::scenarios(), [
-            self::SCENARIO_RESEND_CONFIRM_MAIL => ['email']
+            self::SCENARIO_RESEND_CONFIRMATION_MAIL => ['email']
         ]);
     }
 
@@ -39,10 +39,8 @@ class ResendConfirmMailForm extends UserModel
     }
 
     public function validateEmailExisting($attribute, $params) {
-        if(!$this->hasErrors()) {
-            if(!$this->id) {
-                $this->addError($attribute, 'Такой e-mail адрес не найден');
-            }
+        if(!$this->hasErrors() && !$this->id) {
+            $this->addError($attribute, 'Такой e-mail адрес не найден');
         }
     }
 
@@ -50,5 +48,17 @@ class ResendConfirmMailForm extends UserModel
         if(!$this->hasErrors() && $this->confirmed) {
             $this->addError($attribute, 'Этот e-mail адрес уже подтвержден');
         }
+    }
+
+    /**
+     * @return bool
+     */
+    public function resendConfirmationMail() {
+        return $this->validate()
+        && $this->sendMail(
+            'confirmation',
+            'Подтверждение e-mail адреса',
+            ['link' => $this->getConfirmationLink()]
+        );
     }
 }

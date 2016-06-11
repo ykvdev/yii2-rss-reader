@@ -58,7 +58,7 @@ class SignInForm extends UserModel
                     'Ваш e-mail не подтвержден.
                     Вы должны перейти по ссылке из письма для подтверждения e-mail адреса.
                     Если вы не получали это письмо, вы можете %s.',
-                    Html::a('запросить его повторно', ['/guest/guest/resend-confirm-mail', 'email' => $this->email])
+                    Html::a('запросить его повторно', ['/guest/guest/resend-confirmation-mail', 'email' => $this->email])
                 ));
             }
         }

@@ -13,7 +13,7 @@ trait UserModelServiceTrait
     public function getConfirmationLink() {
         /** @var $this UserModel */
         return Url::toRoute([
-            '/common/user/confirmation',
+            '/common/user/confirmation-email',
             'email' => $this->email,
             'hash' => $this->getConfirmationHash()
         ], true);
@@ -56,11 +56,25 @@ trait UserModelServiceTrait
         }
     }
 
+    /**
+     * @param string $view
+     * @param string $subject
+     * @param array $params
+     * @return bool
+     */
     public function sendMail($view, $subject, $params = []) {
         /** @var $this UserModel */
-        self::sendMailTo($view, $subject, $this->email, null, $params);
+        return self::sendMailTo($view, $subject, $this->email, null, $params);
     }
 
+    /**
+     * @param string $view
+     * @param string $subject
+     * @param string $recipientEmail
+     * @param null|string $recipientName
+     * @param array $params
+     * @return bool
+     */
     public static function sendMailTo($view, $subject, $recipientEmail, $recipientName = null, $params = []) {
         // Set layout params
         if($recipientName) {
@@ -68,7 +82,7 @@ trait UserModelServiceTrait
         }
 
         $moduleViewsPath = '@app/modules/' . \Yii::$app->controller->module->id . '/mail/views';
-        \Yii::$app->mailer->compose([
+        $result = \Yii::$app->mailer->compose([
             'html' => $moduleViewsPath . '/' . $view . '-html',
             'text' => $moduleViewsPath . '/' . $view . '-text',
         ], $params)->setTo($recipientName ? [$recipientEmail => $recipientName] : $recipientEmail)
@@ -79,5 +93,7 @@ trait UserModelServiceTrait
         if($recipientName) {
             \Yii::$app->mailer->getView()->params['name'] = null;
         }
+
+        return $result;
     }
 }
