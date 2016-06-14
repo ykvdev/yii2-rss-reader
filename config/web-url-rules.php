@@ -12,8 +12,8 @@ return [
      * GUEST MODULE
      */
     'sign-up' => 'guest/guest/sign-up',
-    'sign-in' => 'guest/guest/sign-in',
-    'resend-confirmation-mail/<email:.*>' => 'guest/guest/resend-confirmation-mail',
+    'sign-in' => 'guest/user/sign-in',
+    'resend-confirmation-mail/<email:.*>' => 'guest/user/resend-confirmation-mail',
 
     /**
      * USER MODULE

@@ -5,7 +5,7 @@ $config = [
     'language' => 'ru-RU',
     'sourceLanguage' => 'ru-RU',
     'basePath' => dirname(__DIR__),
-    'defaultRoute' => 'guest/guest/sign-in',
+    'defaultRoute' => 'guest/user/sign-in',
     'layoutPath' => '@app/modules/common/views/layouts',
     'modules' => [
         'guest' => [
@@ -33,7 +33,7 @@ $config = [
         'user' => [
             'identityClass' => 'app\modules\common\models\db\UserModel',
             'enableAutoLogin' => true, // for remember me functionality
-            'loginUrl' => ['guest/guest/sign-in']
+            'loginUrl' => ['guest/user/sign-in']
         ],
         'errorHandler' => [
             'errorAction' => 'common/common/error',

@@ -37,7 +37,7 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => Yii::$app->user->isGuest ? [
             ['label' => 'Регистрация', 'url' => ['/guest/guest/sign-up']],
-            ['label' => 'Авторизация', 'url' => ['/guest/guest/sign-in']],
+            ['label' => 'Авторизация', 'url' => ['/guest/user/sign-in']],
             ['label' => 'Восстановить пароль', 'url' => ['/guest/guest/re-password']],
         ] : [
             // user space menu items
