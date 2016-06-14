@@ -3,6 +3,7 @@
 namespace app\modules\common\models\db;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "feeds".
@@ -13,7 +14,7 @@ use Yii;
  * @property string $rss_uri
  * @property string $subscribed_at
  */
-class FeedModel extends \yii\db\ActiveRecord
+class FeedModel extends ActiveRecord
 {
     /**
      * @inheritdoc

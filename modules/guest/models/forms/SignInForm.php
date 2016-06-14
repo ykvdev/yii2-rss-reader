@@ -68,7 +68,11 @@ class SignInForm extends UserModel
     {
         if (!$this->hasErrors()) {
             if (!$this->id || !Yii::$app->security->validatePassword($this->nativePassword, $this->password)) {
-                $this->addError($attribute, 'Не корректное имя пользователя или пароль');
+                $this->addError($attribute, sprintf(
+                    'Не корректное имя пользователя или пароль.
+                    Если вы забыли пароль, вы можете %s',
+                    Html::a('восстановить его', ['/guest/user/reset-password-request', 'email' => $this->email])
+                ));
             }
         }
     }

@@ -14,6 +14,12 @@ return [
     'sign-up' => 'guest/guest/sign-up',
     'sign-in' => 'guest/user/sign-in',
     'resend-confirmation-mail/<email:.*>' => 'guest/user/resend-confirmation-mail',
+    [
+        'pattern' => 'reset-password-request/<email:.*>',
+        'route' => 'guest/user/reset-password-request',
+        'defaults' => ['email' => '']
+    ],
+    'reset-password/<email:.*>/<hash:.*>' => 'guest/user/reset-password',
 
     /**
      * USER MODULE

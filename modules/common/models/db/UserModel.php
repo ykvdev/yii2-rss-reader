@@ -3,6 +3,7 @@
 namespace app\modules\common\models\db;
 
 use Yii;
+use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
 /**
@@ -14,10 +15,13 @@ use yii\web\IdentityInterface;
  * @property string $registered_at
  * @property integer $confirmed
  */
-class UserModel extends \yii\db\ActiveRecord implements IdentityInterface
+class UserModel extends ActiveRecord implements IdentityInterface
 {
-    use UserModelIdentityTrait,
-        UserModelServiceTrait;
+    use UserModel\IdentityTrait,
+        UserModel\CommonTrait,
+        UserModel\ConfirmationTrait,
+        UserModel\MailTrait,
+        UserModel\ResetPasswordTrait;
 
     /**
      * @inheritdoc

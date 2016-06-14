@@ -1,8 +1,10 @@
 <?php
 
-namespace app\modules\common\models\db;
+namespace app\modules\common\models\db\UserModel;
 
-trait UserModelIdentityTrait
+use app\modules\common\models\db\UserModel;
+
+trait IdentityTrait
 {
     public static function findIdentity($id)
     {

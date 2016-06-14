@@ -27,7 +27,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'RSS Reader',
+        'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -38,7 +38,7 @@ AppAsset::register($this);
         'items' => Yii::$app->user->isGuest ? [
             ['label' => 'Регистрация', 'url' => ['/guest/guest/sign-up']],
             ['label' => 'Авторизация', 'url' => ['/guest/user/sign-in']],
-            ['label' => 'Восстановить пароль', 'url' => ['/guest/guest/re-password']],
+            ['label' => 'Восстановить пароль', 'url' => ['/guest/user/reset-password-request', 'email' => '']],
         ] : [
             // user space menu items
         ],
@@ -57,7 +57,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; RSS Reader <?= date('Y') ?></p>
+        <p class="pull-left">&copy; <?= Yii::$app->name ?> <?= date('Y') ?></p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>

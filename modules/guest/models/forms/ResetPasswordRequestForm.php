@@ -5,43 +5,54 @@ namespace app\modules\guest\models\forms;
 use app\modules\common\models\db\UserModel;
 use yii\helpers\Url;
 
-class SignUpForm extends UserModel
+class ResetPasswordRequestForm extends UserModel
 {
-    const SCENARIO_SIGN_UP = 'sign-up';
+    const SCENARIO_RESET_PASSWORD = 'reset-password';
 
-    public $repassword, $captcha, $acceptAgreement;
+    public $captcha;
 
     public function init() {
         parent::init();
-        $this->scenario = self::SCENARIO_SIGN_UP;
+        $this->scenario = self::SCENARIO_RESET_PASSWORD;
     }
 
     public function scenarios() {
         return array_merge(parent::scenarios(), [
-            self::SCENARIO_SIGN_UP => ['email', 'password', 'repassword', 'captcha', 'acceptAgreement']
+            self::SCENARIO_RESET_PASSWORD => ['email', 'captcha'],
         ]);
     }
 
     public function rules() {
         return array_merge(parent::rules(), [
-            ['repassword', 'required', 'message' => 'Повторите пароль'],
-            [['password', 'repassword'], 'compare', 'compareAttribute' => 'password',
-                'message' => 'Введенные пароли не совпадают'],
+            ['email', 'validateEmailExisting'],
 
             ['captcha', 'filter', 'filter' => 'trim'],
             ['captcha', 'required', 'message' => 'Введите проверочные цифры'],
             ['captcha', 'captcha', 'captchaAction' => Url::toRoute('/common/common/captcha'),
                 'message' => 'Проверочные цифры введены не верно'],
-
-            ['acceptAgreement', 'boolean'],
-            ['acceptAgreement', 'required', 'requiredValue' => true,
-                'message' => 'Вы должны принять условия соглашения'],
         ]);
+    }
+
+    public function beforeValidate() {
+        if(!parent::beforeValidate()) {
+            return false;
+        }
+
+        if($this->email && !$this->id && $user = self::findOne(['email' => $this->email])) {
+            $this->populateRecord($this, $user->toArray());
+        }
+
+        return true;
+    }
+
+    public function validateEmailExisting($attribute, $params) {
+        if(!$this->hasErrors() && !$this->id) {
+            $this->addError($attribute, 'Такой e-mail адрес не найден');
+        }
     }
 
     public function attributeLabels() {
         return array_merge(parent::attributeLabels(), [
-            'repassword' => 'Повторите пароль',
             'captcha' => 'Введите проверочные цифры',
         ]);
     }
@@ -49,7 +60,7 @@ class SignUpForm extends UserModel
     /**
      * @return bool
      */
-    public function signUp() {
-        return $this->validate() && $this->save() && $this->sendConfirmationMail();
+    public function sendResetPasswordMail() {
+        return $this->validate() && parent::sendResetPasswordMail();
     }
 }

@@ -15,7 +15,7 @@ class Bootstrap implements BootstrapInterface
             function($event) use ($app) {
                 $app->view->title = implode(' - ', [
                     $app->view->title,
-                    'RSS Reader'
+                    \Yii::$app->name
                 ]);
             }
         );

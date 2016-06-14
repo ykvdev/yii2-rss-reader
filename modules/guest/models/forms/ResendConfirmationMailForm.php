@@ -53,12 +53,7 @@ class ResendConfirmationMailForm extends UserModel
     /**
      * @return bool
      */
-    public function resendConfirmationMail() {
-        return $this->validate()
-        && $this->sendMail(
-            'confirmation',
-            'Подтверждение e-mail адреса',
-            ['link' => $this->getConfirmationLink()]
-        );
+    public function sendConfirmationMail() {
+        return $this->validate() && parent::sendConfirmationMail();
     }
 }

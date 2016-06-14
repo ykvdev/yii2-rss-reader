@@ -9,4 +9,4 @@
 
 <?= $content ?>
 
-rss-reader.com
+<?= Yii::$app->homeUrl ?>

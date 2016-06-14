@@ -9,8 +9,8 @@ use yii\bootstrap\ActiveForm;
 $this->title = 'Авторизация';
 
 ?>
-<div class="sign-in-page">
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="form-page">
+    <h2><?= Html::encode($this->title) ?></h2>
 
     <?php $form = ActiveForm::begin([
         'id' => 'sign-up-form',

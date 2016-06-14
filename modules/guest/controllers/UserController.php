@@ -2,6 +2,7 @@
 
 namespace app\modules\guest\controllers;
 
+use app\modules\guest\models\forms\ResetPasswordRequestForm;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
@@ -27,7 +28,7 @@ class UserController extends Controller
 
     public function actionResendConfirmationMail($email) {
         $model = new ResendConfirmationMailForm(compact('email'));
-        if($model->resendConfirmationMail()) {
+        if($model->sendConfirmationMail()) {
             \Yii::$app->session->setFlash('info',
                 'Повторное письмо, со ссылкой для подтверждения e-mail адреса, отправлено');
         } else {
@@ -36,5 +37,25 @@ class UserController extends Controller
         }
 
         return $this->goBack();
+    }
+
+    public function actionResetPasswordRequest($email = null) {
+        $model = new ResetPasswordRequestForm(compact('email'));
+        if($model->load(\Yii::$app->request->post())) {
+            if(\Yii::$app->request->isAjax) {
+                \Yii::$app->response->format = Response::FORMAT_JSON;
+                return ActiveForm::validate($model);
+            } elseif($model->sendResetPasswordMail()) {
+                \Yii::$app->session->setFlash('info', 'Вам было отправлено письмо для восстановления пароля');
+            }
+        }
+
+        return $this->render('reset-password-request', compact('model'));
+    }
+
+    public function actionResetPassword($email, $hash) {
+        // проверяем мыло на существование, хеш обязательный, проеряем валидность хеша
+
+        // форма без аякса, без капчи, два поля: новый пароль, повторить новый пароль
     }
 }

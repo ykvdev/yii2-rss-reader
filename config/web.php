@@ -2,6 +2,8 @@
 
 $config = [
     'id' => 'yii2-rss-reader',
+    'name' => 'RSS Reader',
+    'homeUrl' => 'http://bl-gener',
     'language' => 'ru-RU',
     'sourceLanguage' => 'ru-RU',
     'basePath' => dirname(__DIR__),

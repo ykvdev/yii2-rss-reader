@@ -3,6 +3,7 @@
 namespace app\modules\common\models\db;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "news".
@@ -15,7 +16,7 @@ use Yii;
  * @property string $external_uri
  * @property integer $read
  */
-class NewModel extends \yii\db\ActiveRecord
+class NewModel extends ActiveRecord
 {
     /**
      * @inheritdoc

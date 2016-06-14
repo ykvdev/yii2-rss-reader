@@ -22,7 +22,7 @@ use yii\helpers\Html;
 
     <br>
     <hr>
-    <a href="http://rss-reader.com" target="_blank">rss-reader.com</a>
+    <a href="<?= Yii::$app->homeUrl ?>" target="_blank"><?= Yii::$app->homeUrl ?></a>
 
     <?php $this->endBody() ?>
 </body>

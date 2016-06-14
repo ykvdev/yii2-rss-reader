@@ -10,8 +10,8 @@ use yii\captcha\Captcha;
 $this->title = 'Регистрация';
 
 ?>
-<div class="sign-up-page">
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="form-page">
+    <h2><?= Html::encode($this->title) ?></h2>
 
     <?php $form = ActiveForm::begin([
         'id' => 'sign-up-form',
