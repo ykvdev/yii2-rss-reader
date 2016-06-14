@@ -47,9 +47,16 @@ class SignUpForm extends UserModel
     }
 
     /**
-     * @return bool
+     * @return bool|\yii\web\Response
      */
     public function signUp() {
-        return $this->validate() && $this->save() && $this->sendConfirmationMail();
+        if($this->validate()
+        && $this->save()
+        && $this->sendConfirmationMail()
+        && $userRedirect = $this->signIn(false)) {
+            return $userRedirect;
+        } else {
+            return false;
+        }
     }
 }

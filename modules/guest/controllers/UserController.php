@@ -2,6 +2,7 @@
 
 namespace app\modules\guest\controllers;
 
+use app\modules\guest\models\forms\ResetPasswordForm;
 use app\modules\guest\models\forms\ResetPasswordRequestForm;
 use yii\web\Controller;
 use yii\web\Response;
@@ -54,8 +55,15 @@ class UserController extends Controller
     }
 
     public function actionResetPassword($email, $hash) {
-        // проверяем мыло на существование, хеш обязательный, проеряем валидность хеша
+        $model = new ResetPasswordForm(compact('email', 'hash'));
+        if(!$model->validate(['email', 'hash'])) {
+            $errors = $model->getFirstErrors();
+            \Yii::$app->session->setFlash('danger', array_shift($errors));
+        } elseif($model->load(\Yii::$app->request->post()) && $userRedirect = $model->changePassword()) {
+            \Yii::$app->session->setFlash('info', 'Ваш пароль изменен на новый');
+            return $userRedirect;
+        }
 
-        // форма без аякса, без капчи, два поля: новый пароль, повторить новый пароль
+        return $this->render('reset-password', compact('model'));
     }
 }

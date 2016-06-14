@@ -30,8 +30,6 @@ class SignInForm extends UserModel
     public function rules()
     {
         return array_merge(parent::rules(), [
-            ['email', 'validateEmailConfirmation'],
-
             ['nativePassword', 'required'],
             ['nativePassword', 'validatePassword'],
 
@@ -49,19 +47,6 @@ class SignInForm extends UserModel
         }
 
         return true;
-    }
-
-    public function validateEmailConfirmation($attribute, $params) {
-        if(!$this->hasErrors()) {
-            if($this->id && !$this->confirmed) {
-                $this->addError($attribute, sprintf(
-                    'Ваш e-mail не подтвержден.
-                    Вы должны перейти по ссылке из письма для подтверждения e-mail адреса.
-                    Если вы не получали это письмо, вы можете %s.',
-                    Html::a('запросить его повторно', ['/guest/user/resend-confirmation-mail', 'email' => $this->email])
-                ));
-            }
-        }
     }
 
     public function validatePassword($attribute, $params)
@@ -87,13 +72,14 @@ class SignInForm extends UserModel
     /**
      * @param bool|false $rememberMe
      * @param bool|true $withRedirect
+     * @param bool|true $validateConfirmation
      * @return Response|bool
      */
-    public function signIn($rememberMe = false, $withRedirect = true) {
-        if (!$this->validate()) {
+    public function signIn($rememberMe = false, $withRedirect = true, $validateConfirmation = false) {
+        if ($this->validate() && $userRedirect = parent::signIn(true, $this->rememberMe)) {
+            return $userRedirect;
+        } else {
             return false;
         }
-
-        return parent::signIn($this->rememberMe);
     }
 }

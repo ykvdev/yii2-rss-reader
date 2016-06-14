@@ -15,13 +15,10 @@ class GuestController extends Controller
             if(\Yii::$app->request->isAjax) {
                 \Yii::$app->response->format = Response::FORMAT_JSON;
                 return ActiveForm::validate($model);
-            } elseif($model->signUp()) {
+            } elseif($userRedirect = $model->signUp()) {
                 \Yii::$app->session->setFlash('info', 'Вам необходимо подтвердить ваш e-mail адрес.
                 Для этого воспользуйтесь ссылкой из письма отправленного вам на почту.');
-
-                if ($userRedirect = $model->signIn()) {
-                    return $userRedirect;
-                }
+                return $userRedirect;
             }
         }
 

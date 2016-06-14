@@ -58,7 +58,7 @@ class ConfirmationForm extends UserModel
     }
 
     /**
-     * @return bool
+     * @return \yii\web\Response
      */
     public function confirm() {
         if(!$this->validate()) {
@@ -67,9 +67,15 @@ class ConfirmationForm extends UserModel
 
         if(!$this->confirmed) {
             $this->confirmed = 1;
-            return $this->save();
+            if(!$this->save()) {
+                return false;
+            }
+        }
+
+        if(\Yii::$app->user->isGuest) {
+            return $this->signIn();
         } else {
-            return true;
+            return \Yii::$app->getResponse()->redirect(\Yii::$app->getUser()->getReturnUrl());
         }
     }
 }
