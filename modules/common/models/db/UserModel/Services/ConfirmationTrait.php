@@ -27,7 +27,7 @@ trait ConfirmationTrait
         return Url::toRoute([
             '/common/user/confirmation-email',
             'email' => $this->email,
-            'hash' => $this->getUserSecurityModel()->confirm_hash
+            'hash' => $this->getUserSecurityModel()->confirmation_hash
         ], true);
     }
 }

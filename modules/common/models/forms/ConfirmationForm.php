@@ -52,7 +52,7 @@ class ConfirmationForm extends UserModel
     }
 
     public function validateHash($attribute, $params) {
-        if(!$this->hasErrors() && $this->hash !== $this->getUserSecurityModel()->confirm_hash) {
+        if(!$this->hasErrors() && $this->hash !== $this->getUserSecurityModel()->confirmation_hash) {
             $this->addError($attribute, 'Ссылка подтверждения e-mail адреса не верная');
         }
     }
@@ -73,7 +73,7 @@ class ConfirmationForm extends UserModel
     private function setConfirmed() {
         $securityModel = $this->getUserSecurityModel();
         if(!$securityModel->confirmed) {
-            $securityModel->confirm_hash = null;
+            $securityModel->confirmation_hash = null;
             $securityModel->confirmed = 1;
             return $securityModel->save();
         } else {

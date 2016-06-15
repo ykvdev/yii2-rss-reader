@@ -7,7 +7,7 @@ use yii\db\ActiveRecord;
 
 /**
  * @property integer $user
- * @property string $confirm_hash
+ * @property string $confirmation_hash
  * @property integer $confirmed
  * @property string $reset_password_hash
  * @property integer $last_fail_auth_count
@@ -28,7 +28,7 @@ class UserSecurityModel extends ActiveRecord
             ['user', 'exist', 'skipOnError' => true, 'targetClass' => UserModel::className(),
                 'targetAttribute' => ['user' => 'id']],
 
-            ['confirm_hash', 'string', 'max' => 32],
+            ['confirmation_hash', 'string', 'max' => 32],
 
             ['confirmed', 'boolean'],
 

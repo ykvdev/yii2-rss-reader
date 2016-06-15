@@ -18,7 +18,7 @@ trait AfterSaveEventTrait
         if($this->isNewRecord) {
             (new UserSecurityModel([
                 'user' => $this->id,
-                'confirm_hash' => md5(time() . mt_rand(0, 100) . uniqid())
+                'confirmation_hash' => md5(time() . mt_rand(0, 100) . uniqid())
             ]))->save();
         }
     }
