@@ -61,6 +61,14 @@ class ResetPasswordRequestForm extends UserModel
      * @return bool
      */
     public function sendResetPasswordMail() {
-        return $this->validate() && parent::sendResetPasswordMail();
+        return $this->validate()
+        && $this->generateHash()
+        && parent::sendResetPasswordMail();
+    }
+
+    private function generateHash() {
+        $securityModel = $this->getUserSecurityModel();
+        $securityModel->reset_password_hash = md5(time() . mt_rand(0, 100) . uniqid());
+        return $securityModel->save();
     }
 }

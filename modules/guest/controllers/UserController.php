@@ -2,6 +2,7 @@
 
 namespace app\modules\guest\controllers;
 
+use app\modules\common\models\db\UserModel;
 use app\modules\guest\models\forms\ResetPasswordForm;
 use app\modules\guest\models\forms\ResetPasswordRequestForm;
 use yii\web\Controller;

@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\common\models\db\UserModel;
+namespace app\modules\common\models\db\UserModel\services;
 
 use app\modules\common\models\db\UserModel;
 

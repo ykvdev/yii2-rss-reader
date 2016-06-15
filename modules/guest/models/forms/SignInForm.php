@@ -76,7 +76,8 @@ class SignInForm extends UserModel
      * @return Response|bool
      */
     public function signIn($rememberMe = false, $withRedirect = true, $validateConfirmation = false) {
-        if ($this->validate() && $userRedirect = parent::signIn(true, $this->rememberMe)) {
+        if ($this->validate()
+        && $userRedirect = parent::signIn(true, $this->rememberMe)) {
             return $userRedirect;
         } else {
             return false;

@@ -13,15 +13,16 @@ use yii\web\IdentityInterface;
  * @property string $email
  * @property string $password
  * @property string $registered_at
- * @property integer $confirmed
  */
 class UserModel extends ActiveRecord implements IdentityInterface
 {
-    use UserModel\IdentityTrait,
-        UserModel\CommonTrait,
-        UserModel\ConfirmationTrait,
-        UserModel\MailTrait,
-        UserModel\ResetPasswordTrait;
+    use UserModel\services\IdentityTrait,
+        UserModel\services\CommonTrait,
+        UserModel\services\ConfirmationTrait,
+        UserModel\services\MailTrait,
+        UserModel\services\ResetPasswordTrait,
+        UserModel\events\BeforeSaveEventTrait,
+        UserModel\events\AfterSaveEventTrait;
 
     /**
      * @inheritdoc
@@ -29,22 +30,6 @@ class UserModel extends ActiveRecord implements IdentityInterface
     public static function tableName()
     {
         return 'users';
-    }
-
-    public function beforeSave($insert) {
-        if(!parent::beforeSave($insert)) {
-            return false;
-        }
-
-        if($this->isAttributeChanged('password')) {
-            $this->password = Yii::$app->security->generatePasswordHash($this->password);
-        }
-
-        if($insert) {
-            $this->registered_at = date('Y-m-d H:i:s');
-        }
-
-        return true;
     }
 
     /**
@@ -67,8 +52,6 @@ class UserModel extends ActiveRecord implements IdentityInterface
 
             ['registered_at', 'required'],
             ['registered_at', 'date', 'format' => 'php:Y-m-d H:i:s'],
-
-            ['confirmed', 'boolean'],
         ];
     }
 
@@ -77,15 +60,21 @@ class UserModel extends ActiveRecord implements IdentityInterface
             'email' => 'E-mail',
             'password' => 'Пароль',
             'registered_at' => 'Дата регистрации',
-            'confirmed' => 'Подтвержден'
         ];
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return UserSecurityModel
+     */
+    public function getUserSecurityModel() {
+        return $this->hasOne(UserSecurityModel::className(), ['user' => 'id'])->one();
+    }
+
+    /**
+     * @return FeedModel[]
      */
     public function getFeedModels()
     {
-        return $this->hasMany(FeedModel::className(), ['user' => 'id']);
+        return $this->hasMany(FeedModel::className(), ['user' => 'id'])->all();
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\common\models\db\UserModel;
+namespace app\modules\common\models\db\UserModel\services;
 
 use app\modules\common\models\db\UserModel;
 use yii\helpers\Url;
@@ -27,25 +27,7 @@ trait ConfirmationTrait
         return Url::toRoute([
             '/common/user/confirmation-email',
             'email' => $this->email,
-            'hash' => $this->getConfirmationHash()
+            'hash' => $this->getUserSecurityModel()->confirm_hash
         ], true);
-    }
-
-    /**
-     * @return string
-     * @throws \yii\base\Exception
-     */
-    public function getConfirmationHash() {
-        /** @var $this UserModel */
-        return md5($this->email . $this->registered_at . $this->id . $this->email);
-    }
-
-    /**
-     * @param string $hash
-     * @return bool
-     */
-    public function validateConfirmationHash($hash) {
-        /** @var $this UserModel */
-        return $this->getConfirmationHash() === $hash;
     }
 }

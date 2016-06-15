@@ -52,26 +52,36 @@ class ConfirmationForm extends UserModel
     }
 
     public function validateHash($attribute, $params) {
-        if(!$this->hasErrors() && !$this->validateConfirmationHash($this->hash)) {
+        if(!$this->hasErrors() && $this->hash !== $this->getUserSecurityModel()->confirm_hash) {
             $this->addError($attribute, 'Ссылка подтверждения e-mail адреса не верная');
         }
     }
 
     /**
-     * @return \yii\web\Response
+     * @return bool|\yii\web\Response
      */
     public function confirm() {
-        if(!$this->validate()) {
+        if($this->validate()
+        && $this->setConfirmed()
+        && $userRedirect = $this->getRedirection()) {
+            return $userRedirect;
+        } else {
             return false;
         }
+    }
 
-        if(!$this->confirmed) {
-            $this->confirmed = 1;
-            if(!$this->save()) {
-                return false;
-            }
+    private function setConfirmed() {
+        $securityModel = $this->getUserSecurityModel();
+        if(!$securityModel->confirmed) {
+            $securityModel->confirm_hash = null;
+            $securityModel->confirmed = 1;
+            return $securityModel->save();
+        } else {
+            return true;
         }
+    }
 
+    private function getRedirection() {
         if(\Yii::$app->user->isGuest) {
             return $this->signIn();
         } else {

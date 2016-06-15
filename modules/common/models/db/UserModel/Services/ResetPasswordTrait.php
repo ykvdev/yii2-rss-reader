@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\common\models\db\UserModel;
+namespace app\modules\common\models\db\UserModel\services;
 
 use app\modules\common\models\db\UserModel;
 use yii\helpers\Url;
@@ -24,25 +24,7 @@ trait ResetPasswordTrait
         return Url::toRoute([
             '/guest/user/reset-password',
             'email' => $this->email,
-            'hash' => $this->getResetPasswordHash()
+            'hash' => $this->getUserSecurityModel()->reset_password_hash
         ], true);
-    }
-
-    /**
-     * @return string
-     * @throws \yii\base\Exception
-     */
-    public function getResetPasswordHash() {
-        /** @var $this UserModel */
-        return md5($this->email . $this->registered_at . $this->email);
-    }
-
-    /**
-     * @param string $hash
-     * @return bool
-     */
-    public function validateResetPasswordHash($hash) {
-        /** @var $this UserModel */
-        return $this->getResetPasswordHash() === $hash;
     }
 }

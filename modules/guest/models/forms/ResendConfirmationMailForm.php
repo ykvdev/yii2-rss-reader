@@ -45,7 +45,7 @@ class ResendConfirmationMailForm extends UserModel
     }
 
     public function validateEmailConfirmed($attribute, $params) {
-        if(!$this->hasErrors() && $this->confirmed) {
+        if(!$this->hasErrors() && $this->getUserSecurityModel()->confirmed) {
             $this->addError($attribute, 'Этот e-mail адрес уже подтвержден');
         }
     }

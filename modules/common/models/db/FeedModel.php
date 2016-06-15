@@ -6,8 +6,6 @@ use Yii;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "feeds".
- *
  * @property integer $id
  * @property integer $user
  * @property string $site_url
@@ -30,28 +28,38 @@ class FeedModel extends ActiveRecord
     public function rules()
     {
         return [
-            [['user', 'site_url', 'rss_uri', 'subscribed_at'], 'required'],
-            [['user'], 'integer'],
-            [['subscribed_at'], 'date', 'format' => 'php:Y-m-d H:i:s'],
-            [['site_url'], 'url'],
-            [['site_url', 'rss_uri'], 'string', 'max' => 255],
-            [['user', 'site_url', 'rss_uri'], 'unique', 'targetAttribute' => ['user', 'site_url', 'rss_uri'], 'message' => 'The combination of User, Site Url and Rss Uri has already been taken.'],
-            [['user'], 'exist', 'skipOnError' => true, 'targetClass' => UserModel::className(), 'targetAttribute' => ['user' => 'id']],
+            ['user', 'required'],
+            ['user', 'integer'],
+            ['user', 'exist', 'skipOnError' => true, 'targetClass' => UserModel::className(),
+                'targetAttribute' => ['user' => 'id']],
+
+            ['site_url', 'required'],
+            ['site_url', 'url'],
+            ['site_url', 'string', 'max' => 255],
+
+            ['rss_uri', 'required'],
+            ['rss_uri', 'string', 'max' => 255],
+
+            ['subscribed_at', 'required'],
+            ['subscribed_at', 'date', 'format' => 'php:Y-m-d H:i:s'],
+
+            [['user', 'site_url', 'rss_uri'], 'unique', 'targetAttribute' => ['user', 'site_url', 'rss_uri'],
+                'message' => 'Такой RSS канал уже существует'],
         ];
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return UserModel
      */
     public function getUserModel() {
-        return $this->hasOne(UserModel::className(), ['id' => 'user']);
+        return $this->hasOne(UserModel::className(), ['id' => 'user'])->one();
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return NewModel[]
      */
     public function getNewModels()
     {
-        return $this->hasMany(NewModel::className(), ['feed' => 'id']);
+        return $this->hasMany(NewModel::className(), ['feed' => 'id'])->all();
     }
 }

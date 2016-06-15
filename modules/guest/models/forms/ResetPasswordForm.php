@@ -53,7 +53,7 @@ class ResetPasswordForm extends UserModel
     }
 
     public function validateHash($attribute, $params) {
-        if(!$this->hasErrors() && !$this->validateResetPasswordHash($this->hash)) {
+        if(!$this->hasErrors() && !$this->hash !== $this->getUserSecurityModel()->reset_password_hash) {
             $this->addError($attribute, 'Ссылка смены пароля не верная');
         }
     }
@@ -69,10 +69,19 @@ class ResetPasswordForm extends UserModel
      * @return bool|\yii\web\Response
      */
     public function changePassword() {
-        if($this->validate() && $this->save() && $userRedirect = $this->signIn()) {
+        if($this->validate()
+        && $this->save()
+        && $this->setHashToNull()
+        && $userRedirect = $this->signIn()) {
             return $userRedirect;
         } else {
             return false;
         }
+    }
+
+    private function setHashToNull() {
+        $securityModel = $this->getUserSecurityModel();
+        $securityModel->reset_password_hash = null;
+        return $securityModel->save();
     }
 }
