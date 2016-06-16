@@ -31,18 +31,6 @@ class ConfirmationForm extends UserModel
         ]);
     }
 
-    public function beforeValidate() {
-        if(!parent::beforeValidate()) {
-            return false;
-        }
-
-        if($this->email && !$this->id && $user = self::findOne(['email' => $this->email])) {
-            $this->populateRecord($this, $user->toArray());
-        }
-
-        return true;
-    }
-
     public function validateEmailExisting($attribute, $params) {
         if(!$this->hasErrors()) {
             if(!$this->id) {

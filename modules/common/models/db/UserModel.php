@@ -32,6 +32,32 @@ class UserModel extends ActiveRecord implements IdentityInterface
         return 'users';
     }
 
+    public function __construct($config = []) {
+        parent::__construct($config);
+
+        $id = isset($config['id']) ? $config['id'] : null;
+        $email = isset($config['email']) ? $config['email'] : null;
+        $this->populate($id, $email);
+    }
+
+    public function load($data, $formName = null) {
+        $scope = $formName === null ? $this->formName() : $formName;
+        $id = isset($data[$scope]['id']) ? $data[$scope]['id'] : null;
+        $email = isset($data[$scope]['email']) ? $data[$scope]['email'] : null;
+        $this->populate($id, $email);
+
+        return parent::load($data, $formName);
+    }
+
+    private function populate($id, $email) {
+        if(
+            ($email && !$id && $user = self::findOne(['email' => $email]))
+            || ($id && !$email && $user = self::findOne($id))
+        ) {
+            $this->populateRecord($this, $user->toArray());
+        }
+    }
+
     /**
      * @inheritdoc
      */
@@ -45,7 +71,6 @@ class UserModel extends ActiveRecord implements IdentityInterface
             ['email', 'required'],
             ['email', 'email'],
             ['email', 'string', 'max' => 50],
-            ['email', 'unique', 'targetAttribute' => 'email'],
 
             ['password', 'required'],
             ['password', 'string', 'min' => 3, 'max' => 255],

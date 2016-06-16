@@ -24,6 +24,8 @@ class SignUpForm extends UserModel
 
     public function rules() {
         return array_merge(parent::rules(), [
+            ['email', 'unique', 'targetAttribute' => 'email'],
+
             ['repassword', 'required', 'message' => 'Повторите пароль'],
             [['password', 'repassword'], 'compare', 'compareAttribute' => 'password',
                 'message' => 'Введенные пароли не совпадают'],
