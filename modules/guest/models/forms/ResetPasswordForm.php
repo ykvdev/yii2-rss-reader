@@ -53,7 +53,7 @@ class ResetPasswordForm extends UserModel
     }
 
     public function validateHash($attribute, $params) {
-        if(!$this->hasErrors() && !$this->hash !== $this->getUserSecurityModel()->reset_password_hash) {
+        if(!$this->hasErrors() && $this->hash !== $this->getUserSecurityModel()->reset_password_hash) {
             $this->addError($attribute, 'Ссылка смены пароля не верная');
         }
     }

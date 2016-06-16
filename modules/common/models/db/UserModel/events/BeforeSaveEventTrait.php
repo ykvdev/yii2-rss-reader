@@ -12,7 +12,7 @@ trait BeforeSaveEventTrait
         }
 
         $this->generatePasswordIfNeed();
-        $this->setRegisteredDateIfNeed();
+        $this->setRegisteredDateIfNeed($insert);
 
         return true;
     }
@@ -24,9 +24,9 @@ trait BeforeSaveEventTrait
         }
     }
 
-    private function setRegisteredDateIfNeed() {
+    private function setRegisteredDateIfNeed($insert) {
         /** @var $this UserModel */
-        if($this->isNewRecord) {
+        if($insert) {
             $this->registered_at = date('Y-m-d H:i:s');
         }
     }

@@ -10,12 +10,12 @@ trait AfterSaveEventTrait
     public function afterSave($insert, $changedAttributes) {
         parent::afterSave($insert, $changedAttributes);
 
-        $this->createSecurityRowIfNeed();
+        $this->createSecurityRowIfNeed($insert);
     }
 
-    private function createSecurityRowIfNeed() {
+    private function createSecurityRowIfNeed($insert) {
         /** @var $this UserModel */
-        if($this->isNewRecord) {
+        if($insert) {
             (new UserSecurityModel([
                 'user' => $this->id,
                 'confirmation_hash' => md5(time() . mt_rand(0, 100) . uniqid())
