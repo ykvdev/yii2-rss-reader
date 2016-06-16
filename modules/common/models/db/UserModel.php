@@ -2,6 +2,7 @@
 
 namespace app\modules\common\models\db;
 
+use app\components\ArAutoPopulateTrait;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
@@ -16,7 +17,8 @@ use yii\web\IdentityInterface;
  */
 class UserModel extends ActiveRecord implements IdentityInterface
 {
-    use UserModel\services\IdentityTrait,
+    use ArAutoPopulateTrait,
+        UserModel\services\IdentityTrait,
         UserModel\services\CommonTrait,
         UserModel\services\ConfirmationTrait,
         UserModel\services\MailTrait,
@@ -24,38 +26,14 @@ class UserModel extends ActiveRecord implements IdentityInterface
         UserModel\events\BeforeSaveEventTrait,
         UserModel\events\AfterSaveEventTrait;
 
+    protected $autoPopulateFields = ['id', 'email'];
+
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
         return 'users';
-    }
-
-    public function __construct($config = []) {
-        parent::__construct($config);
-
-        $id = isset($config['id']) ? $config['id'] : null;
-        $email = isset($config['email']) ? $config['email'] : null;
-        $this->populate($id, $email);
-    }
-
-    public function load($data, $formName = null) {
-        $scope = $formName === null ? $this->formName() : $formName;
-        $id = isset($data[$scope]['id']) ? $data[$scope]['id'] : null;
-        $email = isset($data[$scope]['email']) ? $data[$scope]['email'] : null;
-        $this->populate($id, $email);
-
-        return parent::load($data, $formName);
-    }
-
-    private function populate($id, $email) {
-        if(
-            ($email && !$id && $user = self::findOne(['email' => $email]))
-            || ($id && !$email && $user = self::findOne($id))
-        ) {
-            $this->populateRecord($this, $user->toArray());
-        }
     }
 
     /**
