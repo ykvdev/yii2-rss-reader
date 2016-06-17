@@ -60,7 +60,7 @@ class ResetPasswordForm extends UserModel
      */
     public function changePassword() {
         if($this->validate()
-        && $this->save()
+        && $this->save(false)
         && $this->setHashToNull()
         && $userRedirect = $this->signIn()) {
             return $userRedirect;

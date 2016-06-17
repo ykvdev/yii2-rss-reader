@@ -55,7 +55,7 @@ class SignUpForm extends UserModel
      */
     public function signUp() {
         if($this->validate()
-        && $this->save()
+        && $this->save(false)
         && $this->sendConfirmationMail()
         && $userRedirect = $this->signIn(false)) {
             return $userRedirect;
