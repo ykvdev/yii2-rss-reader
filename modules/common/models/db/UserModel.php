@@ -26,7 +26,7 @@ class UserModel extends ActiveRecord implements IdentityInterface
         UserModel\events\BeforeSaveEventTrait,
         UserModel\events\AfterSaveEventTrait;
 
-    protected $autoPopulateFields = ['id', 'email'];
+    protected $autoPopulateByFields = ['id', 'email'];
 
     /**
      * @inheritdoc

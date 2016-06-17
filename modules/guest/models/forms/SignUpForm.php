@@ -11,7 +11,7 @@ class SignUpForm extends UserModel
 
     public $repassword, $captcha, $acceptAgreement;
 
-    protected $autoPopulateFields = [];
+    protected $autoPopulateByFields = [];
 
     public function init() {
         parent::init();

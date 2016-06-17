@@ -4,11 +4,16 @@ namespace app\components;
 
 trait ArAutoPopulateTrait
 {
+    /**
+     * protected $autoPopulateByFields
+     * protected $skipFieldsForPopulate
+     */
+
     public function __construct($config = []) {
         parent::__construct($config);
 
         $populateData = [];
-        foreach($this->autoPopulateFields as $fieldName) {
+        foreach($this->autoPopulateByFields as $fieldName) {
             $populateData[$fieldName] = isset($config[$fieldName]) ? $config[$fieldName] : null;
         }
         $this->populate($populateData);
@@ -17,7 +22,7 @@ trait ArAutoPopulateTrait
     public function load($data, $formName = null) {
         $populateData = [];
         $scope = $formName === null ? $this->formName() : $formName;
-        foreach($this->autoPopulateFields as $fieldName) {
+        foreach($this->autoPopulateByFields as $fieldName) {
             $populateData[$fieldName] = isset($data[$scope][$fieldName]) ? $data[$scope][$fieldName] : null;
         }
         $this->populate($populateData);

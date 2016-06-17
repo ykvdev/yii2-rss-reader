@@ -25,5 +25,6 @@ return [
      * USER MODULE
      */
     'news' => 'user/news/list',
+    'change-email' => 'user/user/change-email',
     'sign-out' => 'user/user/sign-out',
 ];
