@@ -19,6 +19,15 @@ trait ConfirmationTrait
         );
     }
 
+    function sendNewConfirmationMail() {
+        /** @var $this UserModel */
+        return $this->sendMail(
+            'new-confirmation',
+            'Подтверждение нового e-mail адреса',
+            ['link' => $this->getConfirmationLink()]
+        );
+    }
+
     /**
      * @return string
      */

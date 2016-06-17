@@ -13,6 +13,7 @@ trait BeforeSaveEventTrait
 
         $this->generatePasswordIfNeed();
         $this->setRegisteredDateIfNeed($insert);
+        $this->setNewConfirmationIfNeed($insert);
 
         return true;
     }
@@ -28,6 +29,16 @@ trait BeforeSaveEventTrait
         /** @var $this UserModel */
         if($insert) {
             $this->registered_at = date('Y-m-d H:i:s');
+        }
+    }
+
+    private function setNewConfirmationIfNeed($insert) {
+        /** @var $this UserModel */
+        if(!$insert && $this->getDirtyAttributes(['email'])) {
+            $securityModel = $this->getUserSecurityModel();
+            $securityModel->confirmation_hash = md5(time() . mt_rand(0, 100) . uniqid());
+            $securityModel->confirmed = 0;
+            $securityModel->save();
         }
     }
 }

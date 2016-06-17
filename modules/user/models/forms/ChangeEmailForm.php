@@ -56,6 +56,7 @@ class ChangeEmailForm extends UserModel
 
     public function changeEmail() {
         return $this->validate()
-        && $this->save();
+        && $this->save(false)
+        && $this->sendNewConfirmationMail();
     }
 }

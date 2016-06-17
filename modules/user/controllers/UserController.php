@@ -17,7 +17,8 @@ class UserController extends Controller
                 \Yii::$app->response->format = Response::FORMAT_JSON;
                 return ActiveForm::validate($model);
             } elseif($model->changeEmail()) {
-                \Yii::$app->session->setFlash('info', 'Ваш e-mail изменен');
+                \Yii::$app->session->setFlash('info', 'Ваш e-mail адрес изменен.
+                    Текже вам отправлено письмо для подтверждения нового e-mail адреса.');
             }
         }
 
