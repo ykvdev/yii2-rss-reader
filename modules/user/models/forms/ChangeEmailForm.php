@@ -8,7 +8,7 @@ class ChangeEmailForm extends UserModel
 {
     const SCENARIO_CHANGE_EMAIL = 'change-email';
 
-    public $nativePassword;
+    public $currentPassword;
 
     protected $skipFieldsForPopulate = ['email'];
 
@@ -19,7 +19,7 @@ class ChangeEmailForm extends UserModel
 
     public function scenarios() {
         return array_merge(parent::scenarios(), [
-            self::SCENARIO_CHANGE_EMAIL => ['email', 'nativePassword']
+            self::SCENARIO_CHANGE_EMAIL => ['email', 'currentPassword']
         ]);
     }
 
@@ -29,8 +29,8 @@ class ChangeEmailForm extends UserModel
             ['email', 'unique', 'targetAttribute' => 'email', 'filter' => ['!=', 'id', \Yii::$app->user->identity->id]],
             ['email', 'validateEmailEquivalent'],
 
-            ['nativePassword', 'required'],
-            ['nativePassword', 'validatePassword'],
+            ['currentPassword', 'required'],
+            ['currentPassword', 'validatePassword'],
         ]);
     }
 
@@ -42,7 +42,7 @@ class ChangeEmailForm extends UserModel
 
     public function validatePassword($attribute, $params)
     {
-        if (!$this->hasErrors() && !\Yii::$app->security->validatePassword($this->nativePassword, $this->password)) {
+        if (!$this->hasErrors() && !\Yii::$app->security->validatePassword($this->currentPassword, $this->password)) {
             $this->addError($attribute, 'Введенный пароль не верный');
         }
     }
@@ -50,7 +50,7 @@ class ChangeEmailForm extends UserModel
     public function attributeLabels() {
         return array_merge(parent::attributeLabels(), [
             'email' => 'Новый e-mail',
-            'nativePassword' => 'Текущий пароль',
+            'currentPassword' => 'Текущий пароль',
         ]);
     }
 

@@ -26,5 +26,6 @@ return [
      */
     'news' => 'user/news/list',
     'change-email' => 'user/user/change-email',
+    'change-password' => 'user/user/change-password',
     'sign-out' => 'user/user/sign-out',
 ];

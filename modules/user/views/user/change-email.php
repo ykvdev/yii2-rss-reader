@@ -18,7 +18,7 @@ $this->title = 'Изменить e-mail';
         'fieldConfig' => ['inputOptions' => ['autocomplete' => 'off']]
     ]) ?>
     <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
-    <?= $form->field($model, 'nativePassword')->passwordInput() ?>
+    <?= $form->field($model, 'currentPassword')->passwordInput() ?>
     <?= Html::submitButton('Изменить', ['class' => 'btn btn-primary']) ?>
     <?php ActiveForm::end() ?>
 </div>

@@ -8,7 +8,7 @@ class ResetPasswordForm extends UserModel
 {
     const SCENARIO_RESET_PASSWORD = 'reset-password';
 
-    public $hash, $repassword;
+    public $hash, $repeatPassword;
 
     protected $skipFieldsForPopulate = ['password'];
 
@@ -19,7 +19,7 @@ class ResetPasswordForm extends UserModel
 
     public function scenarios() {
         return array_merge(parent::scenarios(), [
-            self::SCENARIO_RESET_PASSWORD => ['email', 'hash', 'password', 'repassword']
+            self::SCENARIO_RESET_PASSWORD => ['email', 'hash', 'password', 'repeatPassword']
         ]);
     }
 
@@ -30,8 +30,8 @@ class ResetPasswordForm extends UserModel
             ['hash', 'required'],
             ['hash', 'validateHash'],
 
-            ['repassword', 'required', 'message' => 'Повторите пароль'],
-            [['password', 'repassword'], 'compare', 'compareAttribute' => 'password',
+            ['repeatPassword', 'required', 'message' => 'Повторите пароль'],
+            ['repeatPassword', 'compare', 'compareAttribute' => 'password',
                 'message' => 'Введенные пароли не совпадают'],
         ]);
     }
@@ -51,7 +51,7 @@ class ResetPasswordForm extends UserModel
     public function attributeLabels() {
         return array_merge(parent::attributeLabels(), [
             'password' => 'Новый пароль',
-            'repassword' => 'Повторите новый пароль',
+            'repeatPassword' => 'Повторите новый пароль',
         ]);
     }
 

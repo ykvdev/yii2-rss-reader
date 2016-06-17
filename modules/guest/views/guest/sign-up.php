@@ -19,7 +19,7 @@ $this->title = 'Регистрация';
     ]) ?>
     <?= $form->field($model, 'email', ['enableAjaxValidation' => true])->textInput(['autofocus' => true]) ?>
     <?= $form->field($model, 'password')->passwordInput() ?>
-    <?= $form->field($model, 'repassword')->passwordInput() ?>
+    <?= $form->field($model, 'repeatPassword')->passwordInput() ?>
     <?= $form->field($model, 'captcha')->widget(Captcha::className(), [
         'captchaAction' => \yii\helpers\Url::toRoute('/common/common/captcha'),
         'options' => ['class' => 'form-control', 'autocomplete' => 'off'],

@@ -9,7 +9,7 @@ class SignUpForm extends UserModel
 {
     const SCENARIO_SIGN_UP = 'sign-up';
 
-    public $repassword, $captcha, $acceptAgreement;
+    public $repeatPassword, $captcha, $acceptAgreement;
 
     protected $autoPopulateByFields = [];
 
@@ -20,7 +20,7 @@ class SignUpForm extends UserModel
 
     public function scenarios() {
         return array_merge(parent::scenarios(), [
-            self::SCENARIO_SIGN_UP => ['email', 'password', 'repassword', 'captcha', 'acceptAgreement']
+            self::SCENARIO_SIGN_UP => ['email', 'password', 'repeatPassword', 'captcha', 'acceptAgreement']
         ]);
     }
 
@@ -28,8 +28,8 @@ class SignUpForm extends UserModel
         return array_merge(parent::rules(), [
             ['email', 'unique', 'targetAttribute' => 'email'],
 
-            ['repassword', 'required', 'message' => 'Повторите пароль'],
-            [['password', 'repassword'], 'compare', 'compareAttribute' => 'password',
+            ['repeatPassword', 'required', 'message' => 'Повторите пароль'],
+            ['repeatPassword', 'compare', 'compareAttribute' => 'password',
                 'message' => 'Введенные пароли не совпадают'],
 
             ['captcha', 'filter', 'filter' => 'trim'],
@@ -45,7 +45,7 @@ class SignUpForm extends UserModel
 
     public function attributeLabels() {
         return array_merge(parent::attributeLabels(), [
-            'repassword' => 'Повторите пароль',
+            'repeatPassword' => 'Повторите пароль',
             'captcha' => 'Введите проверочные цифры',
         ]);
     }
