@@ -61,11 +61,20 @@ class ChangePasswordForm extends UserModel
 
     public function changePassword() {
         return $this->validate()
-        && $this->setNewPassword();
+        && $this->setNewPassword()
+        && $this->sendEmailNotification();
     }
 
     private function setNewPassword() {
         $this->password = $this->newPassword;
         return $this->save(false);
+    }
+
+    private function sendEmailNotification() {
+        /** @var $this UserModel */
+        return $this->sendMail(
+            'password-changed-notify',
+            'Ваш пароль был изменен'
+        );
     }
 }
