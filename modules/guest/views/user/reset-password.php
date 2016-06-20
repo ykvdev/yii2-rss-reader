@@ -13,7 +13,7 @@ $this->title = 'Изменение пароля';
     <h2><?= Html::encode($this->title) ?></h2>
 
     <?php $form = ActiveForm::begin(['fieldConfig' => ['inputOptions' => ['autocomplete' => 'off']]]) ?>
-    <?= $form->field($model, 'password')->passwordInput(['autofocus' => true]) ?>
+    <?= $form->field($model, 'newPassword')->passwordInput(['autofocus' => true]) ?>
     <?= $form->field($model, 'repeatPassword')->passwordInput() ?>
     <?= Html::submitButton('Изменить пароль', ['class' => 'btn btn-primary']) ?>
     <?php ActiveForm::end() ?>

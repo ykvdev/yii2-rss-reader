@@ -2,13 +2,13 @@
 
 namespace app\modules\guest\models\forms;
 
-use app\modules\common\models\db\UserModel;
+use app\modules\common\models\db\UserSecurityModel;
 
-class ResetPasswordForm extends UserModel
+class ResetPasswordForm extends UserSecurityModel
 {
     const SCENARIO_RESET_PASSWORD = 'reset-password';
 
-    public $hash, $repeatPassword;
+    public $newPassword, $repeatPassword;
 
     public function init() {
         parent::init();
@@ -17,16 +17,17 @@ class ResetPasswordForm extends UserModel
 
     public function scenarios() {
         return array_merge(parent::scenarios(), [
-            self::SCENARIO_RESET_PASSWORD => ['email', 'hash', 'password', 'repeatPassword']
+            self::SCENARIO_RESET_PASSWORD => ['hash_id', 'reset_password_hash', 'newPassword', 'repeatPassword']
         ]);
     }
 
     public function rules() {
         return array_merge(parent::rules(), [
-            ['email', 'validateEmailExisting'],
+            ['reset_password_hash', 'required'],
+            ['reset_password_hash', 'validateResetPasswordHash'],
 
-            ['hash', 'required'],
-            ['hash', 'validateHash'],
+            ['newPassword', 'required'],
+            ['newPassword', 'string', 'min' => 3, 'max' => 255],
 
             ['repeatPassword', 'required', 'message' => 'Повторите пароль'],
             ['repeatPassword', 'compare', 'compareAttribute' => 'password',
@@ -34,21 +35,15 @@ class ResetPasswordForm extends UserModel
         ]);
     }
 
-    public function validateEmailExisting($attribute, $params) {
-        if(!$this->hasErrors() && !$this->id) {
-            $this->addError($attribute, 'Такой e-mail адрес не найден');
-        }
-    }
-
-    public function validateHash($attribute, $params) {
-        if(!$this->hasErrors() && $this->hash !== $this->getUserSecurityModel()->reset_password_hash) {
+    public function validateResetPasswordHash($attribute, $params) {
+        if(!$this->hasErrors() && !$this->user) {
             $this->addError($attribute, 'Ссылка смены пароля не верная');
         }
     }
 
     public function attributeLabels() {
         return array_merge(parent::attributeLabels(), [
-            'password' => 'Новый пароль',
+            'newPassword' => 'Новый пароль',
             'repeatPassword' => 'Повторите новый пароль',
         ]);
     }
@@ -58,7 +53,7 @@ class ResetPasswordForm extends UserModel
      */
     public function changePassword() {
         if($this->validate()
-        && $this->save(false)
+        && $this->changeUserPassword()
         && $this->setHashToNull()
         && $userRedirect = $this->signIn()) {
             return $userRedirect;
@@ -67,9 +62,14 @@ class ResetPasswordForm extends UserModel
         }
     }
 
+    private function changeUserPassword() {
+        $userModel = $this->getUserModel();
+        $userModel->password = $this->newPassword;
+        return $userModel->save();
+    }
+
     private function setHashToNull() {
-        $securityModel = $this->getUserSecurityModel();
-        $securityModel->reset_password_hash = null;
-        return $securityModel->save();
+        $this->reset_password_hash = null;
+        return $this->save(false);
     }
 }

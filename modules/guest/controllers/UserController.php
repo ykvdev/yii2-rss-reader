@@ -58,10 +58,10 @@ class UserController extends Controller
         return $this->render('reset-password-request', compact('model'));
     }
 
-    public function actionResetPassword($email, $hash) {
-        $model = new ResetPasswordForm(compact('email', 'hash'));
-        $model->populateBy('email', 'password');
-        if(!$model->validate(['email', 'hash'])) {
+    public function actionResetPassword($hash_id, $reset_password_hash) {
+        $model = new ResetPasswordForm(compact('hash_id', 'reset_password_hash'));
+        $model->populateBy(['hash_id', 'reset_password_hash'], 'password');
+        if(!$model->validate(['hash_id', 'reset_password_hash'])) {
             $errors = $model->getFirstErrors();
             \Yii::$app->session->setFlash('danger', array_shift($errors));
         } elseif($model->load(\Yii::$app->request->post()) && $userRedirect = $model->changePassword()) {

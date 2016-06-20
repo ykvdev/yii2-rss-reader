@@ -19,7 +19,7 @@ return [
         'route' => 'guest/user/reset-password-request',
         'defaults' => ['email' => '']
     ],
-    'reset-password/<email:.*>/<hash:.*>' => 'guest/user/reset-password',
+    'reset-password/<hash_id:.*>/<reset_password_hash:.*>' => 'guest/user/reset-password',
 
     /**
      * USER MODULE
