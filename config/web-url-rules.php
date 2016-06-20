@@ -6,7 +6,7 @@ return [
      */
     'error' => 'common/common/error',
     'page/<view:[a-zA-Z0-9-]+>' => 'common/common/page',
-    'confirmation-email/<email:.*>/<hash:.*>' => 'common/user/confirmation-email',
+    'confirmation-email/<hash_id:.*>/<confirmation_hash:.*>' => 'common/user/confirmation-email',
 
     /**
      * GUEST MODULE

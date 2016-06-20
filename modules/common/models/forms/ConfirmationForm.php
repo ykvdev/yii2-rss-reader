@@ -2,14 +2,11 @@
 
 namespace app\modules\common\models\forms;
 
-use app\modules\common\models\db\UserModel;
+use app\modules\common\models\db\UserSecurityModel;
 
-class ConfirmationForm extends UserModel
+class ConfirmationForm extends UserSecurityModel
 {
     const SCENARIO_CONFIRMATION_EMAIL = 'confirmation-email';
-
-    /** @var string */
-    public $hash;
 
     public function init() {
         parent::init();
@@ -18,29 +15,19 @@ class ConfirmationForm extends UserModel
 
     public function scenarios() {
         return array_merge(parent::scenarios(), [
-            self::SCENARIO_CONFIRMATION_EMAIL => ['email', 'hash']
+            self::SCENARIO_CONFIRMATION_EMAIL => ['hash_id', 'confirmation_hash']
         ]);
     }
 
     public function rules() {
         return array_merge(parent::rules(), [
-            ['email', 'validateEmailExisting'],
-
-            ['hash', 'required'],
-            ['hash', 'validateHash'],
+            ['confirmation_hash', 'required'],
+            ['confirmation_hash', 'validateConfirmationHash'],
         ]);
     }
 
-    public function validateEmailExisting($attribute, $params) {
-        if(!$this->hasErrors()) {
-            if(!$this->id) {
-                $this->addError($attribute, 'Такой e-mail адрес не найден');
-            }
-        }
-    }
-
-    public function validateHash($attribute, $params) {
-        if(!$this->hasErrors() && $this->hash !== $this->getUserSecurityModel()->confirmation_hash) {
+    public function validateConfirmationHash($attribute, $params) {
+        if(!$this->hasErrors() && !$this->user) {
             $this->addError($attribute, 'Ссылка подтверждения e-mail адреса не верная');
         }
     }
@@ -59,11 +46,10 @@ class ConfirmationForm extends UserModel
     }
 
     private function setConfirmed() {
-        $securityModel = $this->getUserSecurityModel();
-        if(!$securityModel->confirmed) {
-            $securityModel->confirmation_hash = null;
-            $securityModel->confirmed = 1;
-            return $securityModel->save();
+        if(!$this->confirmed) {
+            $this->confirmation_hash = null;
+            $this->confirmed = 1;
+            return $this->save(false);
         } else {
             return true;
         }

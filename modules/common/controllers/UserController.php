@@ -7,11 +7,11 @@ use yii\web\Controller;
 
 class UserController extends Controller
 {
-    public function actionConfirmationEmail($email, $hash) {
-        $model = new ConfirmationForm(compact('email', 'hash'));
-        $model->populateBy('email');
+    public function actionConfirmationEmail($hash_id, $confirmation_hash) {
+        $model = new ConfirmationForm(compact('hash_id', 'confirmation_hash'));
+        $model->populateBy(['hash_id', 'confirmation_hash']);
         if($userRedirect = $model->confirm()) {
-            \Yii::$app->session->setFlash('info', 'Ваш e-mail адрес ' . $email . ' подтвержден');
+            \Yii::$app->session->setFlash('info', 'Ваш e-mail адрес подтвержден');
             return $userRedirect;
         } else {
             $errors = $model->getFirstErrors();

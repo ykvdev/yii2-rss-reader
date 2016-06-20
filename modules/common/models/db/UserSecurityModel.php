@@ -8,6 +8,7 @@ use yii\db\ActiveRecord;
 
 /**
  * @property integer $user
+ * @property string $hash_id
  * @property string $confirmation_hash
  * @property integer $confirmed
  * @property string $reset_password_hash
@@ -30,6 +31,10 @@ class UserSecurityModel extends ActiveRecord
             ['user', 'unique', 'targetAttribute' => 'user'],
             ['user', 'exist', 'skipOnError' => true, 'targetClass' => UserModel::className(),
                 'targetAttribute' => ['user' => 'id']],
+
+            ['hash_id', 'required'],
+            ['hash_id', 'string', 'max' => 32],
+            ['hash_id', 'unique', 'targetAttribute' => 'hash_id'],
 
             ['confirmation_hash', 'string', 'max' => 32],
 
