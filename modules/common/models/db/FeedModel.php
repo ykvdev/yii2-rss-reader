@@ -2,6 +2,7 @@
 
 namespace app\modules\common\models\db;
 
+use app\components\ArPopulateTrait;
 use Yii;
 use yii\db\ActiveRecord;
 
@@ -14,6 +15,8 @@ use yii\db\ActiveRecord;
  */
 class FeedModel extends ActiveRecord
 {
+    use ArPopulateTrait;
+
     /**
      * @inheritdoc
      */

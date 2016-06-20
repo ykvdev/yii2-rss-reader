@@ -12,6 +12,7 @@ class UserController extends Controller
 {
     public function actionChangeEmail() {
         $model = new ChangeEmailForm(['id' => \Yii::$app->user->identity->id]);
+        $model->populateBy('id', 'email');
         if($model->load(\Yii::$app->request->post())) {
             if(\Yii::$app->request->isAjax) {
                 \Yii::$app->response->format = Response::FORMAT_JSON;
@@ -27,6 +28,7 @@ class UserController extends Controller
 
     public function actionChangePassword() {
         $model = new ChangePasswordForm(['id' => \Yii::$app->user->identity->id]);
+        $model->populateBy('id');
         if($model->load(\Yii::$app->request->post())) {
             if(\Yii::$app->request->isAjax) {
                 \Yii::$app->response->format = Response::FORMAT_JSON;

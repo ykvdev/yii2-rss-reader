@@ -17,6 +17,7 @@ class UserController extends Controller
     {
         $model = new SignInForm();
         if ($model->load(\Yii::$app->request->post())) {
+            $model->populateBy('email');
             if(\Yii::$app->request->isAjax) {
                 \Yii::$app->response->format = Response::FORMAT_JSON;
                 return ActiveForm::validate($model);
@@ -30,6 +31,7 @@ class UserController extends Controller
 
     public function actionResendConfirmationMail($email) {
         $model = new ResendConfirmationMailForm(compact('email'));
+        $model->populateBy('email');
         if($model->sendConfirmationMail()) {
             \Yii::$app->session->setFlash('info',
                 'Повторное письмо, со ссылкой для подтверждения e-mail адреса, отправлено');
@@ -43,6 +45,7 @@ class UserController extends Controller
 
     public function actionResetPasswordRequest($email = null) {
         $model = new ResetPasswordRequestForm(compact('email'));
+        $model->populateBy('email');
         if($model->load(\Yii::$app->request->post())) {
             if(\Yii::$app->request->isAjax) {
                 \Yii::$app->response->format = Response::FORMAT_JSON;
@@ -57,6 +60,7 @@ class UserController extends Controller
 
     public function actionResetPassword($email, $hash) {
         $model = new ResetPasswordForm(compact('email', 'hash'));
+        $model->populateBy('email', 'password');
         if(!$model->validate(['email', 'hash'])) {
             $errors = $model->getFirstErrors();
             \Yii::$app->session->setFlash('danger', array_shift($errors));

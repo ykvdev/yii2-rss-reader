@@ -10,8 +10,6 @@ class ChangeEmailForm extends UserModel
 
     public $currentPassword;
 
-    protected $skipFieldsForPopulate = ['email'];
-
     public function init() {
         parent::init();
         $this->scenario = self::SCENARIO_CHANGE_EMAIL;

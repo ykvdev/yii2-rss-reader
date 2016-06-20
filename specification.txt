@@ -134,6 +134,8 @@ bl-gener\modules\common\models\forms\ConfirmationForm.php
 возможно также сделать с:
 ResetPasswordRequestForm.php
 
+проверить все экщены
+
 ---------------------------
 
 *** ЛК / левая панель ***

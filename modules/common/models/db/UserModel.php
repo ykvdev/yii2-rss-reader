@@ -2,14 +2,12 @@
 
 namespace app\modules\common\models\db;
 
-use app\components\ArAutoPopulateTrait;
+use app\components\ArPopulateTrait;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
 /**
- * This is the model class for table "users".
- *
  * @property integer $id
  * @property string $email
  * @property string $password
@@ -17,7 +15,7 @@ use yii\web\IdentityInterface;
  */
 class UserModel extends ActiveRecord implements IdentityInterface
 {
-    use ArAutoPopulateTrait,
+    use ArPopulateTrait,
         UserModel\services\IdentityTrait,
         UserModel\services\CommonTrait,
         UserModel\services\ConfirmationTrait,
@@ -25,8 +23,6 @@ class UserModel extends ActiveRecord implements IdentityInterface
         UserModel\services\ResetPasswordTrait,
         UserModel\events\BeforeSaveEventTrait,
         UserModel\events\AfterSaveEventTrait;
-
-    protected $autoPopulateByFields = ['id', 'email'];
 
     /**
      * @inheritdoc

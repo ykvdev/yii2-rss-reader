@@ -10,8 +10,6 @@ class ResetPasswordForm extends UserModel
 
     public $hash, $repeatPassword;
 
-    protected $skipFieldsForPopulate = ['password'];
-
     public function init() {
         parent::init();
         $this->scenario = self::SCENARIO_RESET_PASSWORD;

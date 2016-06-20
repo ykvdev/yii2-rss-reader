@@ -9,6 +9,7 @@ class UserController extends Controller
 {
     public function actionConfirmationEmail($email, $hash) {
         $model = new ConfirmationForm(compact('email', 'hash'));
+        $model->populateBy('email');
         if($userRedirect = $model->confirm()) {
             \Yii::$app->session->setFlash('info', 'Ваш e-mail адрес ' . $email . ' подтвержден');
             return $userRedirect;
