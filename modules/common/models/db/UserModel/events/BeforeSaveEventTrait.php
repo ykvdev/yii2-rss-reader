@@ -3,6 +3,7 @@
 namespace app\modules\common\models\db\UserModel\events;
 
 use app\modules\common\models\db\UserModel;
+use yii\db\Expression;
 
 trait BeforeSaveEventTrait
 {
@@ -28,7 +29,7 @@ trait BeforeSaveEventTrait
     private function setRegisteredDateIfNeed($insert) {
         /** @var $this UserModel */
         if($insert) {
-            $this->registered_at = date('Y-m-d H:i:s');
+            $this->registered_at = new Expression('NOW()');
         }
     }
 
