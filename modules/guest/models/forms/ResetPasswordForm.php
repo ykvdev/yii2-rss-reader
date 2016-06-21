@@ -30,7 +30,7 @@ class ResetPasswordForm extends UserSecurityModel
             ['newPassword', 'string', 'min' => 3, 'max' => 255],
 
             ['repeatPassword', 'required', 'message' => 'Повторите пароль'],
-            ['repeatPassword', 'compare', 'compareAttribute' => 'password',
+            ['repeatPassword', 'compare', 'compareAttribute' => 'newPassword',
                 'message' => 'Введенные пароли не совпадают'],
         ]);
     }
@@ -55,7 +55,7 @@ class ResetPasswordForm extends UserSecurityModel
         if($this->validate()
         && $this->changeUserPassword()
         && $this->setHashToNull()
-        && $userRedirect = $this->signIn()) {
+        && $userRedirect = $this->getUserModel()->signIn()) {
             return $userRedirect;
         } else {
             return false;

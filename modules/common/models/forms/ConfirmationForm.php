@@ -57,7 +57,7 @@ class ConfirmationForm extends UserSecurityModel
 
     private function getRedirection() {
         if(\Yii::$app->user->isGuest) {
-            return $this->signIn();
+            return $this->getUserModel()->signIn();
         } else {
             return \Yii::$app->getResponse()->redirect(\Yii::$app->getUser()->getReturnUrl());
         }

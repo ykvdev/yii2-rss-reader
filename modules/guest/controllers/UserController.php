@@ -45,8 +45,8 @@ class UserController extends Controller
 
     public function actionResetPasswordRequest($email = null) {
         $model = new ResetPasswordRequestForm(compact('email'));
-        $model->populateBy('email');
         if($model->load(\Yii::$app->request->post())) {
+            $model->populateBy('email');
             if(\Yii::$app->request->isAjax) {
                 \Yii::$app->response->format = Response::FORMAT_JSON;
                 return ActiveForm::validate($model);

@@ -14,7 +14,7 @@ trait ArPopulateTrait
             $findData = is_array($findData) ? $findData : [$findData];
             foreach ($findData as $k => $fieldName) {
                 $findData[$fieldName] = $this->{$fieldName};
-                unset($findData[$fieldName]);
+                unset($findData[$k]);
             }
         }
 

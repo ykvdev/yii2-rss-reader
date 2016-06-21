@@ -34,7 +34,6 @@ class UserSecurityModel extends ActiveRecord
 
             ['hash_id', 'required'],
             ['hash_id', 'string', 'max' => 32],
-            ['hash_id', 'unique', 'targetAttribute' => 'hash_id'],
 
             ['confirmation_hash', 'string', 'max' => 32],
 

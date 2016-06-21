@@ -21,10 +21,11 @@ trait ResetPasswordTrait
      */
     public function getResetPasswordLink() {
         /** @var $this UserModel */
+        $securityModel = $this->getUserSecurityModel();
         return Url::toRoute([
             '/guest/user/reset-password',
-            'email' => $this->email,
-            'hash' => $this->getUserSecurityModel()->reset_password_hash
+            'hash_id' => $securityModel->hash_id,
+            'reset_password_hash' => $securityModel->reset_password_hash
         ], true);
     }
 }

@@ -33,10 +33,11 @@ trait ConfirmationTrait
      */
     public function getConfirmationLink() {
         /** @var $this UserModel */
+        $securityModel = $this->getUserSecurityModel();
         return Url::toRoute([
             '/common/user/confirmation-email',
-            'email' => $this->email,
-            'hash' => $this->getUserSecurityModel()->confirmation_hash
+            'hash_id' => $securityModel->hash_id,
+            'confirmation_hash' => $securityModel->confirmation_hash
         ], true);
     }
 }
