@@ -1,16 +1,22 @@
 <?php
 
-namespace app\modules\user\controllers;
+namespace app\modules\user\controllers\news;
 
+use yii\base\Action;
 use app\modules\common\models\db\FeedModel;
 use app\modules\common\models\db\NewModel;
 use yii\db\Expression;
 use yii\db\Query;
-use yii\web\Controller;
 
-class NewsController extends Controller
+class ListAction extends Action
 {
-    public function actionList() {
+    public function run() {
+        return $this->controller->render('list', [
+            'feeds' => $this->getFeedsList()
+        ]);
+    }
+
+    private function getFeedsList() {
         $noReadCountQuery = (new Query())
             ->select('COUNT(id)')
             ->from(NewModel::tableName())
@@ -22,8 +28,6 @@ class NewsController extends Controller
             ->where(['user' => \Yii::$app->user->identity->id])
             ->all();
 
-        return $this->render('list', [
-            'feeds' => $feeds
-        ]);
+        return $feeds;
     }
 }
