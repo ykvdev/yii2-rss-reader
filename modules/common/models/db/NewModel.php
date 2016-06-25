@@ -12,7 +12,7 @@ use yii\db\ActiveRecord;
  * @property string $published_at
  * @property string $title
  * @property string $short_text
- * @property string $external_uri
+ * @property string $url
  * @property integer $read
  */
 class NewModel extends ActiveRecord
@@ -47,14 +47,14 @@ class NewModel extends ActiveRecord
             ['short_text', 'required'],
             ['short_text', 'string', 'max' => 255],
 
-            ['external_uri', 'required'],
-            ['external_uri', 'string', 'max' => 255],
+            ['url', 'required'],
+            ['url', 'string', 'max' => 255],
 
             ['read', 'boolean'],
 
             [['feed', 'title'], 'unique', 'targetAttribute' => ['feed', 'title'],
                 'message' => 'Такая новость уже есть в этом RSS канале'],
-            [['feed', 'external_uri'], 'unique', 'targetAttribute' => ['feed', 'external_uri'],
+            [['feed', 'url'], 'unique', 'targetAttribute' => ['feed', 'url'],
                 'message' => 'Такая новость уже есть в этом RSS канале'],
         ];
     }

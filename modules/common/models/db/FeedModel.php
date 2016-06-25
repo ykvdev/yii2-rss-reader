@@ -9,8 +9,8 @@ use yii\db\ActiveRecord;
 /**
  * @property integer $id
  * @property integer $user
- * @property string $site_url
- * @property string $rss_uri
+ * @property string $url
+ * @property string $title
  * @property string $subscribed_at
  */
 class FeedModel extends ActiveRecord
@@ -36,17 +36,19 @@ class FeedModel extends ActiveRecord
             ['user', 'exist', 'skipOnError' => true, 'targetClass' => UserModel::className(),
                 'targetAttribute' => ['user' => 'id']],
 
-            ['site_url', 'required'],
-            ['site_url', 'url'],
-            ['site_url', 'string', 'max' => 255],
+            ['url', 'required'],
+            ['url', 'url'],
+            ['url', 'string', 'max' => 255],
 
-            ['rss_uri', 'required'],
-            ['rss_uri', 'string', 'max' => 255],
+            ['title', 'required'],
+            ['title', 'string', 'max' => 255],
 
             ['subscribed_at', 'required'],
             ['subscribed_at', 'date', 'format' => 'php:Y-m-d H:i:s'],
 
-            [['user', 'site_url', 'rss_uri'], 'unique', 'targetAttribute' => ['user', 'site_url', 'rss_uri'],
+            [['user', 'url'], 'unique', 'targetAttribute' => ['user', 'url'],
+                'message' => 'Такой RSS канал уже существует'],
+            [['user', 'title'], 'unique', 'targetAttribute' => ['user', 'title'],
                 'message' => 'Такой RSS канал уже существует'],
         ];
     }
@@ -64,5 +66,13 @@ class FeedModel extends ActiveRecord
     public function getNewModels()
     {
         return $this->hasMany(NewModel::className(), ['feed' => 'id'])->all();
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getNewsQuery()
+    {
+        return $this->hasMany(NewModel::className(), ['feed' => 'id']);
     }
 }

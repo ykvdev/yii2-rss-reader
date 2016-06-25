@@ -6,6 +6,7 @@ use app\modules\common\models\db\UserModel;
 use yii\base\Action;
 use app\modules\common\models\db\FeedModel;
 use app\modules\common\models\db\NewModel;
+use yii\data\Pagination;
 use yii\db\Expression;
 use yii\db\Query;
 
@@ -15,27 +16,13 @@ class ListAction extends Action
     private $currentFeed;
 
     public function run() {
-        $this->initFeedId();
-
+        list($news, $pages) = $this->getNewsList();
         return $this->controller->render('list', [
-            'currentFeed' => $this->currentFeed,
-            'feeds' => $this->getFeedsList()
+            'feeds' => $this->getFeedsList(),
+            'currentFeed' => $this->getCurrentFeed(),
+            'news' => $news,
+            'pages' => $pages
         ]);
-    }
-
-    private function initFeedId() {
-        if($feedId = \Yii::$app->request->get('feed_id')) {
-            $this->currentFeed = FeedModel::findOne($feedId);
-        } else {
-            /** @var UserModel $userModel */
-            $userModel = \Yii::$app->user->identity;
-            $userFirstFeed = $userModel->getFeedModels(1);
-            $this->currentFeed = $userFirstFeed ? $userFirstFeed[0] : null;
-        }
-    }
-
-    private function getNewsList() {
-
     }
 
     private function getFeedsList() {
@@ -63,5 +50,31 @@ class ListAction extends Action
                 $feed['icon_uri'] = \Yii::getAlias('@web/uploads/feed_icons/' . basename($findIcons[0]));
             }
         }
+    }
+
+    private function getCurrentFeed() {
+        if(!$this->currentFeed) {
+            if ($feedId = \Yii::$app->request->get('feed_id')) {
+                $this->currentFeed = FeedModel::findOne($feedId);
+            } else {
+                /** @var UserModel $userModel */
+                $userModel = \Yii::$app->user->identity;
+                $userFirstFeed = $userModel->getFeedModels(1);
+                $this->currentFeed = $userFirstFeed ? $userFirstFeed[0] : null;
+            }
+        }
+
+        return $this->currentFeed;
+    }
+
+    private function getNewsList() {
+        $newsQuery = $this->getCurrentFeed()->getNewsQuery();
+        $countQuery = clone $newsQuery;
+        $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => 1, 'pageSizeParam' => false]);
+        $news = $newsQuery->offset($pages->offset)->limit($pages->limit)->all();
+        foreach($news as &$new) {
+            $new->short_text = strip_tags($new->short_text);
+        }
+        return [$news, $pages];
     }
 }

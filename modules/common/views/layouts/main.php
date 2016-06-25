@@ -47,8 +47,10 @@ AppAsset::register($this);
             'options' => ['class' => 'navbar-nav'],
             'encodeLabels' => false,
             'items' => [
-                ['label' => '<span class="glyphicon glyphicon-inbox"></span> Новости', 'url' => ['/user/news/list', 'feed_id' => '']],
-                ['label' => '<span class="glyphicon glyphicon-plus"></span> Подписаться', 'url' => ['/user/news/subscribe']],
+                ['label' => '<span class="glyphicon glyphicon-inbox"></span> Новости',
+                    'url' => ['/user/news/list', 'feed_id' => '', 'page' => 1]],
+                ['label' => '<span class="glyphicon glyphicon-plus"></span> Подписаться',
+                    'url' => ['/user/news/subscribe']],
             ],
         ]);
 
@@ -56,11 +58,13 @@ AppAsset::register($this);
             'options' => ['class' => 'navbar-nav navbar-right'],
             'encodeLabels' => false,
             'items' => [
-                ['label' => '<span class="glyphicon glyphicon-user"></span> ' . Yii::$app->user->identity->email, 'items' => [
-                    ['label' => 'Изменить e-mail', 'url' => ['/user/user/change-email']],
-                    ['label' => 'Изменить пароль', 'url' => ['/user/user/change-password']],
-                    ['label' => 'Выход', 'url' => ['/user/user/sign-out']],
-                ]],
+                ['label' => '<span class="glyphicon glyphicon-user"></span> ' . Yii::$app->user->identity->email,
+                    'items' => [
+                        ['label' => 'Изменить e-mail', 'url' => ['/user/user/change-email']],
+                        ['label' => 'Изменить пароль', 'url' => ['/user/user/change-password']],
+                        ['label' => 'Выход', 'url' => ['/user/user/sign-out']],
+                    ]
+                ],
             ],
         ]);
     endif;

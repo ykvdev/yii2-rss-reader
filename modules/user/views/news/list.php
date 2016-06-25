@@ -4,8 +4,10 @@ use \yii\helpers\Html,
     yii\helpers\Url;
 
 /** @var $this \yii\web\View */
-/** @var $currentFeed \app\modules\common\models\db\FeedModel */
 /** @var $feeds array */
+/** @var $currentFeed \app\modules\common\models\db\FeedModel */
+/** @var $news \app\modules\common\models\db\NewModel[] */
+/** @var $pages \yii\data\Pagination */
 
 $this->title = 'Список новостей';
 
@@ -14,7 +16,7 @@ $this->title = 'Список новостей';
     <ul class="nav nav-pills nav-stacked">
         <?php foreach($feeds as $feed): ?>
             <li <?= $feed['id'] == $currentFeed->id ? 'class="active"' : '' ?>
-            ><a href="<?= Url::toRoute(['/user/news/list', 'feed_id' => $feed['id']]) ?>">
+            ><a href="<?= Url::toRoute(['/user/news/list', 'feed_id' => $feed['id'], 'page' => 1]) ?>">
                 <?php if(isset($feed['icon_uri'])): ?>
                     <img src="<?= $feed['icon_uri'] ?>" width="16" height="16">
                 <?php endif ?>
@@ -26,12 +28,19 @@ $this->title = 'Список новостей';
                 <?php endif ?>
             </a></li>
         <?php endforeach ?>
-
-<!--        <li role="presentation" class="active"><a href="#">Home <span class="badge">4</span></a></li>-->
-<!--        <li role="presentation"><a href="#">Profile</a></li>-->
-<!--        <li role="presentation"><a href="#">Messages</a></li>-->
     </ul>
     <div class="news-list-container">
-        News list...
+        <?php foreach($news as $new): ?>
+            <div class="new-item">
+                <h4><?= $new->title ?></h4>
+                <div <?= !$new->read ? 'style="font-weight:bold"' : '' ?>><?= $new->short_text ?></div>
+                <a href="<?= $new->url ?>" target="_blank" class="btn btn-default">Подробнее</a>
+                <hr>
+            </div>
+        <?php endforeach ?>
+
+        <?= \yii\widgets\LinkPager::widget([
+            'pagination' => $pages
+        ]) ?>
     </div>
 </div>

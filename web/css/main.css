@@ -43,3 +43,6 @@ body {
     float: left;
     margin-left: 20px;
 }
+.news-list-page .news-list-container .new-item a {
+    margin-top: 10px;
+}
