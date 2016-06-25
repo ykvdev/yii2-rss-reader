@@ -33,3 +33,13 @@ body {
     width: 400px;
     margin: 0 auto;
 }
+
+.news-list-page ul {
+    width: 360px;
+    float: left;
+}
+.news-list-page .news-list-container {
+    width: 750px;
+    float: left;
+    margin-left: 20px;
+}
