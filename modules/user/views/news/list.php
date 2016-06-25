@@ -1,8 +1,10 @@
 <?php
 
-use \yii\helpers\Html;
+use \yii\helpers\Html,
+    yii\helpers\Url;
 
 /** @var $this \yii\web\View */
+/** @var $currentFeed \app\modules\common\models\db\FeedModel */
 /** @var $feeds array */
 
 $this->title = 'Список новостей';
@@ -11,7 +13,8 @@ $this->title = 'Список новостей';
 <div class="news-list-page">
     <ul class="nav nav-pills nav-stacked">
         <?php foreach($feeds as $feed): ?>
-            <li><a href="#">
+            <li <?= $feed['id'] == $currentFeed->id ? 'class="active"' : '' ?>
+            ><a href="<?= Url::toRoute(['/user/news/list', 'feed_id' => $feed['id']]) ?>">
                 <?php if(isset($feed['icon_uri'])): ?>
                     <img src="<?= $feed['icon_uri'] ?>" width="16" height="16">
                 <?php endif ?>

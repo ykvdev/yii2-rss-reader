@@ -2,6 +2,7 @@
 
 namespace app\modules\user\controllers\news;
 
+use app\modules\common\models\db\UserModel;
 use yii\base\Action;
 use app\modules\common\models\db\FeedModel;
 use app\modules\common\models\db\NewModel;
@@ -10,10 +11,31 @@ use yii\db\Query;
 
 class ListAction extends Action
 {
+    /** @var FeedModel */
+    private $currentFeed;
+
     public function run() {
+        $this->initFeedId();
+
         return $this->controller->render('list', [
+            'currentFeed' => $this->currentFeed,
             'feeds' => $this->getFeedsList()
         ]);
+    }
+
+    private function initFeedId() {
+        if($feedId = \Yii::$app->request->get('feed_id')) {
+            $this->currentFeed = FeedModel::findOne($feedId);
+        } else {
+            /** @var UserModel $userModel */
+            $userModel = \Yii::$app->user->identity;
+            $userFirstFeed = $userModel->getFeedModels(1);
+            $this->currentFeed = $userFirstFeed ? $userFirstFeed[0] : null;
+        }
+    }
+
+    private function getNewsList() {
+
     }
 
     private function getFeedsList() {

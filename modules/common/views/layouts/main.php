@@ -47,7 +47,7 @@ AppAsset::register($this);
             'options' => ['class' => 'navbar-nav'],
             'encodeLabels' => false,
             'items' => [
-                ['label' => '<span class="glyphicon glyphicon-inbox"></span> Новости', 'url' => ['/user/news/list']],
+                ['label' => '<span class="glyphicon glyphicon-inbox"></span> Новости', 'url' => ['/user/news/list', 'feed_id' => '']],
                 ['label' => '<span class="glyphicon glyphicon-plus"></span> Подписаться', 'url' => ['/user/news/subscribe']],
             ],
         ]);

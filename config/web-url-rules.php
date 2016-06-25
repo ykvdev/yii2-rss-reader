@@ -24,7 +24,11 @@ return [
     /**
      * USER MODULE
      */
-    'news' => 'user/news/list',
+    [
+        'pattern' => 'news/<feed_id:\d*>',
+        'route' => 'user/news/list',
+        'defaults' => ['feed_id' => '']
+    ],
     'change-email' => 'user/user/change-email',
     'change-password' => 'user/user/change-password',
     'sign-out' => 'user/user/sign-out',

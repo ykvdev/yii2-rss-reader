@@ -70,10 +70,17 @@ class UserModel extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * @param $limit null|int
      * @return FeedModel[]
      */
-    public function getFeedModels()
+    public function getFeedModels($limit = null)
     {
-        return $this->hasMany(FeedModel::className(), ['user' => 'id'])->all();
+        $query = $this->hasMany(FeedModel::className(), ['user' => 'id']);
+
+        if($limit) {
+            $query->limit($limit);
+        }
+
+        return $query->all();
     }
 }
