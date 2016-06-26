@@ -6,20 +6,20 @@ use app\modules\common\models\db\FeedModel;
 use app\modules\common\models\db\NewModel;
 use yii\base\Action;
 
-class SetAsReadAction extends Action
+class UnsubscribeAction extends Action
 {
     public function run() {
         $feedId = \Yii::$app->request->get('feed_id');
         /** @var FeedModel $feed */
         $feed = FeedModel::findOne($feedId);
         if($feed && $feed->user == \Yii::$app->user->identity->id) {
-            NewModel::updateAll([
-                'read' => 1,
-            ], [
-                'feed' => $feedId,
+            NewModel::deleteAll([
+                'feed' => $feedId
             ]);
+            $feed->delete();
+            unlink(FeedModel::getIconPath($feed->id));
         }
 
-        return $this->controller->redirect(['/user/news/list', 'feed_id' => $feedId, 'page' => 1]);
+        return $this->controller->redirect(['/user/news/list', 'feed_id' => '', 'page' => 1]);
     }
 }

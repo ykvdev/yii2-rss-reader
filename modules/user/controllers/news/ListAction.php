@@ -44,11 +44,7 @@ class ListAction extends Action
 
     private function injectFeedIcons(array &$feedsList) {
         foreach($feedsList as &$feed) {
-            $iconPathPattern = \Yii::getAlias("@webroot/uploads/feed_icons/{$feed['id']}.*");
-            $findIcons = glob($iconPathPattern);
-            if(isset($findIcons[0])) {
-                $feed['icon_uri'] = \Yii::getAlias('@web/uploads/feed_icons/' . basename($findIcons[0]));
-            }
+            $feed['icon_uri'] = FeedModel::getIconUri($feed['id']);
         }
     }
 

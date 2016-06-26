@@ -17,7 +17,7 @@ $this->title = 'Список новостей';
         <?php foreach($feeds as $feed): ?>
             <li <?= $feed['id'] == $currentFeed->id ? 'class="active"' : '' ?>
             ><a href="<?= Url::toRoute(['/user/news/list', 'feed_id' => $feed['id'], 'page' => 1]) ?>">
-                <?php if(isset($feed['icon_uri'])): ?>
+                <?php if($feed['icon_uri']): ?>
                     <img src="<?= $feed['icon_uri'] ?>" width="16" height="16">
                 <?php endif ?>
 

@@ -75,4 +75,31 @@ class FeedModel extends ActiveRecord
     {
         return $this->hasMany(NewModel::className(), ['feed' => 'id']);
     }
+
+    /**
+     * @param int $feedId
+     * @return bool|string
+     */
+    public static function getIconPath($feedId) {
+        $iconsPath = \Yii::getAlias("@webroot/uploads/feed_icons");
+        $findIcons = glob("{$iconsPath}/{$feedId}.*");
+        if(isset($findIcons[0])) {
+            return $iconsPath . '/' . basename($findIcons[0]);
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @param int $feedId
+     * @return bool|string
+     */
+    public static function getIconUri($feedId) {
+        $findIcons = glob(\Yii::getAlias("@webroot/uploads/feed_icons/{$feedId}.*"));
+        if(isset($findIcons[0])) {
+            return \Yii::getAlias("@web/uploads/feed_icons/") . basename($findIcons[0]);
+        } else {
+            return false;
+        }
+    }
 }
