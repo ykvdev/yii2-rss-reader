@@ -34,7 +34,7 @@ body {
     margin: 0 auto;
 }
 
-.news-list-page ul {
+.news-list-page > ul {
     width: 360px;
     float: left;
 }
@@ -45,4 +45,19 @@ body {
 }
 .news-list-page .news-list-container .new-item a {
     margin-top: 10px;
+}
+.news-list-page .news-list-container .panel-heading h3 {
+    margin-top: 10px;
+}
+.news-list-page .panel-footer {
+    padding: 15px 20px;
+}
+.news-list-page .panel-footer .pagination {
+    margin: 0;
+}
+.news-list-page .news-list-container .left-side {
+    float: left;
+}
+.news-list-page .news-list-container .right-side {
+    float: right;
 }

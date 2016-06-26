@@ -70,7 +70,7 @@ class ListAction extends Action
     private function getNewsList() {
         $newsQuery = $this->getCurrentFeed()->getNewsQuery();
         $countQuery = clone $newsQuery;
-        $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => 1, 'pageSizeParam' => false]);
+        $pages = new Pagination(['totalCount' => $countQuery->count(), /*'pageSize' => 1,*/ 'pageSizeParam' => false]);
         $news = $newsQuery->offset($pages->offset)->limit($pages->limit)->all();
         foreach($news as &$new) {
             $new->short_text = strip_tags($new->short_text);

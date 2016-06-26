@@ -17,8 +17,12 @@ class Controller extends \yii\web\Controller
         foreach($dir as $item) {
             if($item->isFile()) {
                 $actionId = lcfirst(str_replace(['Action', '.' . $item->getExtension()], '', $item->getBasename()));
+                $actionId = preg_replace('/([A-Z]{1})/', '-$1', $actionId);
+                $actionId = strtolower($actionId);
+
                 $actionClassName = "app\\modules\\{$moduleId}\\controllers\\{$controllerId}\\"
                     . str_replace('.' . $item->getExtension(), '', $item->getBasename());
+
                 $actions[$actionId] = $actionClassName;
             }
         }
