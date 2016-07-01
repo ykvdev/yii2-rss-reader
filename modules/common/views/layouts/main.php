@@ -50,7 +50,7 @@ AppAsset::register($this);
                 ['label' => '<span class="glyphicon glyphicon-inbox"></span> Новости',
                     'url' => ['/user/news/list', 'feed_id' => '', 'page' => 1]],
                 ['label' => '<span class="glyphicon glyphicon-plus"></span> Подписаться',
-                    'url' => ['/user/news/subscribe']],
+                    'url' => ['/user/feeds/subscribe']],
             ],
         ]);
 

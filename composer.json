@@ -9,7 +9,8 @@
         "yiisoft/yii2": ">=2.0.5",
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "*",
-        "omnilight/yii2-captcha": "^1.0"
+        "omnilight/yii2-captcha": "^1.0",
+        "olamedia/nokogiri": "^1.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "*",

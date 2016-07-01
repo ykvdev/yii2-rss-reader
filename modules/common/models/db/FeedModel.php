@@ -5,6 +5,7 @@ namespace app\modules\common\models\db;
 use app\components\ArPopulateTrait;
 use Yii;
 use yii\db\ActiveRecord;
+use yii\db\Expression;
 
 /**
  * @property integer $id
@@ -74,6 +75,18 @@ class FeedModel extends ActiveRecord
     public function getNewsQuery()
     {
         return $this->hasMany(NewModel::className(), ['feed' => 'id']);
+    }
+
+    public function beforeSave($insert) {
+        if(!parent::beforeSave($insert)) {
+            return false;
+        }
+
+        if($insert) {
+            $this->subscribed_at = new Expression('NOW()');
+        }
+
+        return true;
     }
 
     /**
