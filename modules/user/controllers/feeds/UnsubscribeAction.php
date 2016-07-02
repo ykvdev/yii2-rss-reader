@@ -16,8 +16,13 @@ class UnsubscribeAction extends Action
             NewModel::deleteAll([
                 'feed' => $feedId
             ]);
+
             $feed->delete();
-            unlink(FeedModel::getIconPath($feed->id));
+
+            $iconPath = FeedModel::getIconPath($feed->id);
+            if(file_exists($iconPath)) {
+                unlink($iconPath);
+            }
         }
 
         return $this->controller->redirect(['/user/news/list', 'feed_id' => '', 'page' => 1]);

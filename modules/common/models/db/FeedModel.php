@@ -94,7 +94,7 @@ class FeedModel extends ActiveRecord
      * @return bool|string
      */
     public static function getIconPath($feedId) {
-        $iconsPath = \Yii::getAlias("@webroot/uploads/feed_icons");
+        $iconsPath = self::getIconsPath();
         $findIcons = glob("{$iconsPath}/{$feedId}.*");
         if(isset($findIcons[0])) {
             return $iconsPath . '/' . basename($findIcons[0]);
@@ -108,11 +108,15 @@ class FeedModel extends ActiveRecord
      * @return bool|string
      */
     public static function getIconUri($feedId) {
-        $findIcons = glob(\Yii::getAlias("@webroot/uploads/feed_icons/{$feedId}.*"));
+        $findIcons = glob(self::getIconsPath() . "/{$feedId}.*");
         if(isset($findIcons[0])) {
             return \Yii::getAlias("@web/uploads/feed_icons/") . basename($findIcons[0]);
         } else {
             return false;
         }
+    }
+
+    public static function getIconsPath() {
+        return \Yii::getAlias("@webroot/uploads/feed_icons");
     }
 }
