@@ -117,7 +117,7 @@ class SubscribeFeedForm extends FeedModel
             } else {
                 $iconUrl = $siteUrl . '/favicon.ico';
             }
-            
+
             $response = (new Client())->createRequest()->setUrl($iconUrl)->send();
             if($response->isOk) {
                 file_put_contents(

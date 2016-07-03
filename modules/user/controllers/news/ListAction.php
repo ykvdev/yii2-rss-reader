@@ -9,6 +9,9 @@ use app\modules\common\models\db\NewModel;
 use yii\data\Pagination;
 use yii\db\Expression;
 use yii\db\Query;
+use yii\helpers\StringHelper;
+use yii\httpclient\Client;
+use yii\httpclient\Exception;
 
 class ListAction extends Action
 {
@@ -16,6 +19,9 @@ class ListAction extends Action
     private $currentFeed;
 
     public function run() {
+        $this->checkForNews();
+        $this->clearOldNewsIfNeed();
+
         list($news, $pages) = $this->getNewsList();
         return $this->controller->render('list', [
             'feeds' => $this->getFeedsList(),
@@ -23,6 +29,54 @@ class ListAction extends Action
             'news' => $news,
             'pages' => $pages
         ]);
+    }
+
+    private function checkForNews() {
+        try {
+            $response = (new Client())->createRequest()->setUrl($this->getCurrentFeed()->url)->send();
+            if(!$response->isOk) {
+                throw new \Exception;
+            }
+
+            $rss = simplexml_load_string($response->getContent());
+            $newItemsCount = 0;
+            foreach ($rss->channel->item as $item) {
+                if(!NewModel::findOne(['feed' => $this->getCurrentFeed()->id, 'url' => (string)$item->link])) {
+                    $new = new NewModel();
+                    $new->feed = $this->getCurrentFeed()->id;
+                    $new->published_at = date_create_from_format(\DateTime::RSS, (string)$item->pubDate)->format('Y-m-d H:i:s');
+                    $new->title = (string)$item->title;
+                    if(isset($item->description)) {
+                        $new->short_text = StringHelper::truncate(strip_tags((string)$item->description), 250);
+                    }
+                    $new->url = (string)$item->link;
+                    if($new->save()) {
+                        $newItemsCount++;
+                    }
+                }
+            }
+
+            if($newItemsCount > 0) {
+//                \Yii::$app->session->setFlash('info', \Yii::t('app',
+//                    'Получено {n, plural, one{# новость} few{# новости} many{# новостей}}', ['n' => $newItemsCount]));
+                \Yii::$app->session->setFlash('info', 'Получено новостей: ' . $newItemsCount);
+            }
+        } catch(Exception $e) {
+            \Yii::$app->session->setFlash('danger', 'При получении новостей с канала произошла ошибка');
+        }
+    }
+
+    private function clearOldNewsIfNeed() {
+        $newsCount = NewModel::find()->where([
+            'feed' => $this->getCurrentFeed()->id
+        ])->count();
+        if($newsCount > \Yii::$app->params['news']['max-count']) {
+            \Yii::$app->db->createCommand(sprintf(
+                'DELETE FROM %s ORDER BY published_at LIMIT %d',
+                NewModel::tableName(),
+                $newsCount - \Yii::$app->params['news']['max-count']
+            ))->execute();
+        }
     }
 
     private function getFeedsList() {
@@ -67,7 +121,7 @@ class ListAction extends Action
         $newsQuery = $this->getCurrentFeed()->getNewsQuery();
         $countQuery = clone $newsQuery;
         $pages = new Pagination(['totalCount' => $countQuery->count(), /*'pageSize' => 1,*/ 'pageSizeParam' => false]);
-        $news = $newsQuery->offset($pages->offset)->limit($pages->limit)->all();
+        $news = $newsQuery->orderBy('published_at DESC')->offset($pages->offset)->limit($pages->limit)->all();
         foreach($news as &$new) {
             $new->short_text = strip_tags($new->short_text);
         }

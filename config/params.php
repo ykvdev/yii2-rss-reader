@@ -8,5 +8,8 @@ return [
             'auth-key-secret' => '651ERFds1ERG',
             'redirect-route' => ['/user/news/list', 'feed_id' => '', 'page' => 1],
         ]
+    ],
+    'news' => [
+        'max-count' => 100
     ]
 ];

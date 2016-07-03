@@ -48,7 +48,7 @@ $this->title = 'Список новостей';
         <div class="panel-body">
             <?php foreach($news as $new): ?>
                 <div class="new-item">
-                    <h4><?= $new->title ?></h4>
+                    <h4><?= $new->title ?> (<?= $new->published_at ?>)</h4>
                     <div <?= !$new->read ? 'style="font-weight:bold"' : '' ?>><?= $new->short_text ?></div>
                     <a href="<?= $new->url ?>" target="_blank" class="btn btn-default">Подробнее</a>
                     <hr>
