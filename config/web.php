@@ -60,14 +60,17 @@ $config = [
                 ],
             ],
         ],
-        'db' => require(__DIR__ . '/db.php'),
+        'db' => require(__DIR__ . '/common/db.php'),
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => require(__DIR__ . '/web-url-rules.php'),
+            'rules' => require(__DIR__ . '/web/url-rules.php'),
+        ],
+        'assetManager' => [
+            'bundles' => YII_ENV_DEV ? ['\app\assets\AppAsset'] : require __DIR__ . '/web/assets-compressed.php'
         ],
     ],
-    'params' => require(__DIR__ . '/params.php'),
+    'params' => require(__DIR__ . '/common/params.php'),
 ];
 
 if (YII_ENV_DEV) {
