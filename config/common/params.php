@@ -11,5 +11,9 @@ return [
     ],
     'news' => [
         'max-count' => 100
+    ],
+    'i18n' => [
+        'available-languages' => ['en' => 'en-US', 'ru' => 'ru-RU'],
+        'default-language' => 'en',
     ]
 ];

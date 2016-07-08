@@ -5,6 +5,8 @@ namespace app\components;
 use yii\base\BootstrapInterface;
 use yii\base\Event;
 use yii\base\Application;
+use yii\helpers\Url;
+use yii\web\Controller;
 
 class Bootstrap implements BootstrapInterface
 {
@@ -14,8 +16,62 @@ class Bootstrap implements BootstrapInterface
     public function bootstrap($app) {
         $this->app = $app;
 
+        $this->setCurrentLanguageOrRedirect();
         $this->fillControllerMap();
         $this->makePageTitle();
+    }
+
+    private function setCurrentLanguageOrRedirect() {
+        Event::on(
+            Application::className(),
+            Application::EVENT_BEFORE_REQUEST,
+            function($event) {
+                list($route, $params) = $this->app->getUrlManager()->parseRequest($this->app->request);
+                if($route
+                && strlen($route) > 3
+                && !isset($params['currentLanguage'])) {
+                    $availableLanguages = $this->app->params['i18n']['available-languages'];
+                    $defaultLanguage = $this->app->params['i18n']['default-language'];
+                    $currentLanguage = $this->app->request->getPreferredLanguage($availableLanguages);
+                    $currentLanguage = $currentLanguage ? array_search($currentLanguage, $availableLanguages) : $defaultLanguage;
+                    $redirectUrl = Url::base() . '/' . $currentLanguage . '/' . $route;
+
+                    $this->app->response->redirect($redirectUrl);
+                    $this->app->response->send();
+                    $this->app->end();
+                }
+            }
+        );
+
+        Event::on(
+            Controller::className(),
+            Controller::EVENT_BEFORE_ACTION,
+            function($event) {
+                $currentLanguage = $this->app->request->get('currentLanguage');
+                $availableLanguages = $this->app->params['i18n']['available-languages'];
+                $defaultLanguage = $this->app->params['i18n']['default-language'];
+
+                if($currentLanguage && isset($availableLanguages[$currentLanguage])) {
+                    $this->app->language = $currentLanguage;
+                } else {
+                    $currentLanguage = $this->app->request->getPreferredLanguage($availableLanguages);
+                    $currentLanguage = $currentLanguage ? array_search($currentLanguage, $availableLanguages) : $defaultLanguage;
+
+                    $moduleId = $this->app->controller->module->id;
+                    $controllerId = $this->app->controller->id;
+                    $actionId = $this->app->controller->action->id;
+                    $this->app->response->redirect(array_merge(
+                        $this->app->request->get(),
+                        [
+                            "/{$moduleId}/{$controllerId}/{$actionId}",
+                            'currentLanguage' => $currentLanguage
+                        ]
+                    ));
+                    $this->app->response->send();
+                    $this->app->end();
+                }
+            }
+        );
     }
 
     /**

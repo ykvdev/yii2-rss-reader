@@ -4,8 +4,8 @@ $config = [
     'id' => 'yii2-rss-reader',
     'name' => 'RSS Reader',
     'homeUrl' => 'http://bl-gener',
-    'language' => 'ru-RU',
-    'sourceLanguage' => 'ru-RU',
+    'sourceLanguage' => 'en-US',
+    'language' => 'en-US',
     'basePath' => dirname(__DIR__),
     'defaultRoute' => 'guest/user/sign-in',
     'layoutPath' => '@app/modules/common/views/layouts',
@@ -64,6 +64,9 @@ $config = [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            'ruleConfig' => [
+                'class' => '\app\components\LanguageUrlRule'
+            ],
             'rules' => require(__DIR__ . '/web/url-rules.php'),
         ],
         'assetManager' => [
