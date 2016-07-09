@@ -65,6 +65,9 @@ $config = [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            'ruleConfig' => [
+                'class' => 'app\components\LanguageUrlRule'
+            ],
             'rules' => require(__DIR__ . '/web/url-rules.php'),
         ],
         'assetManager' => [

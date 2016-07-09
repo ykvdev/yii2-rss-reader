@@ -24,36 +24,8 @@ class I18n implements BootstrapInterface
         $this->availableLanguages = $this->application->params['i18n']['available-languages'];
         $this->defaultLanguage = $this->application->params['i18n']['default-language'];
 
-        $this->prepareUrlRulesIfNeed();
         $this->addLanguageToUrlIfNeed();
         $this->setCurrentLanguageOrRedirect();
-    }
-
-    private function prepareUrlRulesIfNeed() {
-        Event::on(
-            Application::className(),
-            Application::EVENT_BEFORE_REQUEST,
-            function($event) {
-                $rules = require \Yii::getAlias('@app/config/web/url-rules.php');
-                foreach($rules as $pattern => $route) {
-                    if(is_string($route)) {
-                        $rules[] = [
-                            'pattern' => "<currentLanguage>/{$pattern}",
-                            'route' => $route,
-                            'defaults' => ['currentLanguage' => $this->defaultLanguage]
-                        ];
-                        unset($rules[$pattern]);
-                    } elseif(is_array($route) && isset($route['pattern'])) {
-                        $rules[$pattern]['pattern'] = "<currentLanguage>/{$route['pattern']}";
-                        $rules[$pattern]['defaults'] = isset($rules[$pattern]['defaults'])
-                            ? array_merge($rules[$pattern]['defaults'], ['currentLanguage' => $this->application->language])
-                            : ['currentLanguage' => $this->defaultLanguage];
-                    }
-                }
-                $this->application->urlManager->rules = $rules;
-                $this->application->urlManager->init();
-            }
-        );
     }
 
     private function addLanguageToUrlIfNeed()
