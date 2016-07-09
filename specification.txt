@@ -194,9 +194,7 @@ https://github.com/samdark/yii2-cookbook/blob/master/book/i18n-selecting-applica
 ru-RU
 en-US
 
-// Todo: проверять кеш из UrlManager, если нет, только тогда делать подготовку url-rules
 // todo: не работает переход по ссылкам, не срабатывает параметр defaults из rules
-// todo: отрефакторить бутстрапинг, т.е. вынести i18n в отдельный бутстрап класс, и другое тоже
 
 --------------------------
 

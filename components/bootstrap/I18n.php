@@ -40,14 +40,14 @@ class I18n implements BootstrapInterface
                         $rules[] = [
                             'pattern' => "<currentLanguage>/{$pattern}",
                             'route' => $route,
-                            'defaults' => ['currentLanguage' => $this->application->language]
+                            'defaults' => ['currentLanguage' => $this->defaultLanguage]
                         ];
                         unset($rules[$pattern]);
                     } elseif(is_array($route) && isset($route['pattern'])) {
                         $rules[$pattern]['pattern'] = "<currentLanguage>/{$route['pattern']}";
                         $rules[$pattern]['defaults'] = isset($rules[$pattern]['defaults'])
                             ? array_merge($rules[$pattern]['defaults'], ['currentLanguage' => $this->application->language])
-                            : ['currentLanguage' => $this->application->language];
+                            : ['currentLanguage' => $this->defaultLanguage];
                     }
                 }
                 $this->application->urlManager->rules = $rules;
