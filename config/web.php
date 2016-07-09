@@ -22,7 +22,8 @@ $config = [
     ],
     'bootstrap' => [
         'log',
-        'app\components\Bootstrap'
+        'app\components\bootstrap\I18n',
+        'app\components\bootstrap\Common',
     ],
     'components' => [
         'request' => [
@@ -64,9 +65,6 @@ $config = [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'ruleConfig' => [
-                'class' => '\app\components\LanguageUrlRule'
-            ],
             'rules' => require(__DIR__ . '/web/url-rules.php'),
         ],
         'assetManager' => [
