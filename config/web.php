@@ -22,8 +22,8 @@ $config = [
     ],
     'bootstrap' => [
         'log',
-        'app\components\bootstrap\I18n',
         'app\components\bootstrap\Common',
+        'app\components\bootstrap\I18n',
     ],
     'components' => [
         'request' => [
@@ -72,6 +72,22 @@ $config = [
         ],
         'assetManager' => [
             'bundles' => YII_ENV_DEV ? ['\app\assets\AppAsset'] : require __DIR__ . '/web/assets-compressed.php'
+        ],
+        'i18n' => [
+            'translations' => [
+                'common*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@app/modules/common/messages',
+                ],
+                'guest*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@app/modules/guest/messages',
+                ],
+                'user*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@app/modules/user/messages',
+                ],
+            ],
         ],
     ],
     'params' => require(__DIR__ . '/common/params.php'),

@@ -7,7 +7,7 @@ use yii\bootstrap\Html;
 use yii\bootstrap\ActiveForm;
 use yii\captcha\Captcha;
 
-$this->title = 'Авторизация';
+$this->title = Yii::t('guest', 'Sign in');
 
 ?>
 <div class="form-page">

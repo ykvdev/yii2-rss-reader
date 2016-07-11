@@ -6,8 +6,8 @@
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use app\components\widgets\SelectLanguageWidget;
 
 AppAsset::register($this);
 ?>
@@ -82,7 +82,9 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; <?= Yii::$app->name ?> <?= date('Y') ?></p>
+        <p class="pull-left">
+            &copy; <?= Yii::$app->name ?> <?= date('Y') ?> | <?= SelectLanguageWidget::widget() ?>
+        </p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>

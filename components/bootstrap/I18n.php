@@ -55,7 +55,7 @@ class I18n implements BootstrapInterface
             function($event) {
                 $currentLanguage = $this->application->request->get('currentLanguage');
                 if($currentLanguage && isset($this->availableLanguages[$currentLanguage])) {
-                    $this->application->language = $currentLanguage;
+                    $this->application->language = $this->availableLanguages[$currentLanguage];
                 } else {
                     $moduleId = $this->application->controller->module->id;
                     $controllerId = $this->application->controller->id;
