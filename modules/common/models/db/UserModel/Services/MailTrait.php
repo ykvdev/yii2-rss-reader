@@ -26,12 +26,14 @@ trait MailTrait
      * @return bool
      */
     public static function sendMailTo($view, $subject, $recipientEmail, $recipientName = null, $params = []) {
+        \Yii::$app->mailer->setViewPath('@app/modules/common/mail/' . \Yii::$app->language);
+
         // Set layout params
         if($recipientName) {
             \Yii::$app->mailer->getView()->params['name'] = $recipientName;
         }
 
-        $moduleViewsPath = '@app/modules/' . \Yii::$app->controller->module->id . '/mail/views';
+        $moduleViewsPath = '@app/modules/' . \Yii::$app->controller->module->id . '/mail/' . \Yii::$app->language . '/views';
         $result = \Yii::$app->mailer->compose([
             'html' => $moduleViewsPath . '/' . $view . '-html',
             'text' => $moduleViewsPath . '/' . $view . '-text',

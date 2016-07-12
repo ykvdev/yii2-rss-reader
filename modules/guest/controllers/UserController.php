@@ -33,8 +33,7 @@ class UserController extends Controller
         $model = new ResendConfirmationMailForm(compact('email'));
         $model->populateBy('email');
         if($model->sendConfirmationMail()) {
-            \Yii::$app->session->setFlash('info',
-                'Повторное письмо, со ссылкой для подтверждения e-mail адреса, отправлено');
+            \Yii::$app->session->setFlash('info', \Yii::t('guest', 'Confirmation e-mail has been sent'));
         } else {
             $errors = $model->getFirstErrors();
             \Yii::$app->session->setFlash('danger', array_shift($errors));
@@ -51,7 +50,8 @@ class UserController extends Controller
                 \Yii::$app->response->format = Response::FORMAT_JSON;
                 return ActiveForm::validate($model);
             } elseif($model->sendResetPasswordMail()) {
-                \Yii::$app->session->setFlash('info', 'Вам было отправлено письмо для восстановления пароля');
+                \Yii::$app->session->setFlash('info',
+                    \Yii::t('guest', 'For you has been sent a letter for reset password'));
             }
         }
 
@@ -65,7 +65,7 @@ class UserController extends Controller
             $errors = $model->getFirstErrors();
             \Yii::$app->session->setFlash('danger', array_shift($errors));
         } elseif($model->load(\Yii::$app->request->post()) && $userRedirect = $model->changePassword()) {
-            \Yii::$app->session->setFlash('info', 'Ваш пароль изменен на новый');
+            \Yii::$app->session->setFlash('info', \Yii::t('guest', 'Your password has been changed to the new'));
             return $userRedirect;
         }
 

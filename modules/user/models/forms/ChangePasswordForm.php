@@ -33,29 +33,29 @@ class ChangePasswordForm extends UserModel
 
             ['repeatPassword', 'required'],
             ['repeatPassword', 'compare', 'compareAttribute' => 'newPassword',
-                'message' => 'Введенные пароли не совпадают'],
+                'message' => \Yii::t('user', 'Entered passwords is not equal')],
         ]);
     }
 
     public function validateCurrentPassword($attribute, $params)
     {
         if (!$this->hasErrors() && !\Yii::$app->security->validatePassword($this->currentPassword, $this->password)) {
-            $this->addError($attribute, 'Текущий пароль не верный');
+            $this->addError($attribute, \Yii::t('user', 'Current password is incorrect'));
         }
     }
 
     public function validateNewPasswordEquivalent($attribute, $params)
     {
         if (!$this->hasErrors() && \Yii::$app->security->validatePassword($this->newPassword, $this->password)) {
-            $this->addError($attribute, 'Новый пароль совпадает с текущим');
+            $this->addError($attribute, \Yii::t('user', 'New password is equal to current'));
         }
     }
 
     public function attributeLabels() {
         return array_merge(parent::attributeLabels(), [
-            'currentPassword' => 'Текущий пароль',
-            'newPassword' => 'Новый пароль',
-            'repeatPassword' => 'Повторите новый пароль'
+            'currentPassword' => \Yii::t('user', 'Current password'),
+            'newPassword' => \Yii::t('user', 'New password'),
+            'repeatPassword' => \Yii::t('user', 'Repeat a new password')
         ]);
     }
 
@@ -74,7 +74,7 @@ class ChangePasswordForm extends UserModel
         /** @var $this UserModel */
         return $this->sendMail(
             'password-changed-notify',
-            'Ваш пароль был изменен'
+            \Yii::t('user', 'Your password has been changed')
         );
     }
 }

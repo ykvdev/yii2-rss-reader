@@ -14,7 +14,7 @@ trait ConfirmationTrait
         /** @var $this UserModel */
         return $this->sendMail(
             'confirmation',
-            'Подтверждение e-mail адреса',
+            \Yii::t('common', 'E-mail confirmation'),
             ['link' => $this->getConfirmationLink()]
         );
     }
@@ -23,7 +23,7 @@ trait ConfirmationTrait
         /** @var $this UserModel */
         return $this->sendMail(
             'new-confirmation',
-            'Подтверждение нового e-mail адреса',
+            \Yii::t('common', 'New e-mail confirmation'),
             ['link' => $this->getConfirmationLink()]
         );
     }

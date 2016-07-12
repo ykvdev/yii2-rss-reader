@@ -57,12 +57,10 @@ class ListAction extends Action
             }
 
             if($newItemsCount > 0) {
-//                \Yii::$app->session->setFlash('info', \Yii::t('app',
-//                    'Получено {n, plural, one{# новость} few{# новости} many{# новостей}}', ['n' => $newItemsCount]));
-                \Yii::$app->session->setFlash('info', 'Получено новостей: ' . $newItemsCount);
+                \Yii::$app->session->setFlash('info', \Yii::t('user', 'Get news: ') . $newItemsCount);
             }
         } catch(Exception $e) {
-            \Yii::$app->session->setFlash('danger', 'При получении новостей с канала произошла ошибка');
+            \Yii::$app->session->setFlash('danger', \Yii::t('user', 'Get news error'));
         }
     }
 

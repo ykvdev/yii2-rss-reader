@@ -48,9 +48,9 @@ class FeedModel extends ActiveRecord
             ['subscribed_at', 'date', 'format' => 'php:Y-m-d H:i:s'],
 
             [['user', 'url'], 'unique', 'targetAttribute' => ['user', 'url'],
-                'message' => 'Такой RSS канал уже существует'],
+                'message' => Yii::t('common', 'This RSS feed already exist')],
             [['user', 'title'], 'unique', 'targetAttribute' => ['user', 'title'],
-                'message' => 'Такой RSS канал уже существует'],
+                'message' => Yii::t('common', 'This RSS feed already exist')],
         ];
     }
 

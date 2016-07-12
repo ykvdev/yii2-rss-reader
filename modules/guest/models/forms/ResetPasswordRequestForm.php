@@ -27,21 +27,21 @@ class ResetPasswordRequestForm extends UserModel
             ['email', 'validateEmailExisting'],
 
             ['captcha', 'filter', 'filter' => 'trim'],
-            ['captcha', 'required', 'message' => 'Введите проверочные цифры'],
+            ['captcha', 'required', 'message' => \Yii::t('guest', 'Enter controlling digits')],
             ['captcha', 'captcha', 'captchaAction' => Url::toRoute('/common/common/captcha'),
-                'message' => 'Проверочные цифры введены не верно'],
+                'message' => \Yii::t('guest', 'Controlling digits is not correct')],
         ]);
     }
 
     public function validateEmailExisting($attribute, $params) {
         if(!$this->hasErrors() && !$this->id) {
-            $this->addError($attribute, 'Такой e-mail адрес не найден');
+            $this->addError($attribute, \Yii::t('guest', 'This e-mail address is not found'));
         }
     }
 
     public function attributeLabels() {
         return array_merge(parent::attributeLabels(), [
-            'captcha' => 'Введите проверочные цифры',
+            'captcha' => \Yii::t('guest', 'Enter controlling digits'),
         ]);
     }
 

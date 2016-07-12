@@ -18,10 +18,10 @@ trait CommonTrait
         /** @var $this UserModel */
         if($validateConfirmation && !$this->getUserSecurityModel()->confirmed) {
             $this->addError('email', sprintf(
-                'Ваш e-mail не подтвержден.
-                Вы должны перейти по ссылке из письма для подтверждения e-mail адреса.
-                Если вы не получали это письмо, вы можете %s.',
-                Html::a('запросить его повторно', ['/guest/user/resend-confirmation-mail', 'email' => $this->email])
+                \Yii::t('common', 'Your e-mail address is not confirmed.
+                You are needed to go to the link from confirmation letter.
+                If you are not received this letter then %s'),
+                Html::a(\Yii::t('common', 'request it repeatedly'), ['/guest/user/resend-confirmation-mail', 'email' => $this->email])
             ));
 
             return false;

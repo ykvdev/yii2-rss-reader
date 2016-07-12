@@ -7,7 +7,7 @@ use yii\bootstrap\Html;
 use yii\bootstrap\ActiveForm;
 use yii\captcha\Captcha;
 
-$this->title = 'Регистрация';
+$this->title = Yii::t('guest', 'Sign up');
 
 ?>
 <div class="form-page">
@@ -23,13 +23,13 @@ $this->title = 'Регистрация';
     <?= $form->field($model, 'captcha')->widget(Captcha::className(), [
         'captchaAction' => \yii\helpers\Url::toRoute('/common/common/captcha'),
         'options' => ['class' => 'form-control', 'autocomplete' => 'off'],
-        'template' => '{image} <a href="#" class="captcha-refresh-link" title="Получить другие цифры"
-                        ><span class="glyphicon glyphicon-refresh"></span></a> {input}'
+        'template' => '{image} <a href="#" class="captcha-refresh-link" title="' . Yii::t('guest', 'Refresh digits')
+                    . '"><span class="glyphicon glyphicon-refresh"></span></a> {input}'
     ]) ?>
-    <?= $form->field($model, 'acceptAgreement')->checkbox()->label('Принять условия ' . Html::a(
-            'пользовательского сглашения',
+    <?= $form->field($model, 'acceptAgreement')->checkbox()->label(Yii::t('guest', 'Accept conditions') . Html::a(
+            Yii::t('guest', 'of user agreement'),
             ['/common/common/page', 'view' => 'agreement'],
             ['target' => '_blank'])) ?>
-    <?= Html::submitButton('Регистрация', ['class' => 'btn btn-primary']) ?>
+    <?= Html::submitButton(Yii::t('guest', 'Sign up'), ['class' => 'btn btn-primary']) ?>
     <?php ActiveForm::end() ?>
 </div>

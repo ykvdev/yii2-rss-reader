@@ -8,7 +8,7 @@ use yii\bootstrap\ActiveForm;
 use yii\captcha\Captcha;
 use yii\helpers\Url;
 
-$this->title = 'Восстановление пароля';
+$this->title = Yii::t('guest', 'Reset password');
 
 ?>
 <div class="form-page">
@@ -26,9 +26,9 @@ $this->title = 'Восстановление пароля';
     <?= $form->field($model, 'captcha')->widget(Captcha::className(), [
         'captchaAction' => Url::toRoute('/common/common/captcha'),
         'options' => ['class' => 'form-control', 'autocomplete' => 'off'],
-        'template' => '{image} <a href="#" class="captcha-refresh-link" title="Получить другие цифры"
-                        ><span class="glyphicon glyphicon-refresh"></span></a> {input}'
+        'template' => '{image} <a href="#" class="captcha-refresh-link" title="' . Yii::t('guest', 'Refresh digits')
+                    . '"><span class="glyphicon glyphicon-refresh"></span></a> {input}'
     ]) ?>
-    <?= Html::submitButton('Восстановить', ['class' => 'btn btn-primary']) ?>
+    <?= Html::submitButton(Yii::t('guest', 'Reset'), ['class' => 'btn btn-primary']) ?>
     <?php ActiveForm::end() ?>
 </div>

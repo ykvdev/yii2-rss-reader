@@ -6,7 +6,7 @@
 use yii\bootstrap\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Подписаться';
+$this->title = Yii::t('user', 'Subscribe');
 
 ?>
 <div class="form-page">
@@ -18,6 +18,6 @@ $this->title = 'Подписаться';
         'fieldConfig' => ['inputOptions' => ['autocomplete' => 'off']]
     ]) ?>
     <?= $form->field($model, 'url')->textInput(['autofocus' => true]) ?>
-    <?= Html::submitButton('Подписаться', ['class' => 'btn btn-primary']) ?>
+    <?= Html::submitButton(Yii::t('user', 'Subscribe'), ['class' => 'btn btn-primary']) ?>
     <?php ActiveForm::end() ?>
 </div>

@@ -37,9 +37,9 @@ AppAsset::register($this);
         echo Nav::widget([
             'options' => ['class' => 'navbar-nav navbar-right'],
             'items' => [
-                ['label' => 'Регистрация', 'url' => ['/guest/guest/sign-up']],
-                ['label' => 'Авторизация', 'url' => ['/guest/user/sign-in']],
-                ['label' => 'Восстановить пароль', 'url' => ['/guest/user/reset-password-request', 'email' => '']],
+                ['label' => Yii::t('common', 'Sign up'), 'url' => ['/guest/guest/sign-up']],
+                ['label' => Yii::t('common', 'Sign in'), 'url' => ['/guest/user/sign-in']],
+                ['label' => Yii::t('common', 'Reset password'), 'url' => ['/guest/user/reset-password-request', 'email' => '']],
             ],
         ]);
     else:
@@ -47,9 +47,9 @@ AppAsset::register($this);
             'options' => ['class' => 'navbar-nav'],
             'encodeLabels' => false,
             'items' => [
-                ['label' => '<span class="glyphicon glyphicon-inbox"></span> Новости',
+                ['label' => '<span class="glyphicon glyphicon-inbox"></span> ' . Yii::t('common', 'News'),
                     'url' => ['/user/news/list', 'feed_id' => '', 'page' => 1]],
-                ['label' => '<span class="glyphicon glyphicon-plus"></span> Подписаться',
+                ['label' => '<span class="glyphicon glyphicon-plus"></span> ' . Yii::t('common', 'Subscribe'),
                     'url' => ['/user/feeds/subscribe']],
             ],
         ]);
@@ -60,9 +60,9 @@ AppAsset::register($this);
             'items' => [
                 ['label' => '<span class="glyphicon glyphicon-user"></span> ' . Yii::$app->user->identity->email,
                     'items' => [
-                        ['label' => 'Изменить e-mail', 'url' => ['/user/user/change-email']],
-                        ['label' => 'Изменить пароль', 'url' => ['/user/user/change-password']],
-                        ['label' => 'Выход', 'url' => ['/user/user/sign-out']],
+                        ['label' => Yii::t('common', 'Change e-mail'), 'url' => ['/user/user/change-email']],
+                        ['label' => Yii::t('common', 'Change password'), 'url' => ['/user/user/change-password']],
+                        ['label' => Yii::t('common', 'Sign out'), 'url' => ['/user/user/sign-out']],
                     ]
                 ],
             ],

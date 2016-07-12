@@ -189,6 +189,10 @@ http://blog.denisbondar.com/post/yii2-%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D0%BD%D0%B0
 
 https://habrahabr.ru/post/226931/
 https://github.com/codemix/yii2-localeurls
+enableDefaultLanguageUrlCode to true
+
+Yii::$app->controller->route
+
 https://github.com/samdark/yii2-cookbook/blob/master/book/i18n-selecting-application-language.md
 
 ru-RU
@@ -196,6 +200,10 @@ en-US
 
 // не работает ссылка переключения на англ в футере
 // todo: не работает переход по ссылкам, не срабатывает параметр defaults из rules
+
+--
+
+Проверить: отправка писем на разн яз, отображение стат страницы на разных яз
 
 --------------------------
 
