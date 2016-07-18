@@ -26,7 +26,7 @@ $this->title = Yii::t('guest', 'Sign up');
         'template' => '{image} <a href="#" class="captcha-refresh-link" title="' . Yii::t('guest', 'Refresh digits')
                     . '"><span class="glyphicon glyphicon-refresh"></span></a> {input}'
     ]) ?>
-    <?= $form->field($model, 'acceptAgreement')->checkbox()->label(Yii::t('guest', 'Accept conditions') . Html::a(
+    <?= $form->field($model, 'acceptAgreement')->checkbox()->label(Yii::t('guest', 'Accept conditions ') . Html::a(
             Yii::t('guest', 'of user agreement'),
             ['/common/common/page', 'view' => 'agreement'],
             ['target' => '_blank'])) ?>

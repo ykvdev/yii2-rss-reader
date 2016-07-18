@@ -11,7 +11,8 @@
         "yiisoft/yii2-swiftmailer": "*",
         "omnilight/yii2-captcha": "^1.0",
         "olamedia/nokogiri": "^1.0",
-        "yiisoft/yii2-httpclient": "2.0.0.1"
+        "yiisoft/yii2-httpclient": "2.0.0.1",
+        "codemix/yii2-localeurls": "^1.4"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "*",

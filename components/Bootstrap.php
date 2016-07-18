@@ -1,13 +1,13 @@
 <?php
 
-namespace app\components\bootstrap;
+namespace app\components;
 
 use yii\base\BootstrapInterface;
 use yii\base\Event;
 use yii\base\Application;
 use yii\web\Controller;
 
-class Common implements BootstrapInterface
+class Bootstrap implements BootstrapInterface
 {
     /** @var Application */
     private $application;

@@ -22,8 +22,7 @@ $config = [
     ],
     'bootstrap' => [
         'log',
-        'app\components\bootstrap\Common',
-        'app\components\bootstrap\I18n',
+        'app\components\Bootstrap',
     ],
     'components' => [
         'request' => [
@@ -63,11 +62,14 @@ $config = [
         ],
         'db' => require(__DIR__ . '/common/db.php'),
         'urlManager' => [
+            'class' => 'codemix\localeurls\UrlManager',
+            'languages' => ['ru', 'en'],
+            'enableDefaultLanguageUrlCode' => true,
+            'ignoreLanguageUrlPatterns' => [
+                '#^common/common/captcha#' => '#^common/common/captcha#'
+            ],
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'ruleConfig' => [
-                'class' => 'app\components\LanguageUrlRule'
-            ],
             'rules' => require(__DIR__ . '/web/url-rules.php'),
         ],
         'assetManager' => [

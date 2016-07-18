@@ -7,7 +7,7 @@ use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use app\assets\AppAsset;
-use app\components\widgets\SelectLanguageWidget;
+use app\components\SelectLanguageWidget;
 
 AppAsset::register($this);
 ?>
