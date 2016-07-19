@@ -11,5 +11,5 @@ return [
     ],
     'news' => [
         'max-count' => 100
-    ]
+    ],
 ];

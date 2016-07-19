@@ -28,13 +28,13 @@ class ResendConfirmationMailForm extends UserModel
 
     public function validateEmailExisting($attribute, $params) {
         if(!$this->hasErrors() && !$this->id) {
-            $this->addError($attribute, 'Такой e-mail адрес не найден');
+            $this->addError($attribute, \Yii::t('guest', 'This e-mail address not found'));
         }
     }
 
     public function validateEmailConfirmed($attribute, $params) {
         if(!$this->hasErrors() && $this->getUserSecurityModel()->confirmed) {
-            $this->addError($attribute, 'Этот e-mail адрес уже подтвержден');
+            $this->addError($attribute, \Yii::t('guest', 'This e-mail address already confirmed'));
         }
     }
 

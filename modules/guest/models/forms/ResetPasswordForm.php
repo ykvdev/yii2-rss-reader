@@ -29,22 +29,22 @@ class ResetPasswordForm extends UserSecurityModel
             ['newPassword', 'required'],
             ['newPassword', 'string', 'min' => 3, 'max' => 255],
 
-            ['repeatPassword', 'required', 'message' => 'Повторите пароль'],
+            ['repeatPassword', 'required', 'message' => \Yii::t('guest', 'Repeat password')],
             ['repeatPassword', 'compare', 'compareAttribute' => 'newPassword',
-                'message' => 'Введенные пароли не совпадают'],
+                'message' => \Yii::t('guest', 'Filled passwords is not equal')],
         ]);
     }
 
     public function validateResetPasswordHash($attribute, $params) {
         if(!$this->hasErrors() && !$this->user) {
-            $this->addError($attribute, 'Ссылка смены пароля не верная');
+            $this->addError($attribute, \Yii::t('guest', 'Link for password reset is not correct'));
         }
     }
 
     public function attributeLabels() {
         return array_merge(parent::attributeLabels(), [
-            'newPassword' => 'Новый пароль',
-            'repeatPassword' => 'Повторите новый пароль',
+            'newPassword' => \Yii::t('guest', 'New password'),
+            'repeatPassword' => \Yii::t('guest', 'Repeat a new password'),
         ]);
     }
 

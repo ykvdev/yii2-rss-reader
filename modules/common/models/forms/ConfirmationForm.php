@@ -28,7 +28,7 @@ class ConfirmationForm extends UserSecurityModel
 
     public function validateConfirmationHash($attribute, $params) {
         if(!$this->hasErrors() && !$this->user) {
-            $this->addError($attribute, 'Ссылка подтверждения e-mail адреса не верная');
+            $this->addError($attribute, \Yii::t('common', 'E-mail confirmation link is not correct'));
         }
     }
 

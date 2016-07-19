@@ -27,6 +27,7 @@ class CommonController extends Controller
             ],
             'page' => [
                 'class' => ViewAction::className(),
+                'viewPrefix' => 'pages/' . \Yii::$app->language
             ]
         ];
     }

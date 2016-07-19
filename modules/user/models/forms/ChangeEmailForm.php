@@ -34,21 +34,21 @@ class ChangeEmailForm extends UserModel
 
     public function validateEmailEquivalent($attribute, $params) {
         if (!$this->hasErrors() && $this->email === \Yii::$app->user->identity->email) {
-            $this->addError($attribute, 'Введенный e-mail эквивалентен текущему');
+            $this->addError($attribute, \Yii::t('user', 'Entered e-mail is equal to current'));
         }
     }
 
     public function validatePassword($attribute, $params)
     {
         if (!$this->hasErrors() && !\Yii::$app->security->validatePassword($this->currentPassword, $this->password)) {
-            $this->addError($attribute, 'Введенный пароль не верный');
+            $this->addError($attribute, \Yii::t('user', 'Entered password is incorrect'));
         }
     }
 
     public function attributeLabels() {
         return array_merge(parent::attributeLabels(), [
-            'email' => 'Новый e-mail',
-            'currentPassword' => 'Текущий пароль',
+            'email' => \Yii::t('user', 'New e-mail'),
+            'currentPassword' => \Yii::t('user', 'Current password'),
         ]);
     }
 

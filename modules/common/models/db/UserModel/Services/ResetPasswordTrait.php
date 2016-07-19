@@ -11,7 +11,7 @@ trait ResetPasswordTrait
         /** @var $this UserModel */
         return $this->sendMail(
             'reset-password-request',
-            'Смена пароля',
+            \Yii::t('common', 'Password changing'),
             ['link' => $this->getResetPasswordLink()]
         );
     }

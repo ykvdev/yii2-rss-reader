@@ -40,9 +40,9 @@ class SignInForm extends UserModel
             ['rememberMe', 'boolean'],
 
             ['captcha', 'filter', 'filter' => 'trim'],
-            ['captcha', 'required', 'message' => 'Введите проверочные цифры'],
+            ['captcha', 'required', 'message' => Yii::t('guest', 'Enter controlling digits')],
             ['captcha', 'captcha', 'captchaAction' => Url::toRoute('/common/common/captcha'),
-                'message' => 'Проверочные цифры введены не верно'],
+                'message' => Yii::t('guest', 'Controlling digits is not correct')],
         ]);
     }
 
@@ -51,10 +51,9 @@ class SignInForm extends UserModel
         if (!$this->hasErrors()) {
             if (!$this->id || !Yii::$app->security->validatePassword($this->nativePassword, $this->password)) {
                 $this->incrementFailAuthCounterIfNeed();
-                $this->addError($attribute, sprintf(
-                    'Не корректное имя пользователя или пароль.
-                    Если вы забыли пароль, вы можете %s',
-                    Html::a('восстановить его', ['/guest/user/reset-password-request', 'email' => $this->email])
+                $this->addError($attribute,  Yii::t('guest',
+                    'Incorrect e-mail or password. If you forgot password you can {0}',
+                    Html::a(Yii::t('guest', 'reset it'), ['/guest/user/reset-password-request', 'email' => $this->email])
                 ));
             }
         }
@@ -76,9 +75,9 @@ class SignInForm extends UserModel
 
     public function attributeLabels() {
         return array_merge(parent::attributeLabels(), [
-            'nativePassword' => 'Пароль',
-            'rememberMe' => 'Запомнить меня',
-            'captcha' => 'Введите проверочные цифры',
+            'nativePassword' => Yii::t('guest', 'Password'),
+            'rememberMe' => Yii::t('guest', 'Remember me'),
+            'captcha' => Yii::t('guest', 'Enter controlling digits'),
         ]);
     }
 

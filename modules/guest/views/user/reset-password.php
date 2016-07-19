@@ -6,7 +6,7 @@
 use yii\bootstrap\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Изменение пароля';
+$this->title = Yii::t('guest', 'Change password');
 
 ?>
 <div class="form-page">
@@ -15,6 +15,6 @@ $this->title = 'Изменение пароля';
     <?php $form = ActiveForm::begin(['fieldConfig' => ['inputOptions' => ['autocomplete' => 'off']]]) ?>
     <?= $form->field($model, 'newPassword')->passwordInput(['autofocus' => true]) ?>
     <?= $form->field($model, 'repeatPassword')->passwordInput() ?>
-    <?= Html::submitButton('Изменить пароль', ['class' => 'btn btn-primary']) ?>
+    <?= Html::submitButton(Yii::t('guest', 'Change password'), ['class' => 'btn btn-primary']) ?>
     <?php ActiveForm::end() ?>
 </div>

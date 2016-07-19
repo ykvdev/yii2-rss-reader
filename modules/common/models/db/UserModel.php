@@ -57,8 +57,8 @@ class UserModel extends ActiveRecord implements IdentityInterface
     public function attributeLabels() {
         return [
             'email' => 'E-mail',
-            'password' => 'Пароль',
-            'registered_at' => 'Дата регистрации',
+            'password' => Yii::t('common', 'Password'),
+            'registered_at' => Yii::t('common', 'Registered at'),
         ];
     }
 

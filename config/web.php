@@ -4,8 +4,8 @@ $config = [
     'id' => 'yii2-rss-reader',
     'name' => 'RSS Reader',
     'homeUrl' => 'http://bl-gener',
-    'language' => 'ru-RU',
-    'sourceLanguage' => 'ru-RU',
+    'sourceLanguage' => 'en-US',
+    'language' => 'en-US',
     'basePath' => dirname(__DIR__),
     'defaultRoute' => 'guest/user/sign-in',
     'layoutPath' => '@app/modules/common/views/layouts',
@@ -22,7 +22,7 @@ $config = [
     ],
     'bootstrap' => [
         'log',
-        'app\components\Bootstrap'
+        'app\components\Bootstrap',
     ],
     'components' => [
         'request' => [
@@ -62,12 +62,34 @@ $config = [
         ],
         'db' => require(__DIR__ . '/common/db.php'),
         'urlManager' => [
+            'class' => 'codemix\localeurls\UrlManager',
+            'languages' => ['ru', 'en'],
+            'enableDefaultLanguageUrlCode' => true,
+            'ignoreLanguageUrlPatterns' => [
+                '#^common/common/captcha#' => '#^common/common/captcha#'
+            ],
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => require(__DIR__ . '/web/url-rules.php'),
         ],
         'assetManager' => [
             'bundles' => YII_ENV_DEV ? ['\app\assets\AppAsset'] : require __DIR__ . '/web/assets-compressed.php'
+        ],
+        'i18n' => [
+            'translations' => [
+                'common*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@app/modules/common/messages',
+                ],
+                'guest*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@app/modules/guest/messages',
+                ],
+                'user*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@app/modules/user/messages',
+                ],
+            ],
         ],
     ],
     'params' => require(__DIR__ . '/common/params.php'),

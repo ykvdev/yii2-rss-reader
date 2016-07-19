@@ -5,14 +5,15 @@ namespace app\components;
 use yii\base\BootstrapInterface;
 use yii\base\Event;
 use yii\base\Application;
+use yii\web\View;
 
 class Bootstrap implements BootstrapInterface
 {
     /** @var Application */
-    private $app;
+    private $application;
 
-    public function bootstrap($app) {
-        $this->app = $app;
+    public function bootstrap($application) {
+        $this->application = $application;
 
         $this->fillControllerMap();
         $this->makePageTitle();
@@ -36,11 +37,11 @@ class Bootstrap implements BootstrapInterface
                         $namespaceOfDefinedController = "app\\modules\\{$moduleId}\\controllers\\"
                             . ucfirst($controllerId) . 'Controller';
 
-                        $modulesConfig = $this->app->modules;
+                        $modulesConfig = $this->application->modules;
                         $modulesConfig[$moduleId]['controllerMap'][$controllerId] = file_exists($pathOfDefinedController)
                             ? $namespaceOfDefinedController
                             : Controller::className();
-                        $this->app->modules = $modulesConfig;
+                        $this->application->modules = $modulesConfig;
                     }
                 }
             }
@@ -49,11 +50,11 @@ class Bootstrap implements BootstrapInterface
 
     private function makePageTitle() {
         Event::on(
-            \yii\web\View::className(),
-            \yii\web\View::EVENT_AFTER_RENDER,
+            View::className(),
+            View::EVENT_AFTER_RENDER,
             function($event) {
-                $this->app->view->title = implode(' - ', [
-                    $this->app->view->title,
+                $this->application->view->title = implode(' - ', [
+                    $this->application->view->title,
                     \Yii::$app->name
                 ]);
             }

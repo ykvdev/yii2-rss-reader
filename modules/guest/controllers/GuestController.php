@@ -16,8 +16,8 @@ class GuestController extends Controller
                 \Yii::$app->response->format = Response::FORMAT_JSON;
                 return ActiveForm::validate($model);
             } elseif($userRedirect = $model->signUp()) {
-                \Yii::$app->session->setFlash('info', 'Вам необходимо подтвердить ваш e-mail адрес.
-                Для этого воспользуйтесь ссылкой из письма отправленного вам на почту.');
+                \Yii::$app->session->addFlash('info',
+                \Yii::t('guest', 'You are need to confirm your e-mail. For this, use the link from confirmation mail.'));
                 return $userRedirect;
             }
         }

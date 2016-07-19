@@ -35,7 +35,7 @@ class SubscribeFeedForm extends FeedModel
         try {
             (new Client())->createRequest()->setUrl($this->url)->send();
         } catch(Exception $e) {
-            $this->addError('url', 'Указанный URL адрес не существует');
+            $this->addError('url', \Yii::t('user', 'Entered URL is not found'));
         }
     }
 
@@ -46,7 +46,7 @@ class SubscribeFeedForm extends FeedModel
 
         if(!$this->validateRssFeedAndInit()
         && !$this->findRssFeedAndInit()) {
-            $this->addError('url', 'RSS канал по этой ссылке не найден');
+            $this->addError('url', \Yii::t('user', 'RSS feed not found in this URL'));
         }
     }
 
@@ -86,7 +86,7 @@ class SubscribeFeedForm extends FeedModel
 
     public function attributeLabels() {
         return array_merge(parent::attributeLabels(), [
-            'url' => 'URL сайта или RSS канала'
+            'url' => \Yii::t('user', 'Site or RSS feed URL')
         ]);
     }
 

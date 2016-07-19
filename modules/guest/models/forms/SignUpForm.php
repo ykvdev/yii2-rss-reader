@@ -26,25 +26,25 @@ class SignUpForm extends UserModel
         return array_merge(parent::rules(), [
             ['email', 'unique', 'targetAttribute' => 'email'],
 
-            ['repeatPassword', 'required', 'message' => 'Повторите пароль'],
+            ['repeatPassword', 'required', 'message' => \Yii::t('guest', 'Repeat password')],
             ['repeatPassword', 'compare', 'compareAttribute' => 'password',
-                'message' => 'Введенные пароли не совпадают'],
+                'message' => \Yii::t('guest', 'Filled passwords is not equal')],
 
             ['captcha', 'filter', 'filter' => 'trim'],
-            ['captcha', 'required', 'message' => 'Введите проверочные цифры'],
+            ['captcha', 'required', 'message' => \Yii::t('guest', 'Enter controlling digits')],
             ['captcha', 'captcha', 'captchaAction' => Url::toRoute('/common/common/captcha'),
-                'message' => 'Проверочные цифры введены не верно'],
+                'message' => \Yii::t('guest', 'Controlling digits is not correct')],
 
             ['acceptAgreement', 'boolean'],
             ['acceptAgreement', 'required', 'requiredValue' => true,
-                'message' => 'Вы должны принять условия соглашения'],
+                'message' => \Yii::t('guest', 'You are need to accept agreement')],
         ]);
     }
 
     public function attributeLabels() {
         return array_merge(parent::attributeLabels(), [
-            'repeatPassword' => 'Повторите пароль',
-            'captcha' => 'Введите проверочные цифры',
+            'repeatPassword' => \Yii::t('guest', 'Repeat password'),
+            'captcha' => \Yii::t('guest', 'Enter controlling digits'),
         ]);
     }
 

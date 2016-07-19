@@ -53,9 +53,9 @@ class NewModel extends ActiveRecord
             ['read', 'boolean'],
 
             [['feed', 'title'], 'unique', 'targetAttribute' => ['feed', 'title'],
-                'message' => 'Такая новость уже есть в этом RSS канале'],
+                'message' => Yii::t('common', 'This new already exist in this RSS feed')],
             [['feed', 'url'], 'unique', 'targetAttribute' => ['feed', 'url'],
-                'message' => 'Такая новость уже есть в этом RSS канале'],
+                'message' => Yii::t('common', 'This new already exist in this RSS feed')],
         ];
     }
 

@@ -11,11 +11,11 @@ class UserController extends Controller
         $model = new ConfirmationForm(compact('hash_id', 'confirmation_hash'));
         $model->populateBy(['hash_id', 'confirmation_hash']);
         if($userRedirect = $model->confirm()) {
-            \Yii::$app->session->setFlash('info', 'Ваш e-mail адрес подтвержден');
+            \Yii::$app->session->addFlash('info', \Yii::t('common', 'Your e-mail address has been confirmed'));
             return $userRedirect;
         } else {
             $errors = $model->getFirstErrors();
-            \Yii::$app->session->setFlash('danger', array_shift($errors));
+            \Yii::$app->session->addFlash('danger', array_shift($errors));
         }
 
         return $this->goHome();

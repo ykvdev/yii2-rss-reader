@@ -6,7 +6,7 @@
 use yii\bootstrap\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Изменить e-mail';
+$this->title = Yii::t('user', 'Change e-mail');
 
 ?>
 <div class="form-page">
@@ -19,6 +19,6 @@ $this->title = 'Изменить e-mail';
     ]) ?>
     <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
     <?= $form->field($model, 'currentPassword')->passwordInput() ?>
-    <?= Html::submitButton('Изменить', ['class' => 'btn btn-primary']) ?>
+    <?= Html::submitButton(Yii::t('user', 'Change'), ['class' => 'btn btn-primary']) ?>
     <?php ActiveForm::end() ?>
 </div>

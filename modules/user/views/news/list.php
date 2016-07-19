@@ -9,7 +9,7 @@ use \yii\helpers\Html,
 /** @var $news \app\modules\common\models\db\NewModel[] */
 /** @var $pages \yii\data\Pagination */
 
-$this->title = 'Список новостей';
+$this->title = Yii::t('user', 'News list');
 
 ?>
 <div class="news-list-page">
@@ -37,9 +37,9 @@ $this->title = 'Список новостей';
                 <div class="right-side">
                     <div class="btn-group">
                         <a href="<?= Url::toRoute(['/user/feeds/set-as-read', 'feed_id' => $currentFeed->id]) ?>"
-                           class="btn btn-default"><span class="glyphicon glyphicon-ok"></span> Прочитано</a>
+                           class="btn btn-default"><span class="glyphicon glyphicon-ok"></span> <?= Yii::t('user', 'Read') ?></a>
                         <a href="<?= Url::toRoute(['/user/feeds/unsubscribe', 'feed_id' => $currentFeed->id]) ?>"
-                           class="btn btn-default"><span class="glyphicon glyphicon-remove"></span> Отписаться</a>
+                           class="btn btn-default"><span class="glyphicon glyphicon-remove"></span> <?= Yii::t('user', 'Unsubscribe') ?></a>
                     </div>
                 </div>
                 <br style="clear: both">
@@ -50,7 +50,7 @@ $this->title = 'Список новостей';
                 <div class="new-item">
                     <h4><?= $new->title ?> (<?= $new->published_at ?>)</h4>
                     <div <?= !$new->read ? 'style="font-weight:bold"' : '' ?>><?= $new->short_text ?></div>
-                    <a href="<?= $new->url ?>" target="_blank" class="btn btn-default">Подробнее</a>
+                    <a href="<?= $new->url ?>" target="_blank" class="btn btn-default"><?= Yii::t('user', 'More') ?></a>
                     <hr>
                 </div>
             <?php endforeach ?>
@@ -64,9 +64,9 @@ $this->title = 'Список новостей';
             <div class="right-side">
                 <div class="btn-group">
                     <a href="<?= Url::toRoute(['/user/feeds/set-as-read', 'feed_id' => $currentFeed->id]) ?>"
-                       class="btn btn-default"><span class="glyphicon glyphicon-ok"></span> Прочитано</a>
+                       class="btn btn-default"><span class="glyphicon glyphicon-ok"></span> <?= Yii::t('user', 'Read') ?></a>
                     <a href="<?= Url::toRoute(['/user/feeds/unsubscribe', 'feed_id' => $currentFeed->id]) ?>"
-                       class="btn btn-default"><span class="glyphicon glyphicon-remove"></span> Отписаться</a>
+                       class="btn btn-default"><span class="glyphicon glyphicon-remove"></span> <?= Yii::t('user', 'Unsubscribe') ?></a>
                 </div>
             </div>
             <br style="clear: both">
