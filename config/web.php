@@ -91,6 +91,14 @@ $config = [
                 ],
             ],
         ],
+        'view' => [
+            'class' => 'yii\web\View',
+            'renderers' => [
+                'php' => [
+                    'class' => 'app\components\ViewRenderer',
+                ],
+            ],
+        ]
     ],
     'params' => require(__DIR__ . '/common/params.php'),
 ];
