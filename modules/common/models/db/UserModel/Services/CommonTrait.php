@@ -17,12 +17,10 @@ trait CommonTrait
     public function signIn($validateConfirmation = true, $rememberMe = false, $withRedirect = true) {
         /** @var $this UserModel */
         if($validateConfirmation && !$this->getUserSecurityModel()->confirmed) {
-            $this->addError('email', sprintf(
-                \Yii::t('common', 'Your e-mail address is not confirmed.
-                You are needed to go to the link from confirmation letter.
-                If you are not received this letter then %s'),
-                Html::a(\Yii::t('common', 'request it repeatedly'), ['/guest/user/resend-confirmation-mail', 'email' => $this->email])
-            ));
+            $this->addError('email', \Yii::t('common',
+                'Your e-mail address is not confirmed. You are needed to go to the link from confirmation letter. If you are not received this letter then {0}',
+                Html::a(\Yii::t('common', 'request it repeatedly'), ['/guest/user/resend-confirmation-mail', 'email' => $this->email]))
+            );
 
             return false;
         }

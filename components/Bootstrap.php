@@ -5,7 +5,7 @@ namespace app\components;
 use yii\base\BootstrapInterface;
 use yii\base\Event;
 use yii\base\Application;
-use yii\web\Controller;
+use yii\web\View;
 
 class Bootstrap implements BootstrapInterface
 {
@@ -50,8 +50,8 @@ class Bootstrap implements BootstrapInterface
 
     private function makePageTitle() {
         Event::on(
-            \yii\web\View::className(),
-            \yii\web\View::EVENT_AFTER_RENDER,
+            View::className(),
+            View::EVENT_AFTER_RENDER,
             function($event) {
                 $this->application->view->title = implode(' - ', [
                     $this->application->view->title,

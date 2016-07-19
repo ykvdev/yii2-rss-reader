@@ -18,9 +18,8 @@ class UserController extends Controller
                 \Yii::$app->response->format = Response::FORMAT_JSON;
                 return ActiveForm::validate($model);
             } elseif($model->changeEmail()) {
-                \Yii::$app->session->setFlash('info', \Yii::t('user',
-                    'Your e-mail address has been changed.
-                    New e-mail confirm letter has been sent.'));
+                \Yii::$app->session->addFlash('info', \Yii::t('user',
+                    'Your e-mail address has been changed. New e-mail confirm letter has been sent.'));
             }
         }
 
@@ -35,7 +34,7 @@ class UserController extends Controller
                 \Yii::$app->response->format = Response::FORMAT_JSON;
                 return ActiveForm::validate($model);
             } elseif($model->changePassword()) {
-                \Yii::$app->session->setFlash('info', \Yii::t('user', 'Your password has been changed'));
+                \Yii::$app->session->addFlash('info', \Yii::t('user', 'Your password has been changed'));
             }
         }
 

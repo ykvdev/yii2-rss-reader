@@ -3,11 +3,8 @@
 return [
     'Sign in' => 'Авторизация',
 
-    'You are need to confirm your e-mail.
-    For this, use the link from confirmation mail.'
-    =>
-    'Вам необходимо подтвердить ваш e-mail адрес.
-    Для этого воспользуйтесь ссылкой из письма отправленного вам на почту.',
+    'You are need to confirm your e-mail. For this, use the link from confirmation mail.'
+    => 'Вам необходимо подтвердить ваш e-mail адрес. Для этого воспользуйтесь ссылкой из письма отправленного вам на почту.',
 
     'Confirmation e-mail has been sent'
     => 'Повторное письмо, со ссылкой для подтверждения e-mail адреса, отправлено',
@@ -37,11 +34,8 @@ return [
 
     'This e-mail address is not found' => 'Такой e-mail адрес не найден',
 
-    'Incorrect e-mail or password.
-    If you forgot password you can %s'
-    =>
-    'Не корректный e-mail адрес или пароль.
-    Если вы забыли пароль, вы можете %s',
+    'Incorrect e-mail or password. If you forgot password you can {0}'
+    => 'Не корректный e-mail адрес или пароль. Если вы забыли пароль, вы можете {0}',
 
     'reset it' => 'восстановить его',
 

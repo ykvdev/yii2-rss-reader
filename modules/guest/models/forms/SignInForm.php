@@ -51,9 +51,8 @@ class SignInForm extends UserModel
         if (!$this->hasErrors()) {
             if (!$this->id || !Yii::$app->security->validatePassword($this->nativePassword, $this->password)) {
                 $this->incrementFailAuthCounterIfNeed();
-                $this->addError($attribute, sprintf(
-                    Yii::t('guest', 'Incorrect e-mail or password.
-                    If you forgot password you can %s'),
+                $this->addError($attribute,  Yii::t('guest',
+                    'Incorrect e-mail or password. If you forgot password you can {0}',
                     Html::a(Yii::t('guest', 'reset it'), ['/guest/user/reset-password-request', 'email' => $this->email])
                 ));
             }

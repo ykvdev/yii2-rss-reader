@@ -7,13 +7,8 @@ return [
     'Password' => 'Пароль',
     'Registered at' => 'Дата регистрации',
 
-    'Your e-mail address is not confirmed.
-    You are needed to go to the link from confirmation letter.
-    If you are not received this letter then %s'
-    =>
-    'Ваш e-mail не подтвержден.
-    Вы должны перейти по ссылке из письма для подтверждения e-mail адреса.
-    Если вы не получали это письмо, вы можете %s.',
+    'Your e-mail address is not confirmed. You are needed to go to the link from confirmation letter. If you are not received this letter then {0}'
+    => 'Ваш e-mail не подтвержден. Вы должны перейти по ссылке из письма для подтверждения e-mail адреса. Если вы не получали это письмо, вы можете {0}.',
 
     'request it repeatedly' => 'запросить его повторно',
     'E-mail confirmation' => 'Подтверждение e-mail адреса',

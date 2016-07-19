@@ -19,9 +19,13 @@ class ListAction extends Action
     private $currentFeed;
 
     public function run() {
+        if(!$this->getCurrentFeed()) {
+            \Yii::$app->session->addFlash('info', \Yii::t('user', 'You has no subscriptions'));
+            return $this->controller->redirect(['/user/feeds/subscribe']);
+        }
+
         $this->checkForNews();
         $this->clearOldNewsIfNeed();
-
         list($news, $pages) = $this->getNewsList();
         return $this->controller->render('list', [
             'feeds' => $this->getFeedsList(),
@@ -57,10 +61,10 @@ class ListAction extends Action
             }
 
             if($newItemsCount > 0) {
-                \Yii::$app->session->setFlash('info', \Yii::t('user', 'Get news: ') . $newItemsCount);
+                \Yii::$app->session->addFlash('info', \Yii::t('user', 'Get news: ') . $newItemsCount);
             }
         } catch(Exception $e) {
-            \Yii::$app->session->setFlash('danger', \Yii::t('user', 'Get news error'));
+            \Yii::$app->session->addFlash('danger', \Yii::t('user', 'Get news error'));
         }
     }
 

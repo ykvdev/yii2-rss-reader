@@ -5,11 +5,8 @@ return [
     'Unsubscribe' => 'Отписаться',
     'More' => 'Подробнее',
 
-    'Your e-mail address has been changed.
-    New e-mail confirm letter has been sent.'
-    =>
-    'Ваш e-mail адрес изменен.
-    Текже вам отправлено письмо для подтверждения нового e-mail адреса',
+    'Your e-mail address has been changed. New e-mail confirm letter has been sent.'
+    => 'Ваш e-mail адрес изменен. Текже вам отправлено письмо для подтверждения нового e-mail адреса',
 
     'Your password has been changed' => 'Ваш пароль изменен',
 
@@ -54,4 +51,6 @@ return [
     'Change' => 'Изменить',
 
     'Change password' => 'Изменить пароль',
+
+    'You has no subscriptions' => 'Вы еще не подписаны ни на один канал',
 ];

@@ -24,7 +24,7 @@ class SubscribeAction extends Action
 
                 return array_merge($resultValidation, ActiveForm::validate($model));
             } elseif($userRedirect = $model->subscribe()) {
-                \Yii::$app->session->setFlash('info', \Yii::t('user', 'Feed has been added to your subscriptions'));
+                \Yii::$app->session->addFlash('info', \Yii::t('user', 'Feed has been added to your subscriptions'));
                 return $userRedirect;
             }
         }
