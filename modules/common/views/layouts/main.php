@@ -7,7 +7,6 @@ use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use app\assets\AppAsset;
-use app\components\SelectLanguageWidget;
 
 AppAsset::register($this);
 ?>
@@ -72,11 +71,7 @@ AppAsset::register($this);
     ?>
 
     <div class="container">
-        <?php foreach(Yii::$app->session->getAllFlashes() as $type => $messages): ?>
-            <?php foreach($messages as $message): ?>
-                <div class="alert alert-<?= $type ?>" role="alert"><?= $message ?></div>
-            <?php endforeach ?>
-        <?php endforeach ?>
+        <?= $this->render('main/flashes') ?>
 
         <?= $content ?>
     </div>
@@ -85,7 +80,7 @@ AppAsset::register($this);
 <footer class="footer">
     <div class="container">
         <p class="pull-left">
-            &copy; <?= Yii::$app->name ?> <?= date('Y') ?> | <?= SelectLanguageWidget::widget() ?>
+            &copy; <?= Yii::$app->name ?> <?= date('Y') ?> | <?= $this->render('main/select-language') ?>
         </p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
