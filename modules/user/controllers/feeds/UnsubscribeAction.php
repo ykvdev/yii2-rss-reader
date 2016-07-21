@@ -23,8 +23,19 @@ class UnsubscribeAction extends Action
             if(file_exists($iconPath)) {
                 unlink($iconPath);
             }
+
+            \Yii::$app->cache->delete($this->getNewsCacheKey($feedId));
+            \Yii::$app->cache->delete($this->getFeedsCacheKey());
         }
 
         return $this->controller->redirect(['/user/news/list', 'feed_id' => '', 'page' => 1]);
+    }
+
+    private function getNewsCacheKey($feedId) {
+        return 'news-' . $feedId;
+    }
+
+    private function getFeedsCacheKey() {
+        return 'feeds-' . \Yii::$app->user->identity->id;
     }
 }

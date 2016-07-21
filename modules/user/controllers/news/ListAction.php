@@ -25,7 +25,6 @@ class ListAction extends Action
         }
 
         $this->checkForNews();
-        $this->clearOldNewsIfNeed();
         list($news, $pages) = $this->getNewsList();
         return $this->controller->render('list', [
             'feeds' => $this->getFeedsList(),
@@ -62,6 +61,9 @@ class ListAction extends Action
 
             if($newItemsCount > 0) {
                 \Yii::$app->session->addFlash('info', \Yii::t('user', 'Get news: ') . $newItemsCount);
+                $this->clearOldNewsIfNeed();
+                \Yii::$app->cache->delete($this->getNewsCacheKey());
+                \Yii::$app->cache->delete($this->getFeedsCacheKey());
             }
         } catch(Exception $e) {
             \Yii::$app->session->addFlash('danger', \Yii::t('user', 'Get news error'));
@@ -81,19 +83,42 @@ class ListAction extends Action
         }
     }
 
-    private function getFeedsList() {
-        $noReadCountQuery = (new Query())
-            ->select('COUNT(id)')
-            ->from(NewModel::tableName())
-            ->where(new Expression('feed = feeds.id'))
-            ->andWhere(['read' => 0]);
-        $feeds = (new Query())
-            ->select(['*', 'no_read_count' => $noReadCountQuery])
-            ->from(FeedModel::tableName())
-            ->where(['user' => \Yii::$app->user->identity->id])
-            ->all();
+    private function getNewsList() {
+        if($news = \Yii::$app->cache->get($this->getNewsCacheKey())) {
+            return $news;
+        } else {
+            $newsQuery = $this->getCurrentFeed()->getNewsQuery();
+            $countQuery = clone $newsQuery;
+            $pages = new Pagination(['totalCount' => $countQuery->count(), /*'pageSize' => 1,*/
+                'pageSizeParam' => false]);
+            $news = $newsQuery->orderBy('published_at DESC')->offset($pages->offset)->limit($pages->limit)->all();
+            foreach ($news as &$new) {
+                $new->short_text = strip_tags($new->short_text);
+            }
 
-        $this->injectFeedIcons($feeds);
+            \Yii::$app->cache->set($this->getNewsCacheKey(), [$news, $pages]);
+
+            return [$news, $pages];
+        }
+    }
+
+    private function getFeedsList() {
+        if(!$feeds = \Yii::$app->cache->get($this->getFeedsCacheKey())) {
+            $noReadCountQuery = (new Query())
+                ->select('COUNT(id)')
+                ->from(NewModel::tableName())
+                ->where(new Expression('feed = feeds.id'))
+                ->andWhere(['read' => 0]);
+            $feeds = (new Query())
+                ->select(['*', 'no_read_count' => $noReadCountQuery])
+                ->from(FeedModel::tableName())
+                ->where(['user' => \Yii::$app->user->identity->id])
+                ->all();
+
+            $this->injectFeedIcons($feeds);
+
+            \Yii::$app->cache->set($this->getFeedsCacheKey(), $feeds);
+        }
 
         return $feeds;
     }
@@ -119,14 +144,11 @@ class ListAction extends Action
         return $this->currentFeed;
     }
 
-    private function getNewsList() {
-        $newsQuery = $this->getCurrentFeed()->getNewsQuery();
-        $countQuery = clone $newsQuery;
-        $pages = new Pagination(['totalCount' => $countQuery->count(), /*'pageSize' => 1,*/ 'pageSizeParam' => false]);
-        $news = $newsQuery->orderBy('published_at DESC')->offset($pages->offset)->limit($pages->limit)->all();
-        foreach($news as &$new) {
-            $new->short_text = strip_tags($new->short_text);
-        }
-        return [$news, $pages];
+    private function getNewsCacheKey() {
+        return 'news-' . $this->getCurrentFeed()->id;
+    }
+
+    private function getFeedsCacheKey() {
+        return 'feeds-' . \Yii::$app->user->identity->id;
     }
 }

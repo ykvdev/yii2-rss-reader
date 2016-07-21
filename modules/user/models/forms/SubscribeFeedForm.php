@@ -97,6 +97,8 @@ class SubscribeFeedForm extends FeedModel
         if($this->validate()
         && $this->save(false)
         && $this->saveIcon()) {
+            $this->deleteCache();
+
             return \Yii::$app->getResponse()->redirect(['/user/news/list', 'feed_id' => $this->id, 'page' => 1]);
         } else {
             return false;
@@ -128,5 +130,18 @@ class SubscribeFeedForm extends FeedModel
         } catch(\Exception $e) {}
 
         return true;
+    }
+
+    private function deleteCache() {
+        \Yii::$app->cache->delete($this->getNewsCacheKey());
+        \Yii::$app->cache->delete($this->getFeedsCacheKey());
+    }
+
+    private function getNewsCacheKey() {
+        return 'news-' . $this->id;
+    }
+
+    private function getFeedsCacheKey() {
+        return 'feeds-' . \Yii::$app->user->identity->id;
     }
 }
