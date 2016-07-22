@@ -1,7 +1,7 @@
 {
-    "name": "atoumus/yii2-rss-reader",
+    "name": "atoumus/yii2-rss-reader-example",
     "description": "Yii 2 RSS reader app example",
-    "keywords": ["yii2", "rss", "reader", "example"],
+    "keywords": ["yii2", "rss", "example"],
     "type": "project",
     "minimum-stability": "stable",
     "require": {
