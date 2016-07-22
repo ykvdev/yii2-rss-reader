@@ -8,7 +8,7 @@ This is an example RSS reader, powered by YII2 framework.
 - MySQL 5+
 - Web server (like NGINX, Apache, etc)
 
-## Installation
+## Installation as a web site
 
 1. Go to your web server sites folder
 1. Clone this app from github: `git clone https://github.com/atoumus/yii2-rss-reader-example.git`
@@ -16,6 +16,10 @@ This is an example RSS reader, powered by YII2 framework.
 1. Fill your server configurations in folder `config`
 1. Run YII migrations command from console: `./yii migrate`
 1. Create a web server host config (see example for NGINX by this [link](https://raw.githubusercontent.com/atoumus/yii2-rss-reader-example/master/nginx-host-example))
+
+## Installation as a project via composer
+
+`$ composer create-project atoumus/yii2-rss-reader-example`
 
 ## Capabilities
 
