@@ -3,7 +3,7 @@
     "description": "Yii 2 RSS reader app example",
     "keywords": ["yii2", "rss", "example"],
     "type": "project",
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
         "php": ">=5.4.0",
         "yiisoft/yii2": ">=2.0.5",
