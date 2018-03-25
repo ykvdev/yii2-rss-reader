@@ -32,16 +32,16 @@ This is an example RSS reader, powered by YII2 framework.
 
 ## Screen shots
 
-![Sign up - RSS Reader](https://bytebucket.org/atoumus/learn-yii2-rss-reader-example/raw/c7efb05e6da38d5cb45d2594346a988286f50f4a/screens/Sign up - RSS Reader.jpg)
+![Sign up - RSS Reader](https://bytebucket.org/atoumus/learn-yii2-rss-reader-example/raw/c7efb05e6da38d5cb45d2594346a988286f50f4a/screens/Sign%20up%20-%20RSS%20Reader.jpg)
 
-![Sign in - RSS Reader](https://bytebucket.org/atoumus/learn-yii2-rss-reader-example/raw/c7efb05e6da38d5cb45d2594346a988286f50f4a/screens/Sign in - RSS Reader.jpg)
+![Sign in - RSS Reader](https://bytebucket.org/atoumus/learn-yii2-rss-reader-example/raw/c7efb05e6da38d5cb45d2594346a988286f50f4a/screens/Sign%20in%20-%20RSS%20Reader.jpg)
 
-![Subscribe - RSS Reader](https://bytebucket.org/atoumus/learn-yii2-rss-reader-example/raw/c7efb05e6da38d5cb45d2594346a988286f50f4a/screens/Subscribe - RSS Reader.jpg)
+![Subscribe - RSS Reader](https://bytebucket.org/atoumus/learn-yii2-rss-reader-example/raw/c7efb05e6da38d5cb45d2594346a988286f50f4a/screens/Subscribe%20-%20RSS%20Reader.jpg)
 
-![News list - RSS Reader](https://bytebucket.org/atoumus/learn-yii2-rss-reader-example/raw/c7efb05e6da38d5cb45d2594346a988286f50f4a/screens/News list - RSS Reader.jpg)
+![News list - RSS Reader](https://bytebucket.org/atoumus/learn-yii2-rss-reader-example/raw/c7efb05e6da38d5cb45d2594346a988286f50f4a/screens/News%20list%20-%20RSS%20Reader.jpg)
 
-![Reset password - RSS Reader](https://bytebucket.org/atoumus/learn-yii2-rss-reader-example/raw/c7efb05e6da38d5cb45d2594346a988286f50f4a/screens/Reset password - RSS Reader.jpg)
+![Reset password - RSS Reader](https://bytebucket.org/atoumus/learn-yii2-rss-reader-example/raw/c7efb05e6da38d5cb45d2594346a988286f50f4a/screens/Reset%20password%20-%20RSS%20Reader.jpg)
 
-![Change e-mail - RSS Reader](https://bytebucket.org/atoumus/learn-yii2-rss-reader-example/raw/c7efb05e6da38d5cb45d2594346a988286f50f4a/screens/Change e-mail - RSS Reader.jpg)
+![Change e-mail - RSS Reader](https://bytebucket.org/atoumus/learn-yii2-rss-reader-example/raw/c7efb05e6da38d5cb45d2594346a988286f50f4a/screens/Change%20e-mail%20-%20RSS%20Reader.jpg)
 
-![Change password - RSS Reader](https://bytebucket.org/atoumus/learn-yii2-rss-reader-example/raw/c7efb05e6da38d5cb45d2594346a988286f50f4a/screens/Change password - RSS Reader.jpg)
+![Change password - RSS Reader](https://bytebucket.org/atoumus/learn-yii2-rss-reader-example/raw/c7efb05e6da38d5cb45d2594346a988286f50f4a/screens/Change%20password%20-%20RSS%20Reader.jpg)
