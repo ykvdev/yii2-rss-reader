@@ -1,6 +1,6 @@
-# Yii2 RSS reader example app
+# Yii2 RSS Reader
 
-This is an example RSS reader, powered by YII2 framework. 
+This is an RSS reader, powered by Yii2 framework. 
 
 ## Requirements
 
