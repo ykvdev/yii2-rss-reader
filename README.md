@@ -11,7 +11,7 @@ This is an RSS reader, powered by Yii2 framework.
 ## Installation as a website
 
 1. Go to your web server sites folder
-1. Clone this app: `git clone git@github.com:ykvdev/yii2-rss-reader.git`
+1. Clone this app: `git clone https://github.com/ykvdev/yii2-rss-reader.git`
 1. Create MySQL DB named like `yii2_rss_reader` (or other, and change it in config\common\db.php)
 1. Fill your server configurations in folder `config`
 1. Run YII migrations command from console: `./yii migrate`
