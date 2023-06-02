@@ -3,9 +3,9 @@ server {
 
     listen 80;
 
-    root /var/www/yii2-rss-reader-example/web;
+    root /var/www/yii2-rss-reader/web;
 
-    server_name yii2-rss-reader-example;
+    server_name yii2-rss-reader;
 
     index index.php;
 
